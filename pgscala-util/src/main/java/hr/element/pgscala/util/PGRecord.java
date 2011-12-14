@@ -2,6 +2,8 @@ package hr.element.pgscala.util;
 
 public class PGRecord {
 
+//-----------------------------------------------------------------------------
+
   /**
    * Doubles all quotes and backslashes (for quoting a tuple element).
    * <code>It's: "OK"!</code> becomes <code>"It's ""OK""!"</code>
@@ -9,7 +11,7 @@ public class PGRecord {
 
   public static String quote(final String value) {
     if (null == value) {
-      return null;
+      return "";
     }
 
     final int len = value.length();
@@ -54,6 +56,8 @@ public class PGRecord {
 
     return new String(quoted);
   }
+
+//-----------------------------------------------------------------------------
 
   // public static final String toString(final String[] values) {
   // if (null == values)

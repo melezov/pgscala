@@ -10,8 +10,8 @@ class PGLiteralStringSpec extends FeatureSpec
                     with MustMatchers {
   feature("Strings can be converted into string literals") {
 
-    val origStr = "It's OK -> \\ Don\"t {worry} be (happy)! /"
-    val quotStr  = "'It''s OK -> \\ Don\"t {worry} be (happy)! /'"
+    val origStr = """It's OK -> \ Don"t {worry} be (happy)! /"""
+    val quotStr  = """'It''s OK -> \ Don"t {worry} be (happy)! /'"""
 
     scenario("String can be quoted") {
       PGLiteral.quote(origStr) must equal (quotStr)
@@ -58,7 +58,7 @@ class PGLiteralStringSpec extends FeatureSpec
     scenario("Random generated strings must be able to make a roundabout trip") {
       val isReadible = false
 
-      val trials = 5000
+      val trials = 100
 
       val maxLength = 10000
       val nullRatio = 0.05

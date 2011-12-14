@@ -29,7 +29,7 @@ class PGLiteralIntSpec extends FeatureSpec
     }
 
     scenario("Random generated integere must be able to make a roundabout trip") {
-      val trials = 50000
+      val trials = 100
 
       import scala.util.Random
       val seed = Random.nextInt

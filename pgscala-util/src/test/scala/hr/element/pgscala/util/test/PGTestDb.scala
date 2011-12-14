@@ -2,7 +2,7 @@ package hr.element.pgscala.util
 package test
 
 import org.streum.configrity._
-import java.sql.ResultSet
+import java.sql.{Statement, ResultSet}
 import org.postgresql.ds.PGSimpleDataSource
 
 object PGTestDb {
@@ -29,17 +29,50 @@ object PGTestDb {
     pgsds
   }
 
-  def qry[T](body: String)(f: ResultSet => T): T = {
+  def testInSchema(schema: String)(f: => Unit) {
+    iud("CREATE SCHEMA %s;" format schema)
+    try {
+      f
+    }
+    finally{
+      iud("DROP SCHEMA %s CASCADE;" format schema)
+    }
+  }
+
+  def prepareSchemaQuery(schema: Option[String], st: Statement) =
+    schema match {
+      case Some(s) =>
+        st.execute("SET search_path TO %s;" format s)
+      case _ =>
+    }
+
+  def qry[T](body: String)(f: ResultSet => T)(implicit schema: Option[String] = None): T = {
     try {
       val con = pgds.getConnection();
       try {
         val st = con.createStatement()
         try {
-          val rs = st.executeQuery(body)
+          prepareSchemaQuery(schema, st)
+          val rS = st.executeQuery(body)
           try {
-            f(rs)
+            f(rS)
           }
-          finally rs.close()
+          finally rS.close()
+        }
+        finally st.close()
+      }
+      finally con.close()
+    }
+  }
+
+  def iud(body: String)(implicit schema: Option[String] = None) {
+    try {
+      val con = pgds.getConnection();
+      try {
+        val st = con.createStatement()
+        try {
+          prepareSchemaQuery(schema, st)
+          st.execute(body)
         }
         finally st.close()
       }
