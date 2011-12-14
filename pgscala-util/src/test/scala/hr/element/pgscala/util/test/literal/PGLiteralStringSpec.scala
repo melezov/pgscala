@@ -1,5 +1,6 @@
 package hr.element.pgscala.util
 package test
+package literal
 
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import org.scalatest.matchers.MustMatchers
