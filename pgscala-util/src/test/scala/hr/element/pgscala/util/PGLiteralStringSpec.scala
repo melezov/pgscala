@@ -4,24 +4,24 @@ package test
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import org.scalatest.matchers.MustMatchers
 
-class PGLiteralSpec extends FeatureSpec
+class PGLiteralStringSpec extends FeatureSpec
                     with GivenWhenThen
                     with MustMatchers {
-  feature("Primitives can be converted into string literals") {
+  feature("Strings can be converted into string literals") {
 
     val origStr = "It's OK -> \\ Don\"t {worry} be (happy)! /"
     val quotStr  = "'It''s OK -> \\ Don\"t {worry} be (happy)! /'"
 
     scenario("String can be quoted") {
-      PGLiteral.quoteLiteral(origStr) must equal (quotStr)
+      PGLiteral.quote(origStr) must equal (quotStr)
     }
 
     scenario("Boundary conditions must satisfy preset rules") {
-      info("The quoteLiteral must return null on null input (stable)")
-      PGLiteral.quoteLiteral(null) must equal (null)
+      info("The quote must return NULL on null input")
+      PGLiteral.quote(null: String) must equal ("NULL")
 
-      info("The quoteLiteral must return '' on empty string input")
-      PGLiteral.quoteLiteral("") must equal ("''")
+      info("The quote must return '' on empty string input")
+      PGLiteral.quote("") must equal ("''")
     }
 
     scenario("Strings can be quoted to be directly embedded into queries") {
@@ -58,6 +58,7 @@ class PGLiteralSpec extends FeatureSpec
       val isReadible = false
 
       val trials = 5000
+
       val maxLength = 10000
       val nullRatio = 0.05
       val emptyRatio = 0.05
@@ -96,11 +97,11 @@ class PGLiteralSpec extends FeatureSpec
         FROM (VALUES
           %s
         ) v(orig_str);
-      """;
+      """
 
       val quotes =
         values.map(v =>
-          v -> PGLiteral.quoteLiteral(v)
+          v -> PGLiteral.quote(v)
         )
 
       val query =
@@ -118,7 +119,7 @@ class PGLiteralSpec extends FeatureSpec
           rS.next()
 
           val dbOrigGenStr = rS.getString("orig_str")
-          origGenStr must equal(dbOrigGenStr)
+          origGenStr must equal (dbOrigGenStr)
 
           val dbQuotGenStr = rS.getString("quot_str")
           dbQuotGenStr
@@ -131,7 +132,7 @@ class PGLiteralSpec extends FeatureSpec
         FROM (VALUES
           %s
         ) v(pg_approves);
-      """;
+      """
 
       and("PostgreSQL quote_literal must evaluate to the client quoted strings")
 
