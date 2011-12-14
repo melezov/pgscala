@@ -33,7 +33,7 @@ object BuildSettings {
     name         := "PGScala-Util",
     version      := "0.1.4",
 
-    javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5", "-g:none"),
+    javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5"), // , "-g:none"),
     compileOrder := CompileOrder.JavaThenScala,
     publishArtifact in (Compile, packageDoc) := false,
     autoScalaLibrary := false,

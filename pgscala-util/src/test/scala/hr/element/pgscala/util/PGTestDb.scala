@@ -1,9 +1,6 @@
 package hr.element.pgscala.util
 package test
 
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.FeatureSpec
-
 import org.streum.configrity._
 
 import com.mchange.v2.c3p0.ComboPooledDataSource
@@ -53,26 +50,5 @@ object PGTestDb {
       }
       finally con.close()
     }
-  }
-}
-
-class PGTestDb extends FeatureSpec
-                with ShouldMatchers {
-
-  import PGTestDb._
-
-  feature("Database connectivity") {
-
-    scenario("Simple query to test database connection") {
-      qry("SELECT current_database();"){ rS =>
-        rS.next() match {
-          case true =>
-            Some(rS.getString(1))
-          case flase =>
-            None
-        }
-      } should be (Some(dbName))
-    }
-
   }
 }
