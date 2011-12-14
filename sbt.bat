@@ -3,7 +3,7 @@ setlocal
 pushd
 cd "%~dp0"
 
-set JVM_PARAMS=-Xss2m -Xmx712m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled
+set JVM_PARAMS=-Xss2m -Xmx1g -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled
 
 set LIFT_RUN_MODE=-Drun.mode=development
 set TRY_JREBEL=true

@@ -44,19 +44,11 @@ object BuildSettings {
 object Dependencies {
 
   val postgres = "postgresql" % "postgresql" % "9.1-901.jdbc4" % "test"
-
-  val c3p0 = "c3p0" % "c3p0" % "0.9.1.2" % "test"
-  val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.6.4" % "test"
-  val logback = "ch.qos.logback" % "logback-classic" % "1.0.0" % "test"
-
   val configrity = "org.streum" %% "configrity" % "0.9.0" % "test"
   val scalaTest = "org.scalatest" %% "scalatest" % "1.6.1" % "test"
 
   val depsPGScalaUtil = Seq(
     postgres,
-    c3p0,
-    log4jOverSlf4j,
-    logback,
     configrity,
     scalaTest
   )

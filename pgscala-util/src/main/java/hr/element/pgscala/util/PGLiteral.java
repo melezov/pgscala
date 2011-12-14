@@ -8,14 +8,12 @@ public class PGLiteral {
 
   public static String quoteLiteral(final String literal)
   {
-    if (null == literal) {
-      return "NULL";
-    }
+    if (null == literal)
+      return null;
 
-    int len = literal.length();
-    if (0 == len) {
+    final int len = literal.length();
+    if (0 == len)
       return "''";
-    }
 
     final int total;
     {
@@ -40,8 +38,8 @@ public class PGLiteral {
       quoted[0] = quoted[newLen - 1] = '\'';
 
       if (total == 0) {
-        for (int i = 0; i < len;) {
-          quoted[++i] = literal.charAt(i);
+        for (int i = 0; i < len; i++) {
+          quoted[i + 1] = literal.charAt(i);
         }
       }
       else {

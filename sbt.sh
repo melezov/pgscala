@@ -2,7 +2,7 @@
 cd `dirname $0`
 
 ## START JVM PARAMS
-JVM_PARAMS="-Xss2m -Xmx712m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled"
+JVM_PARAMS="-Xss2m -Xmx1g -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled"
 
 LIFT_RUN_MODE="-Drun.mode=development"
 TRY_JREBEL=true
