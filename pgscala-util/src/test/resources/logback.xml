@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" debug="false">
+  <logger name="com.mchange.v2.c3p0" level="INFO"/>
+</configuration>
