@@ -35,7 +35,7 @@ class PGLiteralIntSpec extends FeatureSpec
       val seed = Random.nextInt
       Random.setSeed(seed)
 
-      given("%d random integers")
+      given("%d random integers" format trials)
       and("a random seed of [%d]" format seed)
 
       val values =

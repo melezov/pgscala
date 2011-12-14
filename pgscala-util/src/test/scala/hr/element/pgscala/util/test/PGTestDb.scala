@@ -30,19 +30,19 @@ object PGTestDb {
   }
 
   def testInSchema(schema: String)(f: => Unit) {
-    iud("CREATE SCHEMA %s;" format schema)
+    iud("CREATE SCHEMA %s;" format PGIdent.quote(schema))
     try {
       f
     }
     finally{
-      iud("DROP SCHEMA %s CASCADE;" format schema)
+      iud("DROP SCHEMA %s CASCADE;" format PGIdent.quote(schema))
     }
   }
 
   def prepareSchemaQuery(schema: Option[String], st: Statement) =
     schema match {
       case Some(s) =>
-        st.execute("SET search_path TO %s;" format s)
+        st.execute("SET search_path TO %s;" format PGIdent.quote(s))
       case _ =>
     }
 
