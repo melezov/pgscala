@@ -1,0 +1,10 @@
+.cache
+.classpath
+.project
+.scala_dependencies
+.settings
+target
+.target
+
+code/scala/project/project
+code/scala/project/strap/sbt-launch-*.jar
