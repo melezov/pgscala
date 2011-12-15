@@ -59,7 +59,6 @@ class PGLiteralStringSpec extends FeatureSpec
       val isReadible = false
 
       val trials = 100
-
       val maxLength = 10000
       val nullRatio = 0.05
       val emptyRatio = 0.05

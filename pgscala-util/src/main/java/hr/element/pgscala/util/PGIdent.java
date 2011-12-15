@@ -4,7 +4,6 @@ import java.util.*;
 import java.io.*;
 
 public class PGIdent {
-
   // -----------------------------------------------------------------------------
 
   /**
@@ -55,7 +54,7 @@ public class PGIdent {
 
   public static String quote(final String ident) {
     if (null == ident) {
-      return null;
+      throw new NullPointerException("Ident cannot be null!");
     }
 
     {
@@ -93,12 +92,13 @@ public class PGIdent {
 
       total = cnt;
     }
+
     if (!quoting && (total == 0) && !keywords.contains(ident)) {
       identCache.put(ident, ident);
       return ident;
     }
 
-    final int newLen = total + len + 2;
+    final int newLen = len + 2 + total;
     final char[] quoted = new char[newLen];
     {
       quoted[0] = quoted[newLen - 1] = '"';

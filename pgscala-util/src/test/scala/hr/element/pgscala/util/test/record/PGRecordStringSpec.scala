@@ -26,7 +26,6 @@ class PGRecordStringSpec extends FeatureSpec
     }
 
     scenario("Strings can be quoted to be directly embedded into queries") {
-
       val testSchema = "test_schema[%08x:%04x]" format(
         System.currentTimeMillis(), scala.util.Random.nextInt()
       )

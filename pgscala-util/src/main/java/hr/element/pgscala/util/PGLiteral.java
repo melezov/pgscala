@@ -1,8 +1,7 @@
 package hr.element.pgscala.util;
 
 public class PGLiteral {
-
-//-----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
 
   /**
    * Replaces all apostrophes with double apostrophes, and surrounds in
@@ -37,7 +36,7 @@ public class PGLiteral {
       total = cnt;
     }
 
-    final int newLen = total + len + 2;
+    final int newLen = len + 2 + total;
     final char[] quoted = new char[newLen];
     {
       quoted[0] = quoted[newLen - 1] = '\'';
@@ -62,44 +61,45 @@ public class PGLiteral {
     return new String(quoted);
   }
 
-// -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
 
   public static String quote(final boolean b) {
     return b ? "'t'" : "'f'";
   }
 
-//-----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
 
   public static String quote(final int i) {
     return Integer.toString(i);
   }
 
-//-----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
 
   public static String quote(final long l) {
     return Long.toString(l);
   }
 
-//-----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
 
   public static String quote(final double d) {
     return Double.toString(d);
   }
 
-//-----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
 
   public static String quote(final float f) {
     return Float.toString(f);
   }
 
-//-----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
 
   private static final char[] HEX_DIGITS =
     "0123456789abcdef".toCharArray();
 
   public static String quote(final byte[] bA) {
-    if (null == bA)
-      return null;
+    if (null == bA) {
+      return "NULL";
+    }
 
     final int len = bA.length;
     final char[] buffer = new char[(len + 2) << 1];
@@ -109,15 +109,15 @@ public class PGLiteral {
       buffer[2] = 'x';
 
       int index = 3;
-      for (int i = 0; i < len; i ++) {
+      for (int i = 0; i < len; i++) {
         final byte b = bA[i];
-        buffer[index ++] = HEX_DIGITS[b & 0xf0 >>> 4];
-        buffer[index ++] = HEX_DIGITS[b & 0xf];
+        buffer[index++] = HEX_DIGITS[b & 0xf0 >>> 4];
+        buffer[index++] = HEX_DIGITS[b & 0xf];
       }
     }
 
     return new String(buffer);
   }
 
-//-----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
 }
