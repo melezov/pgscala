@@ -24,7 +24,6 @@ public class PGLiteral {
       int start = 0;
       while (true) {
         final int ind = s.indexOf('\'', start);
-
         if (ind == -1) {
           break;
         }
@@ -32,7 +31,6 @@ public class PGLiteral {
         start = ind + 1;
         cnt++;
       }
-
       total = cnt;
     }
 
@@ -93,8 +91,7 @@ public class PGLiteral {
 
   // -----------------------------------------------------------------------------
 
-  private static final char[] HEX_DIGITS =
-    "0123456789abcdef".toCharArray();
+  private static final char[] HEX_DIGITS = "0123456789abcdef".toCharArray();
 
   public static String quote(final byte[] bA) {
     if (null == bA) {

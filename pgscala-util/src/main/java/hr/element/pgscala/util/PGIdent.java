@@ -34,8 +34,8 @@ public class PGIdent {
 
   /** Volatile cache for quoted identities. */
 
-  private static Map<String, String> identCache =
-    Collections.synchronizedMap(new WeakHashMap<String, String>());
+  private static Map<String, String> identCache = Collections
+      .synchronizedMap(new WeakHashMap<String, String>());
 
   /**
    * Replaces all quotes with double quotes, and surrounds in quotes; mimicking
@@ -89,7 +89,6 @@ public class PGIdent {
           }
         }
       }
-
       total = cnt;
     }
 
