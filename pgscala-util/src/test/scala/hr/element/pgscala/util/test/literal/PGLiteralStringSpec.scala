@@ -17,6 +17,10 @@ class PGLiteralStringSpec extends FeatureSpec
       PGLiteral.quoteString(origStr) must equal (quotStr)
     }
 
+    scenario("String can be unquoted") {
+      PGLiteral.unquoteString(quotStr) must equal (origStr)
+    }
+
     scenario("Boundary conditions must satisfy preset rules") {
       info("The quote must return NULL on null input")
       PGLiteral.quoteOptString(null: String) must equal ("NULL")

@@ -56,4 +56,74 @@ public class PGRecord {
   }
 
   // -----------------------------------------------------------------------------
+
+  public static String quoteInteger(final int i) {
+    return Integer.toString(i);
+  }
+
+  public static int unquoteInteger(final String value) {
+    return Integer.valueOf(value);
+  }
+
+  public static String quoteOptInteger(final Integer i) {
+    return i == null ? "" : i.toString();
+  }
+
+  public static Integer unquoteOptInteger(final String value) {
+    return value.isEmpty() ? null : Integer.valueOf(value);
+  }
+
+  // -----------------------------------------------------------------------------
+
+  public static String quoteLong(final long l) {
+    return Long.toString(l);
+  }
+
+  public static long unquoteLong(final String value) {
+    return Long.valueOf(value);
+  }
+
+  public static String quoteOptLong(final Long l) {
+    return l == null ? "" : l.toString();
+  }
+
+  public static Long unquoteOptLong(final String value) {
+    return value.isEmpty() ? null : Long.valueOf(value);
+  }
+
+  // -----------------------------------------------------------------------------
+
+  public static String quoteDouble(final double d) {
+    return Double.toString(d);
+  }
+
+  public static double unquoteDouble(final String value) {
+    return Double.valueOf(value);
+  }
+
+  public static String quoteOptDouble(final Double d) {
+    return d == null ? "" : d.toString();
+  }
+
+  public static Double unquoteOptDouble(final String value) {
+    return value.isEmpty() ? null : Double.valueOf(value);
+  }
+
+  // -----------------------------------------------------------------------------
+
+  public static String quoteFloat(final float f) {
+    return Float.toString(f);
+  }
+
+  public static float unquoteFloat(final String value) {
+    return Float.valueOf(value);
+  }
+
+  public static String quoteOptFloat(final Float f) {
+    return f == null ? "" : f.toString();
+  }
+
+  public static Float unquoteOptFloat(final String value) {
+    return value.isEmpty() ? null : Float.valueOf(value);
+  }
 }

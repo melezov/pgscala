@@ -85,12 +85,12 @@ public class PGLiteral {
       return value.substring(1, len - 1);
     }
 
-    final int newLen = len - 2 - total;
+    final int newLen = len - 2 - (total >>> 1);
     final char[] unquoted = new char[newLen];
 
     int index = 1;
     for (int i = 0; i < newLen; i++) {
-      final char ch = unquoted[i] = value.charAt(index);
+      final char ch = unquoted[i] = value.charAt(index ++);
 
       if (ch == '\'') {
         index ++;
