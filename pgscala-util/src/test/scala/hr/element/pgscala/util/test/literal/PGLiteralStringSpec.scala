@@ -14,15 +14,15 @@ class PGLiteralStringSpec extends FeatureSpec
     val quotStr  = """'It''s OK -> \ Don"t {worry} be (happy)! /'"""
 
     scenario("String can be quoted") {
-      PGLiteral.quote(origStr) must equal (quotStr)
+      PGLiteral.quoteString(origStr) must equal (quotStr)
     }
 
     scenario("Boundary conditions must satisfy preset rules") {
       info("The quote must return NULL on null input")
-      PGLiteral.quote(null: String) must equal ("NULL")
+      PGLiteral.quoteOptString(null: String) must equal ("NULL")
 
       info("The quote must return '' on empty string input")
-      PGLiteral.quote("") must equal ("''")
+      PGLiteral.quoteString("") must equal ("''")
     }
 
     scenario("Strings can be quoted to be directly embedded into queries") {
@@ -101,7 +101,7 @@ class PGLiteralStringSpec extends FeatureSpec
 
       val quotes =
         values.map(v =>
-          v -> PGLiteral.quote(v)
+          v -> PGLiteral.quoteOptString(v)
         )
 
       val query =

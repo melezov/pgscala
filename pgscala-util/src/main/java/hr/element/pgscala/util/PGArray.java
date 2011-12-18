@@ -5,12 +5,9 @@ public class PGArray {
 
   /** Prefixes all quotes and backslashes with a backslash. */
 
-  public static String quote(final String element) {
-    if (null == element)
-      return "NULL";
-
-    final int len = element.length();
-    if (0 == len) {
+  public static String quoteString(final String s) {
+    final int len = s.length();
+    if (len == 0) {
       return "\"\"";
     }
 
@@ -19,7 +16,7 @@ public class PGArray {
       int cnt = 0;
 
       for (int i = 0; i < len; i++) {
-        final char ch = element.charAt(i);
+        final char ch = s.charAt(i);
         if (ch == '"' || ch == '\\') {
           cnt++;
         }
@@ -34,12 +31,12 @@ public class PGArray {
 
       if (total == 0) {
         for (int i = 0; i < len; i++) {
-          quoted[i + 1] = element.charAt(i);
+          quoted[i + 1] = s.charAt(i);
         }
       } else {
         int cnt = 1;
         for (int i = 0; i < len; i++) {
-          final char ch = element.charAt(i);
+          final char ch = s.charAt(i);
           if (ch == '"' || ch == '\\') {
             quoted[cnt++ + i] = '\\';
           }
@@ -50,6 +47,10 @@ public class PGArray {
 
       return new String(quoted);
     }
+  }
+
+  public static String quoteOptString(final String s) {
+    return s == null ? "NULL" : quoteString(s);
   }
 
   // -----------------------------------------------------------------------------

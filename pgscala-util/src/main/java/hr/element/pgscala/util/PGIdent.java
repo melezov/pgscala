@@ -54,7 +54,7 @@ public class PGIdent {
 
   public static String quote(final String ident) {
     if (null == ident) {
-      throw new NullPointerException("Ident cannot be null!");
+      throw new IllegalArgumentException("Ident cannot be null!");
     }
 
     {

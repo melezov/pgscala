@@ -20,7 +20,7 @@ class PGIdentSpec extends FeatureSpec
 
     scenario("Boundary conditions must satisfy preset rules") {
       info("The quote must throw a NullPointerException on null input")
-      intercept[NullPointerException]{
+      intercept[IllegalArgumentException]{
         PGIdent.quote(null: String)
       }
 
@@ -29,7 +29,7 @@ class PGIdentSpec extends FeatureSpec
     }
 
     scenario("Ident quoting mimics PostgreSQL quote_ident") {
-      val dbQuotStr = PGTestDb.qry("SELECT quote_ident(%s);" format PGLiteral.quote(origStr)){ rS =>
+      val dbQuotStr = PGTestDb.qry("SELECT quote_ident(%s);" format PGLiteral.quoteString(origStr)){ rS =>
         rS.next()
         rS.getString(1)
       }
@@ -38,9 +38,9 @@ class PGIdentSpec extends FeatureSpec
     }
 
     scenario("Random generated idents must be able to make a roundabout trip") {
-      val isReadible = true
+      val isReadible = false
 
-      val trials = 10000
+      val trials = 100
       val maxLength = 50
       val emptyRatio = 0.05
 
@@ -84,7 +84,7 @@ class PGIdentSpec extends FeatureSpec
       val query =
         queryStub.format(
           quotes.map{ case (origGenStr, quotGenStr) =>
-            "(%s)" format PGLiteral.quote(origGenStr)
+            "(%s)" format PGLiteral.quoteString(origGenStr)
           }.mkString(",\n")
         )
 

@@ -11,16 +11,16 @@ class PGLiteralIntSpec extends FeatureSpec
   feature("Integer can be converted into string literals") {
 
     scenario("Integer conversion") {
-      PGLiteral.quote(-100) must equal ("-100")
-      PGLiteral.quote(0) must equal ("0")
-      PGLiteral.quote(300000) must equal ("300000")
+      PGLiteral.quoteInteger(-100) must equal ("-100")
+      PGLiteral.quoteInteger(0) must equal ("0")
+      PGLiteral.quoteInteger(300000) must equal ("300000")
     }
 
     scenario("Integers can be quoted to be directly embedded into queries") {
       val dbTrue = PGTestDb.qry("SELECT %s, %s, %s;" format(
-          PGLiteral.quote(-100),
-          PGLiteral.quote(0),
-          PGLiteral.quote(300000))){ rS =>
+          PGLiteral.quoteInteger(-100),
+          PGLiteral.quoteInteger(0),
+          PGLiteral.quoteInteger(300000))){ rS =>
         rS.next()
         rS.getInt(1) must be (-100)
         rS.getInt(2) must be (0)
@@ -51,7 +51,7 @@ class PGLiteralIntSpec extends FeatureSpec
 
       val quotes =
         values.map(v =>
-          v -> PGLiteral.quote(v)
+          v -> PGLiteral.quoteInteger(v)
         )
 
       val query =

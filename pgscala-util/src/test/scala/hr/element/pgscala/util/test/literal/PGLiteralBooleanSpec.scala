@@ -14,8 +14,8 @@ class PGLiteralBooleanSpec extends FeatureSpec
     val qF = "'f'"
 
     scenario("Boolean conversion") {
-      PGLiteral.quote(true) must equal (qT)
-      PGLiteral.quote(false) must equal (qF)
+      PGLiteral.quoteBoolean(true) must equal (qT)
+      PGLiteral.quoteBoolean(false) must equal (qF)
     }
 
     scenario("Booleans can be quoted to be directly embedded into queries") {

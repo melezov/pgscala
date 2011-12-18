@@ -14,15 +14,15 @@ class PGRecordStringSpec extends FeatureSpec
     val quotStr = """"It's OK -> \\ Don""t {worry} be (happy)! /""""
 
     scenario("String can be quoted") {
-      PGRecord.quote(origStr) must equal (quotStr)
+      PGRecord.quoteString(origStr) must equal (quotStr)
     }
 
     scenario("Boundary conditions must satisfy preset rules") {
-      info("The quote must return an empty string on null input")
-      PGRecord.quote(null: String) must equal ("")
+      info("The quoteString must return an empty string on null input")
+      PGRecord.quoteOptString(null: String) must equal ("")
 
-      info("""The quote must return "" on empty string input""")
-      PGRecord.quote("") must equal ("\"\"")
+      info("""The quoteString must return "" on empty string input""")
+      PGRecord.quoteString("") must equal ("\"\"")
     }
 
     scenario("Strings can be quoted to be directly embedded into queries") {
@@ -42,8 +42,8 @@ class PGRecordStringSpec extends FeatureSpec
         PGTestDb.qry("""
           SELECT (%s::oneStr).s;
         """ format (
-          PGLiteral.quote("(%s)" format(
-            PGRecord.quote(origStr)
+          PGLiteral.quoteString("(%s)" format(
+            PGRecord.quoteString(origStr)
           ))
         )){ rS =>
           rS.next()

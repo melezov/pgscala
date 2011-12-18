@@ -8,13 +8,9 @@ public class PGRecord {
    * <code>It's: "OK"!</code> becomes <code>"It's ""OK""!"</code>
    */
 
-  public static String quote(final String value) {
-    if (null == value) {
-      return "";
-    }
-
-    final int len = value.length();
-    if (0 == len) {
+  public static String quoteString(final String s) {
+    final int len = s.length();
+    if (len == 0) {
       return "\"\"";
     }
 
@@ -22,7 +18,7 @@ public class PGRecord {
     {
       int cnt = 0;
       for (int i = 0; i < len; i++) {
-        final char ch = value.charAt(i);
+        final char ch = s.charAt(i);
         if (ch == '"' || ch == '\\') {
           cnt++;
         }
@@ -37,12 +33,12 @@ public class PGRecord {
 
       if (total == 0) {
         for (int i = 0; i < len; i++) {
-          quoted[i + 1] = value.charAt(i);
+          quoted[i + 1] = s.charAt(i);
         }
       } else {
         int cnt = 1;
         for (int i = 0; i < len; i++) {
-          final char ch = value.charAt(i);
+          final char ch = s.charAt(i);
           quoted[cnt + i] = ch;
 
           if (ch == '"' || ch == '\\') {
@@ -53,6 +49,10 @@ public class PGRecord {
     }
 
     return new String(quoted);
+  }
+
+  public static String quoteOptString(final String s) {
+    return s == null ? "" : quoteString(s);
   }
 
   // -----------------------------------------------------------------------------
