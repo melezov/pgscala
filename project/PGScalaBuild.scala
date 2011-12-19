@@ -15,7 +15,8 @@ object Resolvers {
 object Publishing {
   val publishSettings = Seq(
     publishTo := Some("Element Nexus" at "http://maven.element.hr/nexus/content/repositories/releases/"),
-    credentials += Credentials(Path.userHome / ".publish" / ".credentials")
+    credentials += Credentials(Path.userHome / ".publish" / ".credentials"),
+    publishArtifact in (Compile, packageDoc) := false
   )
 }
 
@@ -35,20 +36,40 @@ object BuildSettings {
 
     javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5"), // , "-g:none"),
     compileOrder := CompileOrder.JavaThenScala,
-    publishArtifact in (Compile, packageDoc) := false,
     autoScalaLibrary := false,
     crossPaths := false
+  )
+
+  val bsPGScalaConverters = commonSettings ++ Seq(
+    organization := "hr.element.pgscala",
+    name         := "PGScala-Converters",
+    version      := "0.0.1",
+    
+    crossScalaVersions := Seq("2.9.1", "2.9.0-1", "2.9.0"),
+    scalaVersion <<= (crossScalaVersions) { versions => versions.head },
+    scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise") // , "-Yrepl-sync"
   )
 }
 
 object Dependencies {
-
-  val postgres = "postgresql" % "postgresql" % "9.1-901.jdbc4" % "test"
+  val jodaConvert = "org.joda" % "joda-convert" % "1.1"  
+  val jodaTime = "joda-time" % "joda-time" % "2.0"  
+  
+  val postgres = "postgresql" % "postgresql" % "9.1-901.jdbc4"
+  
   val configrity = "org.streum" %% "configrity" % "0.9.0" % "test"
   val scalaTest = "org.scalatest" %% "scalatest" % "1.6.1" % "test"
 
   val depsPGScalaUtil = Seq(
-    postgres,
+    postgres % "test",
+    configrity,
+    scalaTest
+  )
+
+  val depsPGScalaConverters = Seq(
+    jodaConvert,  
+    jodaTime,    
+    postgres % "test",
     configrity,
     scalaTest
   )
@@ -65,4 +86,12 @@ object PGScalaBuild extends Build {
       libraryDependencies := depsPGScalaUtil
     )
   )
+
+  lazy val pgscalaConverters = Project(
+    "PGScala-Converters",
+    file("pgscala-converters"),
+    settings = bsPGScalaConverters ++ Seq(
+      libraryDependencies := depsPGScalaConverters
+    )
+  ) dependsOn(pgscalaUtil)
 }
