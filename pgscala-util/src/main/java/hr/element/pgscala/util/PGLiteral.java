@@ -9,8 +9,8 @@ public class PGLiteral {
    * mimics PostgreSQL quote_literal(text) function.
    */
 
-  public static String quote(final String s) {
-    final int len = s.length();
+  public static String quote(final String literal) {
+    final int len = literal.length();
     if (len == 0) {
       return "''";
     }
@@ -20,7 +20,7 @@ public class PGLiteral {
       int cnt = 0;
       int start = 0;
       while (true) {
-        final int ind = s.indexOf('\'', start);
+        final int ind = literal.indexOf('\'', start);
         if (ind == -1) {
           break;
         }
@@ -38,12 +38,12 @@ public class PGLiteral {
 
       if (total == 0) {
         for (int i = 0; i < len; i++) {
-          quoted[i + 1] = s.charAt(i);
+          quoted[i + 1] = literal.charAt(i);
         }
       } else {
         int cnt = 1;
         for (int i = 0; i < len; i++) {
-          final char ch = s.charAt(i);
+          final char ch = literal.charAt(i);
           quoted[cnt + i] = ch;
 
           if (ch == '\'') {
