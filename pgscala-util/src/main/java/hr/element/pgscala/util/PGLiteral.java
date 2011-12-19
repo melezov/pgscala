@@ -1,6 +1,6 @@
 package hr.element.pgscala.util;
 
-public class PGLiteral {
+public final class PGLiteral {
   // -----------------------------------------------------------------------------
 
   /**
@@ -9,7 +9,7 @@ public class PGLiteral {
    * mimics PostgreSQL quote_literal(text) function.
    */
 
-  public static String quote(final String literal) {
+  public static final String quote(final String literal) {
     final int len = literal.length();
     if (len == 0) {
       return "''";
@@ -56,7 +56,7 @@ public class PGLiteral {
     return new String(quoted);
   }
 
-  public static String unquote(final String value) {
+  public static final String unquote(final String value) {
     final int len = value.length();
     if (len == 2) {
       return "";
@@ -218,17 +218,6 @@ public class PGLiteral {
 //  }
 //
 //  // -----------------------------------------------------------------------------
-//
-//  private static final char[] HEX_DIGITS = "0123456789abcdef".toCharArray();
-//  private static final byte[] REVERSE_HEX = new byte['f' + 1];
-//  static {
-//    for (int i = 0; i < 16; i ++){
-//      REVERSE_HEX[i] = (byte) i;
-//    }
-//    for (int i = 10; i < 16; i ++){
-//      REVERSE_HEX['A' - 10 + i] = REVERSE_HEX['a' - 10 + i] = (byte) i;
-//    }
-//  }
 //
 //  public static String quoteByteArray(final byte[] bA) {
 //    final int len = bA.length;

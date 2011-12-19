@@ -1,11 +1,14 @@
 package hr.element.pgscala.util;
 
-public class PGArray {
-  // -----------------------------------------------------------------------------
+import java.text.ParseException;
+import java.util.ArrayDeque;
+import java.util.Queue;
+
+public final class PGArray {
 
   /** Prefixes all quotes and backslashes with a backslash. */
 
-  public static String quote(final String element) {
+  public static final String quote(final String element) {
     final int len = element.length();
     if (len == 0) {
       return "\"\"";
@@ -49,7 +52,9 @@ public class PGArray {
     }
   }
 
-  public static String unquote(final String value) {
+  // -----------------------------------------------------------------------------
+
+  public static final String unquote(final String value) {
     final int len = value.length();
     if (len == 2) {
       return "";
@@ -80,13 +85,55 @@ public class PGArray {
 
     int index = 1;
     for (int i = 0; i < newLen; i++) {
-      final char ch = unquoted[i] = value.charAt(index ++);
+      final char ch = unquoted[i] = value.charAt(index++);
 
       if (ch == '\'') {
-        index ++;
+        index++;
       }
     }
 
     return new String(unquoted);
+  }
+
+  // =============================================================================
+
+  public static final String toString(final String[] elements) {
+    final StringBuilder sB = new StringBuilder("{");
+
+    for (int i = 0; i < elements.length; i++) {
+      if (i > 0)
+        sB.append(',');
+      sB.append(elements[i]);
+    }
+
+    return sB.append('}').toString();
+  }
+
+  public static final String[] fromString(final String array)
+      throws ParseException {
+
+    final int lastIndex = array.length() - 1;
+    if (lastIndex < 1)
+      throw new IllegalArgumentException("Array length must be >= 2!");
+
+    if ('{' != array.charAt(0))
+      throw new ParseException("Illegal character at start of array!", 0);
+
+    if ('}' != array.charAt(lastIndex))
+      throw new ParseException("Illegal character at end of array!", lastIndex);
+
+    int curIndex = 1;
+    final Queue<String> sQ = new ArrayDeque<String>();
+
+    for (int index = 1; index <= lastIndex; index++) {
+      final char ch = array.charAt(index);
+      if ((',' == ch) || (index == lastIndex)) {
+        final String elem = array.substring(curIndex, index);
+        sQ.add(elem);
+        curIndex = index + 1;
+      }
+    }
+
+    return sQ.toArray(new String[sQ.size()]);
   }
 }

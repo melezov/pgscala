@@ -1,10 +1,10 @@
 package hr.element.pgscala.util;
 
+import java.text.ParseException;
 import java.util.*;
 import java.io.*;
 
-public class PGIdent {
-  // -----------------------------------------------------------------------------
+public final class PGIdent {
 
   /**
    * All keywords except unreserved ones in lowercase.
@@ -12,7 +12,7 @@ public class PGIdent {
    * See also list in PostgreSQL source file: /src/include/parser/kwlist.h
    */
 
-  protected static Set<String> keywords = new LinkedHashSet<String>();
+  protected static final Set<String> keywords = new LinkedHashSet<String>();
   static {
     try {
       final BufferedReader bR = new BufferedReader(new InputStreamReader(
@@ -34,7 +34,7 @@ public class PGIdent {
 
   /** Volatile cache for quoted identities. */
 
-  private static Map<String, String> identCache = Collections
+  private static final Map<String, String> identCache = Collections
       .synchronizedMap(new WeakHashMap<String, String>());
 
   /**
@@ -52,7 +52,7 @@ public class PGIdent {
    * /src/backend/utils/adt/ruleutils.c
    */
 
-  public static String quote(final String ident) {
+  public static final String quote(final String ident) {
     if (null == ident) {
       throw new IllegalArgumentException("Ident cannot be null!");
     }
@@ -126,7 +126,7 @@ public class PGIdent {
 
   // -----------------------------------------------------------------------------
 
-  public static String unquote(final String value) {
+  public static final String unquote(final String value) {
     final int len = value.length();
     if (len == 2) {
       return "";
@@ -157,13 +157,34 @@ public class PGIdent {
 
     int index = 1;
     for (int i = 0; i < newLen; i++) {
-      final char ch = unquoted[i] = value.charAt(index ++);
+      final char ch = unquoted[i] = value.charAt(index++);
 
       if (ch == '\'') {
-        index ++;
+        index++;
       }
     }
 
     return new String(unquoted);
+  }
+
+  // =============================================================================
+
+  public static final String toString(final String[] elements) {
+    final StringBuilder sB = new StringBuilder();
+
+    for (int i = 0; i < elements.length; i++) {
+      if (i > 0) {
+        sB.append('.');
+      }
+      sB.append(elements[i]);
+    }
+
+    return sB.toString();
+  }
+
+  public static final String[] fromString(final String ident)
+      throws ParseException {
+
+    return ident.split("\\.");
   }
 }

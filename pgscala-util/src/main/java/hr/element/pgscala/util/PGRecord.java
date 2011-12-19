@@ -1,6 +1,6 @@
 package hr.element.pgscala.util;
 
-public class PGRecord {
+public final class PGRecord {
   // -----------------------------------------------------------------------------
 
   /**
@@ -8,7 +8,7 @@ public class PGRecord {
    * <code>It's: "OK"!</code> becomes <code>"It's ""OK""!"</code>
    */
 
-  public static String quote(final String value) {
+  public static final String quote(final String value) {
     final int len = value.length();
     if (len == 0) {
       return "\"\"";
@@ -51,7 +51,7 @@ public class PGRecord {
     return new String(quoted);
   }
 
-  public static String unquote(final String value) {
+  public static final String unquote(final String value) {
     final int len = value.length();
     if (len == 2) {
       return "";
