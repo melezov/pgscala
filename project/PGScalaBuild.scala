@@ -27,10 +27,14 @@ object BuildSettings {
   val commonSettings =
     Defaults.defaultSettings ++
     resolverSettings ++
-    publishSettings
+    publishSettings ++ Seq(
+      organization := "hr.element.pgscala",
+      crossScalaVersions := Seq("2.9.1", "2.9.0-1", "2.9.0"),
+      scalaVersion <<= (crossScalaVersions) { versions => versions.head },
+      scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise") // , "-Yrepl-sync"
+    )
 
   val bsPGScalaUtil = commonSettings ++ Seq(
-    organization := "hr.element.pgscala",
     name         := "PGScala-Util",
     version      := "0.1.4",
 
@@ -41,13 +45,13 @@ object BuildSettings {
   )
 
   val bsPGScalaConverters = commonSettings ++ Seq(
-    organization := "hr.element.pgscala",
     name         := "PGScala-Converters",
-    version      := "0.0.1",
-    
-    crossScalaVersions := Seq("2.9.1", "2.9.0-1", "2.9.0"),
-    scalaVersion <<= (crossScalaVersions) { versions => versions.head },
-    scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise") // , "-Yrepl-sync"
+    version      := "0.0.1"
+  )
+
+  val bsPGScala = commonSettings ++ Seq(
+    name         := "PGScala",
+    version      := "0.6.0"
   )
 }
 
@@ -55,6 +59,8 @@ object Dependencies {
   val jodaConvert = "org.joda" % "joda-convert" % "1.1"  
   val jodaTime = "joda-time" % "joda-time" % "2.0"  
   
+  val iorc = "hr.element.etb" %% "iorc" % "0.0.21" 
+
   val postgres = "postgresql" % "postgresql" % "9.1-901.jdbc4"
   
   val configrity = "org.streum" %% "configrity" % "0.9.0" % "test"
@@ -72,6 +78,11 @@ object Dependencies {
     postgres % "test",
     configrity,
     scalaTest
+  )
+  
+  val depsPGScala = Seq(
+    iorc,
+    postgres
   )
 }
 
@@ -94,4 +105,12 @@ object PGScalaBuild extends Build {
       libraryDependencies := depsPGScalaConverters
     )
   ) dependsOn(pgscalaUtil)
+
+  lazy val pgscala = Project(
+    "PGScala",
+    file("pgscala"),
+    settings = bsPGScala ++ Seq(
+      libraryDependencies := depsPGScala
+    )
+  ) dependsOn(pgscalaConverters)
 }
