@@ -20,7 +20,7 @@ object PGScala{
       false
     }
 
-  val esc = util.PGUtil.quoteLiteral _
+  val esc = util.PGLiteral.quote _
 
   protected val QueryEnd = ";$".r
   def prolongQuery(query: String, chunk: String) =

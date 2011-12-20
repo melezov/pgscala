@@ -5,7 +5,7 @@ package pgscala{
 //  ----------------------------------------------------------------
 
   object Ident {
-    val quote = util.PGUtil.quoteIdent (_: String)
+    val quote = util.PGIdent.quote _
   }
 
   trait Ident {

@@ -10,24 +10,20 @@ object PGByteArrayConverter extends PGTypeConverter[Array[Byte]] {
 
   private val HexIndexes = {
     val buf = new Array[Byte]('f' + 1)
-    for (i <- 0 to 9) {
-      buf('0' + i) = i.toByte
+    for (i <- 0 to 15) {
+      if (i < 10) {
+        buf('0' + i) = i.toByte
+      }
+      else {
+        buf('a' - 10 + i) = i.toByte
+        buf('A' - 10 + i) = i.toByte
+      }
     }
-
-    for (i <- 10 to 15) {
-      buf('a' - 10 + i) = i.toByte
-      buf('A' - 10 + i) = i.toByte
-    }
-
-    val len = revMap.map(_._1).max + 1
-    revMap.foreach(r => buf(r._1) = r._2)
     buf
   }
 
   def toString(bA: Array[Byte]): String = {
     ""
-
-
 
   }
 
