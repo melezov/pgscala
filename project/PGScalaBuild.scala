@@ -19,7 +19,7 @@ object Resolvers {
 }
 
 object Publishing {
-  import Repostiories._
+  import Repositories._
   import Resolvers._
 
   val publishSettings = Seq(
