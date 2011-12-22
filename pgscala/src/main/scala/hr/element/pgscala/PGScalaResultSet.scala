@@ -199,7 +199,7 @@ class PGScalaResultSet(val rs: java.sql.ResultSet) extends Iterator[PGScalaResul
     getFloat(colMap(c))
 
   protected def javaFloat2Opt(f: java.lang.Float): Option[Float] =
-    if (null eq f) None else Some(f.longValue)
+    if (null eq f) None else Some(f.floatValue)
 
   def optFloat(index: Int): Option[Float] =
     javaFloat2Opt(getJavaFloat(index))
@@ -227,7 +227,7 @@ class PGScalaResultSet(val rs: java.sql.ResultSet) extends Iterator[PGScalaResul
   }
 
   protected def javaDouble2Opt(d: java.lang.Double): Option[Double] =
-    if (null eq d) None else Some(d.longValue)
+    if (null eq d) None else Some(d.doubleValue)
 
   def optDouble(index: Int): Option[Double] =
     javaDouble2Opt(getJavaDouble(index))
