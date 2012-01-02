@@ -1,4 +1,3 @@
-
 package hr.element.pgscala.util
 package types
 

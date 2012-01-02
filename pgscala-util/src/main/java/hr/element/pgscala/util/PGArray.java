@@ -1,8 +1,7 @@
 package hr.element.pgscala.util;
 
 import java.text.ParseException;
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.ArrayList;
 
 public final class PGArray {
 
@@ -52,52 +51,9 @@ public final class PGArray {
     }
   }
 
-  // -----------------------------------------------------------------------------
-
-  public static final String unquote(final String value) {
-    final int len = value.length();
-    if (len == 2) {
-      return "";
-    }
-
-    final int total;
-    {
-      int cnt = -1;
-      int start = 1;
-      while (true) {
-        final int ind = value.indexOf('\'', start);
-        if (ind == -1) {
-          break;
-        }
-
-        start = ind + 1;
-        cnt++;
-      }
-      total = cnt;
-    }
-
-    if (total == 0) {
-      return value.substring(1, len - 1);
-    }
-
-    final int newLen = len - 2 - (total >>> 1);
-    final char[] unquoted = new char[newLen];
-
-    int index = 1;
-    for (int i = 0; i < newLen; i++) {
-      final char ch = unquoted[i] = value.charAt(index++);
-
-      if (ch == '\'') {
-        index++;
-      }
-    }
-
-    return new String(unquoted);
-  }
-
   // =============================================================================
 
-  public static final String toString(final String[] elements) {
+  public static final String pack(final String[] elements) {
     final StringBuilder sB = new StringBuilder("{");
 
     for (int i = 0; i < elements.length; i++) {
@@ -109,7 +65,7 @@ public final class PGArray {
     return sB.append('}').toString();
   }
 
-  public static final String[] fromString(final String array)
+  public static final String[] unpack(final String array)
       throws ParseException {
 
     final int lastIndex = array.length() - 1;
@@ -122,18 +78,74 @@ public final class PGArray {
     if ('}' != array.charAt(lastIndex))
       throw new ParseException("Illegal character at end of array!", lastIndex);
 
-    int curIndex = 1;
-    final Queue<String> sQ = new ArrayDeque<String>();
+    int cur = 1;
+    final ArrayList<String> sQ = new ArrayList<String>();
+    final StringBuilder sB = new StringBuilder();
 
-    for (int index = 1; index <= lastIndex; index++) {
-      final char ch = array.charAt(index);
-      if ((',' == ch) || (index == lastIndex)) {
-        final String elem = array.substring(curIndex, index);
-        sQ.add(elem);
-        curIndex = index + 1;
+    while (cur <= lastIndex) {
+      final char ch = array.charAt(cur);
+      switch (ch) {
+        case ',':
+        case '}':
+          final String res = sB.toString();
+          sQ.add(res.equals("NULL") ? null : res);
+          sB.setLength(0);
+          break;
+
+        case '"':
+          if (sB.length() > 0) {
+            throw new ParseException("Error in array format.", cur);
+          }
+
+          cur++;
+          while (cur < lastIndex)
+          {
+            final char ch1 = array.charAt(cur);
+            if (ch1 == '\\') {
+              cur++;
+
+              final char ch2 = array.charAt(cur);
+              sB.append(ch2);
+            }
+            else if (ch1 == '"') {
+              cur++;
+
+              final char ch2 = array.charAt(cur);
+              if (ch2 == '"') {
+                sB.append(ch2);
+              }
+              else {
+                sQ.add(sB.toString());
+                sB.setLength(0);
+                break;
+              }
+            }
+            else {
+              sB.append(ch1);
+            }
+            cur++;
+          }
+          break;
+
+        default:
+          sB.append(ch);
       }
+
+      cur++;
+    }
+
+    System.out.println(sQ);
+
+    if (sB.length() > 0) {
+      throw new ParseException("Too much many stuff at the end!", cur);
     }
 
     return sQ.toArray(new String[sQ.size()]);
+  }
+
+  public static final void main(final String[] args) throws Exception {
+    final String dinamo = "{\"NULL\",NULL}"; //pack(new String[] {"OOOH", "\"NULL\"", "NULL"});
+    System.out.println(dinamo);
+    unpack(dinamo);
   }
 }

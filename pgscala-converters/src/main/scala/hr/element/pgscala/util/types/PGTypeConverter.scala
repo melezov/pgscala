@@ -4,14 +4,25 @@ package types
 import org.joda.convert.StringConverter
 
 trait PGTypeConverter[T] extends StringConverter[T] {
-  // -----------------------------------------------------------------------------
 
-  def convertToString(t: T): String = toString
+// -----------------------------------------------------------------------------
+
+  def convertToString(t: T): String = toString(t)
   def convertFromString(clazz: Class[_ <: T], value: String): T = fromString(value)
 
   def toString(t: T): String;
   def fromString(value: String): T;
+}
 
+object PGTypeConverter {
+  def toArray[T](elements: Traversable[T], converter: PGTypeConverter[T]): String =
+    PGArray.pack(elements.map(converter.toString).toArray)
+
+  def fromArray[T](array: String, converter: PGTypeConverter[T]): IndexedSeq[T] =
+    PGArray.unpack(array).map(converter.fromString)
+}
+
+/*
   // -----------------------------------------------------------------------------
 
   def toLiteralString(t: T): String =
@@ -61,10 +72,6 @@ trait PGTypeConverter[T] extends StringConverter[T] {
 
   // -----------------------------------------------------------------------------
 
-  def toArrayElement(t: T) = {
-    PGArray.quote(toString(t))
-  }
-
   def toArrayElement(oT: Option[T]): String = {
     oT match {
       case Some(t) =>
@@ -74,12 +81,12 @@ trait PGTypeConverter[T] extends StringConverter[T] {
     }
   }
 
-  def fromArrayElement(element: String): Option[T] = {
-    if (!element.equalsIgnoreCase("NULL")) {
-      Some(fromString(PGLiteral.unquote(element)))
-    }
-    else {
+  def fromArrayElement(unpackedElement: String): Option[T] = {
+    if (unpackedElement eq null) {
       None
     }
+    else {
+      Some(fromString(unpackedElement))
+    }
   }
-}
+*/

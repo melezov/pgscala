@@ -1,14 +1,12 @@
 package hr.element.pgscala.util
 package types
 
-import org.joda.time._
+import org.joda.time.LocalDate
 
-object PGDateConverter extends PGTypeConverter[LocalDate] {
-  def toString(lD: LocalDate): String = {
-    lD.toString();
-  }
+object PGNullableDateConverter extends PGTypeConverter[Option[LocalDate]] {
+  def toString(lD: Option[LocalDate]): String =
+    lD.toString
 
-  def fromString(value: String): LocalDate = {
-    return LocalDate.parse(value);
-  }
+  def fromString(value: String): Option[LocalDate] =
+    LocalDate.parse(value)
 }
