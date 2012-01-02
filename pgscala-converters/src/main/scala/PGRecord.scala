@@ -5,7 +5,25 @@ import scala.collection.mutable.ListBuffer
 
 object PGRecord {
   def pack(elements: Traversable[String]): String =
-    elements.mkString("(", ",", ")")
+    elements.map { v =>
+      if (v != null) {
+        if (v.contains(',') ||
+            v.contains(' ') ||
+            v.contains('\\') ||
+            v.contains('"') ||
+            v.contains('(') ||
+            v.contains(')') ||
+            v.isEmpty) {
+          "\"" + v.replace("\\", "\\\\").replace("\"", "\"\"") + "\""
+        }
+        else {
+          v
+        }
+      }
+      else {
+        ""
+      }
+    }.mkString("(", ",", ")")
 
   def unpack(record: String): List[String] = {
     require('(' == record.head, "Illegal character at start of record!")
