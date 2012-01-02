@@ -1,3 +1,6 @@
+package hr.element.pgscala.util
+package converters
+
 import scala.collection.mutable.ListBuffer
 
 object PGRecord {

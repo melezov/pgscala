@@ -3,10 +3,10 @@ package types
 
 import org.joda.time.LocalDate
 
-object PGNullableDateConverter extends PGTypeConverter[Option[LocalDate]] {
-  def toString(lD: Option[LocalDate]): String =
-    lD.toString
+object PGDateConverter extends PGTypeConverter[LocalDate] {
+  def toString(lD: LocalDate): String =
+    lD.toString("yyyy-MM-dd")
 
-  def fromString(value: String): Option[LocalDate] =
+  def fromString(value: String): LocalDate =
     LocalDate.parse(value)
 }
