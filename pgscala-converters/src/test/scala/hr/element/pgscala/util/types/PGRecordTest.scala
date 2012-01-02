@@ -68,4 +68,19 @@ class PGRecordTest extends FeatureSpec
       record must be { "(2012-01-02T20:56:15.017+01:00,3)" }
     }
   }
+
+  feature("array packing") {
+    scenario("can write simple array") {
+      val list = List("1", null, "2")
+      val array = converters.PGArray.pack(list)
+      array must be { "{1,NULL,2}" }
+    }
+
+    scenario("can escape array elements") {
+      val list = List("a\"b", null, "")
+      val array = converters.PGArray.pack(list)
+      array must be { "{\"a\\\"b\",NULL,\"\"}" }
+    }
+
+  }
 }
