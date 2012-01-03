@@ -12,9 +12,9 @@ object BuildSettings {
 
   val bsPGScalaUtil = commonSettings ++ Seq(
     name         := "PGScala-Util",
-    version      := "0.2.1",
+    version      := "0.2.3",
 
-    javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5"), // , "-g:none"),
+    javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5"),
     compileOrder := CompileOrder.JavaThenScala,
     autoScalaLibrary := false,
     crossPaths := false
@@ -22,12 +22,12 @@ object BuildSettings {
 
   val bsPGScalaConverters = commonSettings ++ Seq(
     name         := "PGScala-Converters",
-    version      := "0.0.4"
+    version      := "0.0.5"
   )
 
   val bsPGScala = commonSettings ++ Seq(
     name         := "PGScala",
-    version      := "0.6.1-SNAPSHOT"
+    version      := "0.6.2"
   )
 }
 
@@ -58,7 +58,8 @@ object Dependencies {
 
 //  ---------------------------------------------------------------------------
 
-  val pgscalaUtil = "hr.element.pgscala" % "pgscala-util" % "0.2.1"
+  val pgscalaUtil = "hr.element.pgscala" % "pgscala-util" % "0.2.3"
+  val pgscalaConverters = "hr.element.pgscala" % "pgscala-converters" % "0.2.3"
 
   val depsPGScalaUtil = libDeps(
     //test
@@ -68,7 +69,6 @@ object Dependencies {
   )
 
   val depsPGScalaConverters = libDeps(
-    pgscalaUtil,
     jodaTime,
 
     //test
@@ -79,7 +79,8 @@ object Dependencies {
 
   val depsPGScala = libDeps(
     pgscalaUtil,
-    jodaTime,
+    pgscalaConverters,
+
     iorc,
     postgres,
 
@@ -96,14 +97,14 @@ object PGScalaBuild extends Build {
   import Dependencies._
 
   lazy val pgscalaUtil = Project(
-    "PGScala-Util",
-    file("pgscala-util"),
+    "Util",
+    file("util"),
     settings = bsPGScalaUtil :+ depsPGScalaUtil
   )
 
   lazy val pgscalaConverters = Project(
-    "PGScala-Converters",
-    file("pgscala-converters"),
+    "Converters",
+    file("converters"),
     settings = bsPGScalaConverters :+ depsPGScalaConverters
   ) dependsOn(pgscalaUtil)
 

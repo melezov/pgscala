@@ -16,7 +16,7 @@ public final class PGIdent {
   static {
     try {
       final BufferedReader bR = new BufferedReader(new InputStreamReader(
-          PGIdent.class.getResourceAsStream("/keywords.reserved"), "UTF-8"));
+          PGIdent.class.getResourceAsStream("keywords.reserved"), "UTF-8"));
 
       while (true) {
         final String line = bR.readLine();
