@@ -59,7 +59,7 @@ object Dependencies {
 //  ---------------------------------------------------------------------------
 
   val pgscalaUtil = "hr.element.pgscala" % "pgscala-util" % "0.2.3"
-  val pgscalaConverters = "hr.element.pgscala" % "pgscala-converters" % "0.2.3"
+  val pgscalaConverters = "hr.element.pgscala" % "pgscala-converters" % "0.0.5"
 
   val depsPGScalaUtil = libDeps(
     //test
@@ -112,5 +112,5 @@ object PGScalaBuild extends Build {
     "PGScala",
     file("pgscala"),
     settings = bsPGScala :+ depsPGScala
-  )
+  ) // dependsOn(pgscalaUtil, pgscalaConverters)
 }

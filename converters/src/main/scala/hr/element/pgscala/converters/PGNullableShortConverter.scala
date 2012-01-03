@@ -1,4 +1,4 @@
-package hr.element.pgscala.util
+package hr.element.pgscala.converters
 package types
 
 object PGNullableShortConverter extends PGTypeConverter[Option[Short]] {

@@ -5,9 +5,16 @@ import java.util.ArrayList;
 
 public final class PGArray {
 
-  /** Prefixes all quotes and backslashes with a backslash. */
+  /**
+   * Prefixes all quotes and backslashes with a backslash, and puts the string
+   * in quotes if the element contains , \ " { } or a space, or if it is "NULL".
+   */
 
   public static final String quote(final String element) {
+    if (null == element) {
+      return "NULL";
+    }
+
     final int len = element.length();
     if (len == 0) {
       return "\"\"";
@@ -16,13 +23,23 @@ public final class PGArray {
     final int total;
     {
       int cnt = 0;
+      boolean quoting = false;
 
       for (int i = 0; i < len; i++) {
         final char ch = element.charAt(i);
         if (ch == '"' || ch == '\\') {
           cnt++;
+          quoting = true;
+        } else if (ch == ',' || ch == '\\' || ch == '{' || ch == '}'
+            || Character.isWhitespace(ch)) {
+          quoting = true;
         }
       }
+
+      if (!quoting && !element.equalsIgnoreCase("NULL")) {
+        return element;
+      }
+
       total = cnt;
     }
 
@@ -51,22 +68,23 @@ public final class PGArray {
     }
   }
 
-  // =============================================================================
-
   public static final String pack(final String[] elements) {
-    final StringBuilder sB = new StringBuilder("{");
+    if (elements.length == 0) {
+      return "{}";
+    }
 
-    for (int i = 0; i < elements.length; i++) {
-      if (i > 0)
-        sB.append(',');
-      sB.append(elements[i]);
+    final StringBuilder sB = new StringBuilder('{').append(elements[0]);
+
+    for (int i = 1; i < elements.length; i++) {
+      sB.append(',').append(quote(elements[i]));
     }
 
     return sB.append('}').toString();
   }
 
-  public static final String[] unpack(final String array)
-      throws ParseException {
+  // =============================================================================
+
+  public static final String[] unpack(final String array) throws ParseException {
 
     final int lastIndex = array.length() - 1;
     if (lastIndex < 1)
@@ -85,67 +103,55 @@ public final class PGArray {
     while (cur <= lastIndex) {
       final char ch = array.charAt(cur);
       switch (ch) {
-        case ',':
-        case '}':
-          final String res = sB.toString();
-          sQ.add(res.equals("NULL") ? null : res);
-          sB.setLength(0);
-          break;
+      case ',':
+      case '}':
+        final String res = sB.toString();
+        sQ.add(res.equals("NULL") ? null : res);
+        sB.setLength(0);
+        break;
 
-        case '"':
-          if (sB.length() > 0) {
-            throw new ParseException("Error in array format.", cur);
-          }
+      case '"':
+        if (sB.length() > 0) {
+          throw new ParseException("Error in array format.", cur);
+        }
 
-          cur++;
-          while (cur < lastIndex)
-          {
-            final char ch1 = array.charAt(cur);
-            if (ch1 == '\\') {
-              cur++;
-
-              final char ch2 = array.charAt(cur);
-              sB.append(ch2);
-            }
-            else if (ch1 == '"') {
-              cur++;
-
-              final char ch2 = array.charAt(cur);
-              if (ch2 == '"') {
-                sB.append(ch2);
-              }
-              else {
-                sQ.add(sB.toString());
-                sB.setLength(0);
-                break;
-              }
-            }
-            else {
-              sB.append(ch1);
-            }
+        cur++;
+        while (cur < lastIndex) {
+          final char ch1 = array.charAt(cur);
+          if (ch1 == '\\') {
             cur++;
-          }
-          break;
 
-        default:
-          sB.append(ch);
+            final char ch2 = array.charAt(cur);
+            sB.append(ch2);
+          } else if (ch1 == '"') {
+            cur++;
+
+            final char ch2 = array.charAt(cur);
+            if (ch2 == '"') {
+              sB.append(ch2);
+            } else {
+              sQ.add(sB.toString());
+              sB.setLength(0);
+              break;
+            }
+          } else {
+            sB.append(ch1);
+          }
+          cur++;
+        }
+        break;
+
+      default:
+        sB.append(ch);
       }
 
       cur++;
     }
 
-    System.out.println(sQ);
-
     if (sB.length() > 0) {
-      throw new ParseException("Too much many stuff at the end!", cur);
+      throw new ParseException("Extra content at the end!", cur);
     }
 
     return sQ.toArray(new String[sQ.size()]);
-  }
-
-  public static final void main(final String[] args) throws Exception {
-    final String dinamo = "{\"NULL\",NULL}"; //pack(new String[] {"OOOH", "\"NULL\"", "NULL"});
-    System.out.println(dinamo);
-    unpack(dinamo);
   }
 }

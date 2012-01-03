@@ -1,8 +1,12 @@
 package hr.element.pgscala.util;
 
-import java.text.ParseException;
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 public final class PGIdent {
 
@@ -169,22 +173,13 @@ public final class PGIdent {
 
   // =============================================================================
 
-  public static final String toString(final String[] elements) {
-    final StringBuilder sB = new StringBuilder();
+  public static final String pack(final String[] elements) {
+    final StringBuilder sB = new StringBuilder(elements[0]);
 
-    for (int i = 0; i < elements.length; i++) {
-      if (i > 0) {
-        sB.append('.');
-      }
-      sB.append(elements[i]);
+    for (int i = 1; i < elements.length; i++) {
+      sB.append('.').append(quote(elements[i]));
     }
 
     return sB.toString();
-  }
-
-  public static final String[] fromString(final String ident)
-      throws ParseException {
-
-    return ident.split("\\.");
   }
 }
