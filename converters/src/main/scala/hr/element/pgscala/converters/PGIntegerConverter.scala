@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGIntegerConverter extends PGTypeConverter[Int] {
   def toString(i: Int): String =

@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGNullableLongConverter extends PGTypeConverter[Option[Long]] {
   def toString(value: Option[Long]): String =

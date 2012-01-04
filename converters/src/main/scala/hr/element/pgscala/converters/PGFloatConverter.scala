@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGFloatConverter extends PGTypeConverter[Float] {
   def toString(f: Float): String =

@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 import scala.xml.Elem
 

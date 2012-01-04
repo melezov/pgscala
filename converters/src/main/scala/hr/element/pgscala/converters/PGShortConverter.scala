@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGShortConverter extends PGTypeConverter[Short] {
   def toString(s: Short): String =

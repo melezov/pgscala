@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 import org.joda.time._
 

@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGBooleanConverter extends PGTypeConverter[Boolean] {
   def toString(b: Boolean): String =

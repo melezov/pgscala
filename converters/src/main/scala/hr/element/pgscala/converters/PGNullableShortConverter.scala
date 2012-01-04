@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGNullableShortConverter extends PGTypeConverter[Option[Short]] {
   def toString(value: Option[Short]): String =

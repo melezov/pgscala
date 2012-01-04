@@ -73,7 +73,7 @@ public final class PGArray {
       return "{}";
     }
 
-    final StringBuilder sB = new StringBuilder('{').append(elements[0]);
+    final StringBuilder sB = new StringBuilder("{").append(quote(elements[0]));
 
     for (int i = 1; i < elements.length; i++) {
       sB.append(',').append(quote(elements[i]));
@@ -112,7 +112,8 @@ public final class PGArray {
 
       case '"':
         if (sB.length() > 0) {
-          throw new ParseException("Error in array format.", cur);
+          throw new ParseException(
+            "Unsupported format (array quote starting in the middle).", cur);
         }
 
         cur++;

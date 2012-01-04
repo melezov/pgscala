@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGLongConverter extends PGTypeConverter[Long] {
   def toString(l: Long): String =

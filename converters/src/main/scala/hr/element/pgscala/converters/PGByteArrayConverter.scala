@@ -1,6 +1,5 @@
 //package hr.element.pgscala.converters
-//package types
-//
+////
 //import org.joda.time._
 //
 //object PGByteArrayConverter extends PGTypeConverter[Array[Byte]] {

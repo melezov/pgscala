@@ -1,3 +1,3 @@
 echo off
 
-call "%~dp0\..\sbt.bat" "project PGScala-Util" %*
+call "%~dp0\..\sbt.bat" "project Util" %*

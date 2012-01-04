@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGNullableDoubleConverter extends PGTypeConverter[Option[Double]] {
   def toString(value: Option[Double]): String =

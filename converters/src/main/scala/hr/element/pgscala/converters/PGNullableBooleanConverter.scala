@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGNullableBooleanConverter extends PGTypeConverter[Option[Boolean]] {
   def toString(value: Option[Boolean]): String =

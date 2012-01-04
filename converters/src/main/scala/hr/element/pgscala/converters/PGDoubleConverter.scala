@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGDoubleConverter extends PGTypeConverter[Double] {
   def toString(d: Double): String =

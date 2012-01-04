@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGBigDecimalConverter extends PGTypeConverter[BigDecimal] {
   def toString(bD: BigDecimal): String =

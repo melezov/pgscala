@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGNullableIntegerConverter extends PGTypeConverter[Option[Int]] {
   def toString(value: Option[Int]): String =

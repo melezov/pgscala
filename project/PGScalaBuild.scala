@@ -12,7 +12,7 @@ object BuildSettings {
 
   val bsPGScalaUtil = commonSettings ++ Seq(
     name         := "PGScala-Util",
-    version      := "0.2.3",
+    version      := "0.2.4",
 
     javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5"),
     compileOrder := CompileOrder.JavaThenScala,
@@ -22,7 +22,7 @@ object BuildSettings {
 
   val bsPGScalaConverters = commonSettings ++ Seq(
     name         := "PGScala-Converters",
-    version      := "0.0.5"
+    version      := "0.1.0"
   )
 
   val bsPGScala = commonSettings ++ Seq(
@@ -58,8 +58,8 @@ object Dependencies {
 
 //  ---------------------------------------------------------------------------
 
-  val pgscalaUtil = "hr.element.pgscala" % "pgscala-util" % "0.2.3"
-  val pgscalaConverters = "hr.element.pgscala" % "pgscala-converters" % "0.0.5"
+  val pgscalaUtil = "hr.element.pgscala" % "pgscala-util" % "0.2.4"
+  val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters" % "0.1.0"
 
   val depsPGScalaUtil = libDeps(
     //test
@@ -72,6 +72,7 @@ object Dependencies {
     jodaTime,
 
     //test
+    pgscalaUtil % "test",
     postgres % "test",
     configrity,
     scalaTest
@@ -106,7 +107,7 @@ object PGScalaBuild extends Build {
     "Converters",
     file("converters"),
     settings = bsPGScalaConverters :+ depsPGScalaConverters
-  ) dependsOn(pgscalaUtil)
+  ) // dependsOn(pgscalaUtil)
 
   lazy val pgscala = Project(
     "PGScala",

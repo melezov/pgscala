@@ -1,5 +1,4 @@
 package hr.element.pgscala.converters
-package types
 
 object PGNullableFloatConverter extends PGTypeConverter[Option[Float]] {
   def toString(value: Option[Float]): String =
