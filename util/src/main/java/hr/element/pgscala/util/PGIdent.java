@@ -128,49 +128,6 @@ public final class PGIdent {
     return quotedIdent;
   }
 
-  // -----------------------------------------------------------------------------
-
-  public static final String unquote(final String value) {
-    final int len = value.length();
-    if (len == 2) {
-      return "";
-    }
-
-    final int total;
-    {
-      int cnt = -1;
-      int start = 1;
-      while (true) {
-        final int ind = value.indexOf('\'', start);
-        if (ind == -1) {
-          break;
-        }
-
-        start = ind + 1;
-        cnt++;
-      }
-      total = cnt;
-    }
-
-    if (total == 0) {
-      return value.substring(1, len - 1);
-    }
-
-    final int newLen = len - 2 - (total >>> 1);
-    final char[] unquoted = new char[newLen];
-
-    int index = 1;
-    for (int i = 0; i < newLen; i++) {
-      final char ch = unquoted[i] = value.charAt(index++);
-
-      if (ch == '\'') {
-        index++;
-      }
-    }
-
-    return new String(unquoted);
-  }
-
   // =============================================================================
 
   public static final String pack(final String[] elements) {
