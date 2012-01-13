@@ -12,7 +12,7 @@ object BuildSettings {
 
   val bsPGScalaUtil = commonSettings ++ Seq(
     name         := "PGScala-Util",
-    version      := "0.2.5-SNAPSHOT",
+    version      := "0.2.6-SNAPSHOT",
 
     javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5"),
     compileOrder := CompileOrder.JavaThenScala,
@@ -27,7 +27,7 @@ object BuildSettings {
 
   val bsPGScala = commonSettings ++ Seq(
     name         := "PGScala",
-    version      := "0.6.3-SNAPSHOT"
+    version      := "0.6.4-SNAPSHOT"
   )
 }
 
@@ -58,7 +58,7 @@ object Dependencies {
 
 //  ---------------------------------------------------------------------------
 
-  val pgscalaUtil = "hr.element.pgscala" % "pgscala-util" % "0.2.5-SNAPSHOT"
+  val pgscalaUtil = "hr.element.pgscala" % "pgscala-util" % "0.2.6-SNAPSHOT"
   val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters" % "0.1.1-SNAPSHOT"
 
   val depsPGScalaUtil = libDeps(

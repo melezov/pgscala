@@ -96,6 +96,9 @@ public final class PGArray {
     if ('}' != array.charAt(lastIndex))
       throw new ParseException("Illegal character at end of array!", lastIndex);
 
+    if (lastIndex == 1)
+      return new String[0];
+
     int cur = 1;
     final ArrayList<String> sQ = new ArrayList<String>();
     final StringBuilder sB = new StringBuilder();
