@@ -37,7 +37,9 @@ object Default {
     Publishing.settings ++ Seq(
       crossScalaVersions := Seq("2.9.1", "2.9.0-1", "2.9.0"),
       scalaVersion <<= (crossScalaVersions) { versions => versions.head },
-      scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise") // , "-Yrepl-sync"
+      scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise"), // , "-Yrepl-sync"
+      unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)( _ :: Nil),
+      unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )( _ :: Nil)     
     )
 }
 

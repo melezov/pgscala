@@ -11,36 +11,11 @@ import javax.sql.DataSource
 
 object PGScala{
 
-  def isPGDriverLoaded: Boolean =
-    try{
-      Class.forName("org.postgresql.Driver")
-      true
-    }
-    catch{ case _ =>
-      false
-    }
-
   val esc = util.PGLiteral.quote _
 
   protected val QueryEnd = ";$".r
   def prolongQuery(query: String, chunk: String) =
     QueryEnd.replaceFirstIn(query, Matcher.quoteReplacement(chunk))
-}
-
-class PGScalaSimpleDataSource(
-    host:   Option[String]  = Some("localhost"),
-    port:   Option[Int]     = Some(5432),
-    dbname: Option[String]  = None,
-    user:   Option[String]  = None,
-    pass:   Option[String]  = None,
-    ssl:    Option[Boolean] = Some(true)
-) extends PGSimpleDataSource{
-  for(sn <- host) setServerName(sn)
-  for(pn <- port) setPortNumber(pn)
-  for(dn <- dbname) setDatabaseName(dn)
-  for(u <- user) setUser(u)
-  for(p <- pass) setPassword(p)
-  for(s <- ssl) setSsl(s)
 }
 
 /**
@@ -50,63 +25,10 @@ class PGScalaSimpleDataSource(
  *  PGScala is not an ORM.
  *
  *  @author  Element d.o.o.
- *  @version 0.5.5, 05/03/2011
+ *  @version 0.7.0, 16/01/2012
  */
 
-class PGScala{
-  protected var con: Option[java.sql.Connection] = None
-
-  def connect(ds: DataSource) {
-    if (con.isDefined) {
-      Console.err.println("Already connected to the database, disconnecting previous connection ...")
-      disconnect();
-    }
-
-    if (!PGScala.isPGDriverLoaded){
-      Console.err.println("PostgreSQL JDBC driver is not loaded!")
-    }
-    else {
-      try {
-        con = Some(ds.getConnection())
-      }
-      catch {
-        case e => Console.err.println(e)
-      }
-    }
-  }
-
-  def disconnect() {
-    if(con.isDefined) {
-      try{
-        con.get.close()
-      }
-      catch{
-        case e => Console.err.println(e)
-      }
-
-      con = None
-    }
-  }
-
-  /**
-   * Cleanup on finalize.
-   * Will close the database connection if there is one open.
-   */
-
-  override protected def finalize(){
-    disconnect();
-    super.finalize();
-  }
-
-  /** Throws an exception if the database connection is not open.
-   *  This is being called from all functions before querying the database connection.
-   */
-
-  protected def ensureConnection(){
-    if (con == None) throw new java.sql.SQLException("Connection is not open!")
-  }
-
-//  ----------------------------------------------------------------
+class PGScala(con: java.sql.Connection) {
 
   /**
    * Conversion from <code>joda.time.DateTime</code> to <code>java.sql.Timestamp</code>.
@@ -137,7 +59,7 @@ class PGScala{
     }
 
     def setArray[T](pT: PG.PGType, arr: Array[T]){
-      st.setArray(index, con.get.createArrayOf(pT.enum, arr.map(_.asInstanceOf[java.lang.Object])))
+      st.setArray(index, con.createArrayOf(pT.enum, arr.map(_.asInstanceOf[java.lang.Object])))
     }
 
     def setParam(p: Any){
@@ -197,9 +119,7 @@ class PGScala{
 //  ################################################################
 
   protected def prep[P](query: String, params: Any*)(useStatement: java.sql.PreparedStatement => P) = {
-    ensureConnection()
-
-    val st = con.get.prepareStatement(query)
+    val st = con.prepareStatement(query)
     try{
       parametrify(st, params: _*)
       useStatement(st)

@@ -2,7 +2,6 @@ import sbt._
 import Keys._
 
 object BuildSettings {
-
   val commonSettings =
     Default.settings ++ Seq(
       organization := "hr.element.pgscala"
@@ -11,8 +10,11 @@ object BuildSettings {
 //  ---------------------------------------------------------------------------
 
   val bsPGScalaUtil = commonSettings ++ Seq(
-    name         := "PGScala-Util",
-    version      := "0.2.6-SNAPSHOT",
+    name    := "PGScala-Util",
+    version := "0.2.5",
+
+    unmanagedSourceDirectories in Compile <<= (javaSource in Compile)( _ :: Nil),
+    unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )( _ :: Nil),
 
     javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5"),
     compileOrder := CompileOrder.JavaThenScala,
@@ -21,20 +23,33 @@ object BuildSettings {
   )
 
   val bsPGScalaConverters = commonSettings ++ Seq(
-    name         := "PGScala-Converters",
-    version      := "0.1.1-SNAPSHOT"
+    name    := "PGScala-Converters",
+    version := "0.1.0"
   )
 
   val bsPGScala = commonSettings ++ Seq(
-    name         := "PGScala",
-    version      := "0.6.4-SNAPSHOT"
+    name    := "PGScala",
+    version := "0.7.0"
+  )
+
+  val bsPGScalaPool = commonSettings ++ Seq(
+    name    := "PGScala-Pool",
+    version := "0.1.0"
   )
 }
 
 //  ---------------------------------------------------------------------------
 
+object Publications {
+  val pgscalaUtil = "hr.element.pgscala" % "pgscala-util" % "0.2.5"
+  val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters" % "0.1.0"
+  val pgscala = "hr.element.pgscala" %% "pgscala" % "0.7.0"
+}
+
+//  ---------------------------------------------------------------------------
+
 object Dependencies {
-  import Implicits._
+  import Publications._
 
   val jodaTime = Seq(
     "org.joda" % "joda-convert" % "1.1",
@@ -45,6 +60,8 @@ object Dependencies {
 
   val postgres = "postgresql" % "postgresql" % "9.1-901.jdbc4"
 
+  val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
+  
   val configrity = (scalaVersion: String) => {
     val sV = scalaVersion match {
       case "2.9.0" => "2.9.0-1"
@@ -55,12 +72,16 @@ object Dependencies {
   }
 
   val scalaTest = "org.scalatest" %% "scalatest" % "1.6.1" % "test"
+}
 
 //  ---------------------------------------------------------------------------
 
-  val pgscalaUtil = "hr.element.pgscala" % "pgscala-util" % "0.2.6-SNAPSHOT"
-  val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters" % "0.1.1-SNAPSHOT"
-
+import Implicits._
+  
+object ProjectDeps {
+  import Dependencies._
+  import Publications._
+  
   val depsPGScalaUtil = libDeps(
     //test
     postgres % "test",
@@ -89,13 +110,22 @@ object Dependencies {
     configrity,
     scalaTest
   )
+
+  val depsPGScalaPool = libDeps(
+    pgscala,
+    c3p0,
+
+    //test
+    configrity,
+    scalaTest
+  )
 }
 
 //  ---------------------------------------------------------------------------
 
 object PGScalaBuild extends Build {
   import BuildSettings._
-  import Dependencies._
+  import ProjectDeps._
 
   lazy val pgscalaUtil = Project(
     "Util",
@@ -114,4 +144,10 @@ object PGScalaBuild extends Build {
     file("pgscala"),
     settings = bsPGScala :+ depsPGScala
   ) //dependsOn(pgscalaUtil, pgscalaConverters)
+
+  lazy val pgscalaPool = Project(
+    "Pool",
+    file("pool"),
+    settings = bsPGScalaPool :+ depsPGScalaPool
+  ) //dependsOn(pgscala)
 }
