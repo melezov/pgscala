@@ -10,7 +10,7 @@ protected[pgscala] case class PGCredentials(
   port: Int = 5432
 )
 
-class SessionFactory(creds: PGCredentials) {
+class PGPool(creds: PGCredentials) {
   private val pool = {
     val cpds = new ComboPooledDataSource()
     cpds.setDriverClass("org.postgresql.Driver")
