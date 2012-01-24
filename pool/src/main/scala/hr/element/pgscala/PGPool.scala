@@ -1,18 +1,19 @@
 package hr.element.pgscala
 
-import com.mchange.v2.c3p0.ComboPooledDataSource
-
-protected[pgscala] case class PGCredentials(
+case class PGCredentials(
+  host: String,
+  port: Int,
   dbName: String,
   user: String,
-  pass: String,
-  host: String = "localhost",
-  port: Int = 5432
+  pass: String
 )
+
+import com.mchange.v2.c3p0.ComboPooledDataSource
 
 class PGPool(creds: PGCredentials) {
   private val pool = {
     val cpds = new ComboPooledDataSource()
+
     cpds.setDriverClass("org.postgresql.Driver")
     cpds.setJdbcUrl("jdbc:postgresql://%s/%s"
       format(creds.host, creds.port))

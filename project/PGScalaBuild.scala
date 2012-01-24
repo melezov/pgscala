@@ -32,9 +32,9 @@ object BuildSettings {
     version := "0.7.0"
   )
 
-  val bsPGScalaPool = commonSettings ++ Seq(
-    name    := "PGScala-Pool",
-    version := "0.1.2"
+  val bsPGScalaPGPool = commonSettings ++ Seq(
+    name    := "PGScala-PGPool",
+    version := "0.1.0"
   )
 }
 
@@ -111,7 +111,7 @@ object ProjectDeps {
     scalaTest
   )
 
-  val depsPGScalaPool = libDeps(
+  val depsPGScalaPGPool = libDeps(
     pgscala,
     c3p0,
 
@@ -145,9 +145,9 @@ object PGScalaBuild extends Build {
     settings = bsPGScala :+ depsPGScala
   ) //dependsOn(pgscalaUtil, pgscalaConverters)
 
-  lazy val pgscalaPool = Project(
-    "Pool",
-    file("pool"),
-    settings = bsPGScalaPool :+ depsPGScalaPool
+  lazy val pgscalaPGPool = Project(
+    "PGPool",
+    file("pgpool"),
+    settings = bsPGScalaPGPool :+ depsPGScalaPGPool
   ) //dependsOn(pgscala)
 }
