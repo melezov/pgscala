@@ -1,5 +1,8 @@
 package hr.element.pgscala
 
+import javax.sql.DataSource
+import com.mchange.v2.c3p0.ComboPooledDataSource
+
 case class PGCredentials(
   host: String,
   port: Int,
@@ -8,10 +11,8 @@ case class PGCredentials(
   pass: String
 )
 
-import com.mchange.v2.c3p0.ComboPooledDataSource
-
-class PGPool(creds: PGCredentials) {
-  private val pool = {
+class PGPool(creds: PGCredentials) extends PGSessionFactory {
+  val ds = {
     val cpds = new ComboPooledDataSource()
 
     cpds.setDriverClass("org.postgresql.Driver")
@@ -32,24 +33,5 @@ class PGPool(creds: PGCredentials) {
     cpds.setMaxStatementsPerConnection(8)
 
     cpds
-  }
-
-  def using[T](f: PGScala => T) = {
-    val con = pool.getConnection()
-    con.setAutoCommit(false)
-
-    try {
-      val res = f(new PGScala(con))
-      con.commit()
-      res
-    }
-    catch {
-      case e =>
-        con.rollback()
-        throw e
-    }
-    finally {
-      con.close()
-    }
   }
 }

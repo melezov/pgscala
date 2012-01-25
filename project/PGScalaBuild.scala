@@ -29,21 +29,22 @@ object BuildSettings {
 
   val bsPGScala = commonSettings ++ Seq(
     name    := "PGScala",
-    version := "0.7.1"
+    version := "0.7.2"
   )
 
   val bsPGScalaPGPool = commonSettings ++ Seq(
     name    := "PGScala-PGPool",
-    version := "0.1.4"
+    version := "0.1.5"
   )
 }
 
 //  ---------------------------------------------------------------------------
 
 object Publications {
-  val pgscalaUtil = "hr.element.pgscala" % "pgscala-util" % "0.2.5"
+  val pgscalaUtil       = "hr.element.pgscala" %  "pgscala-util"       % "0.2.5"
   val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters" % "0.1.0"
-  val pgscala = "hr.element.pgscala" %% "pgscala" % "0.7.1"
+  val pgscala           = "hr.element.pgscala" %% "pgscala"            % "0.7.2"
+  val pgpool            = "hr.element.pgscala" %% "pgscala-pgpool"     % "0.1.5"
 }
 
 //  ---------------------------------------------------------------------------
@@ -61,7 +62,7 @@ object Dependencies {
   val postgres = "postgresql" % "postgresql" % "9.1-901.jdbc4"
 
   val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
-  
+
   val configrity = (scalaVersion: String) => {
     val sV = scalaVersion match {
       case "2.9.0" => "2.9.0-1"
@@ -77,11 +78,11 @@ object Dependencies {
 //  ---------------------------------------------------------------------------
 
 import Implicits._
-  
+
 object ProjectDeps {
   import Dependencies._
   import Publications._
-  
+
   val depsPGScalaUtil = libDeps(
     //test
     postgres % "test",
@@ -137,17 +138,17 @@ object PGScalaBuild extends Build {
     "Converters",
     file("converters"),
     settings = bsPGScalaConverters :+ depsPGScalaConverters
-  ) //dependsOn(pgscalaUtil % "test")
+  ) // dependsOn(pgscalaUtil % "test")
 
   lazy val pgscala = Project(
     "PGScala",
     file("pgscala"),
     settings = bsPGScala :+ depsPGScala
-  ) //dependsOn(pgscalaUtil, pgscalaConverters)
+  ) // dependsOn(pgscalaUtil, pgscalaConverters)
 
   lazy val pgscalaPGPool = Project(
     "PGPool",
     file("pgpool"),
     settings = bsPGScalaPGPool :+ depsPGScalaPGPool
-  ) //dependsOn(pgscala)
+  ) // dependsOn(pgscala)
 }
