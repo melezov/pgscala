@@ -25,7 +25,7 @@ object PGScala{
  *  PGScala is not an ORM.
  *
  *  @author  Element d.o.o.
- *  @version 0.7.0, 16/01/2012
+ *  @version 0.7.3, 25/01/2012
  */
 
 class PGScala(con: java.sql.Connection) {
