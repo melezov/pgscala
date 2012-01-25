@@ -15,8 +15,8 @@ class PGPool(creds: PGCredentials) {
     val cpds = new ComboPooledDataSource()
 
     cpds.setDriverClass("org.postgresql.Driver")
-    cpds.setJdbcUrl("jdbc:postgresql://%s/%s"
-      format(creds.host, creds.port))
+    cpds.setJdbcUrl("jdbc:postgresql://%s:%d/%s"
+      format(creds.host, creds.port, creds.dbName))
 
     cpds.setUser(creds.user)
     cpds.setPassword(creds.pass)
@@ -34,7 +34,7 @@ class PGPool(creds: PGCredentials) {
     cpds
   }
 
-  def txn[T](f: PGScala => T) = {
+  def using[T](f: PGScala => T) = {
     val con = pool.getConnection()
     con.setAutoCommit(false)
 

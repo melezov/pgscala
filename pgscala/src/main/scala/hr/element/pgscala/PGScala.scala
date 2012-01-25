@@ -210,10 +210,17 @@ class PGScala(con: java.sql.Connection) {
 
 //  ----------------------------------------------------------------
 
-  def getBool(query: String, params: Any*) = row(query, params: _*){ _.getBool(1) }.get
-  def getInt(query: String, params: Any*) = row(query, params: _*){ _.getInt(1) }.get
-  def getLong(query: String, params: Any*) = row(query, params: _*){ _.getLong(1) }.get
-  def getStr(query: String, params: Any*) = row(query, params: _*){ _.getStr(1) }.get
+  def getBoolArr(query: String, params: Any*) = arr(query, params: _*){_.getBool(1)}
+  def getIntArr (query: String, params: Any*) = arr(query, params: _*){_.getInt(1)}
+  def getLongArr(query: String, params: Any*) = arr(query, params: _*){_.getLong(1)}
+  def getStrArr (query: String, params: Any*) = arr(query, params: _*){_.getStr(1)}
+
+//  ----------------------------------------------------------------
+
+  def getBool(query: String, params: Any*) = row(query, params: _*){_.getBool(1)}.get
+  def getInt (query: String, params: Any*) = row(query, params: _*){_.getInt(1)}.get
+  def getLong(query: String, params: Any*) = row(query, params: _*){_.getLong(1)}.get
+  def getStr (query: String, params: Any*) = row(query, params: _*){_.getStr(1)}.get
 
 //  ----------------------------------------------------------------
 
