@@ -1,17 +1,17 @@
 package hr.element.pgscala.converters
 
 object PGNullableBigDecimalConverter extends PGTypeConverter[Option[BigDecimal]] {
-  def toString(value: Option[BigDecimal]): String =
+  def toPGString(value: Option[BigDecimal]): String =
     value match {
       case Some(bD) =>
-        PGBigDecimalConverter.toString(bD)
+        PGBigDecimalConverter.toPGString(bD)
       case _ =>
         null
     }
 
-  def fromString(value: String): Option[BigDecimal] =
+  def fromPGString(value: String): Option[BigDecimal] =
     if(value != null && value.nonEmpty) {
-      Some(PGBigDecimalConverter.fromString(value))
+      Some(PGBigDecimalConverter.fromPGString(value))
     }
     else {
       None

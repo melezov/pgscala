@@ -1,17 +1,17 @@
 package hr.element.pgscala.converters
 
 object PGNullableIntegerConverter extends PGTypeConverter[Option[Int]] {
-  def toString(value: Option[Int]): String =
+  def toPGString(value: Option[Int]): String =
     value match {
       case Some(i) =>
-        PGIntegerConverter.toString(i)
+        PGIntegerConverter.toPGString(i)
       case _ =>
         null
     }
 
-  def fromString(value: String): Option[Int] =
+  def fromPGString(value: String): Option[Int] =
     if(value != null && value.nonEmpty) {
-      Some(PGIntegerConverter.fromString(value))
+      Some(PGIntegerConverter.fromPGString(value))
     }
     else {
       None

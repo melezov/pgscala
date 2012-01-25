@@ -3,17 +3,17 @@ package hr.element.pgscala.converters
 import org.joda.time.DateTime
 
 object PGNullableDateTimeConverter extends PGTypeConverter[Option[DateTime]] {
-  def toString(value: Option[DateTime]): String =
+  def toPGString(value: Option[DateTime]): String =
     value match {
       case Some(dT) =>
-        PGDateTimeConverter.toString(dT)
+        PGDateTimeConverter.toPGString(dT)
       case _ =>
         null
     }
 
-  def fromString(value: String): Option[DateTime] =
+  def fromPGString(value: String): Option[DateTime] =
     if(value != null && value.nonEmpty) {
-      Some(PGDateTimeConverter.fromString(value))
+      Some(PGDateTimeConverter.fromPGString(value))
     }
     else {
       None

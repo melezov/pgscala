@@ -1,9 +1,9 @@
 package hr.element.pgscala.converters
 
 object PGStringConverter extends PGTypeConverter[String] {
-  def toString(s: String): String =
+  def toPGString(s: String): String =
     s
 
-  def fromString(value: String): String =
+  def fromPGString(value: String): String =
     value
 }

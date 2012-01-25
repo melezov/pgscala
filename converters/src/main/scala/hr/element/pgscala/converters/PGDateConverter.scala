@@ -3,9 +3,9 @@ package hr.element.pgscala.converters
 import org.joda.time.LocalDate
 
 object PGDateConverter extends PGTypeConverter[LocalDate] {
-  def toString(lD: LocalDate): String =
+  def toPGString(lD: LocalDate): String =
     lD.toString("yyyy-MM-dd")
 
-  def fromString(value: String): LocalDate =
+  def fromPGString(value: String): LocalDate =
     LocalDate.parse(value)
 }

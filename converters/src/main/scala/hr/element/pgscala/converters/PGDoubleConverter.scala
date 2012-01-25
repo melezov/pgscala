@@ -1,9 +1,9 @@
 package hr.element.pgscala.converters
 
 object PGDoubleConverter extends PGTypeConverter[Double] {
-  def toString(d: Double): String =
+  def toPGString(d: Double): String =
     d.toString
 
-  def fromString(value: String): Double =
+  def fromPGString(value: String): Double =
     java.lang.Double.parseDouble(value)
 }

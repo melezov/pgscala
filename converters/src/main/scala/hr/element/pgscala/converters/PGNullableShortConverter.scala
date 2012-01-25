@@ -1,17 +1,17 @@
 package hr.element.pgscala.converters
 
 object PGNullableShortConverter extends PGTypeConverter[Option[Short]] {
-  def toString(value: Option[Short]): String =
+  def toPGString(value: Option[Short]): String =
     value match {
       case Some(s) =>
-        PGShortConverter.toString(s)
+        PGShortConverter.toPGString(s)
       case _ =>
         null
     }
 
-  def fromString(value: String): Option[Short] =
+  def fromPGString(value: String): Option[Short] =
     if(value != null && value.nonEmpty) {
-      Some(PGShortConverter.fromString(value))
+      Some(PGShortConverter.fromPGString(value))
     }
     else {
       None

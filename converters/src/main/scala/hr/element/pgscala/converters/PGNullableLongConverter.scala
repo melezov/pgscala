@@ -1,17 +1,17 @@
 package hr.element.pgscala.converters
 
 object PGNullableLongConverter extends PGTypeConverter[Option[Long]] {
-  def toString(value: Option[Long]): String =
+  def toPGString(value: Option[Long]): String =
     value match {
       case Some(l) =>
-        PGLongConverter.toString(l)
+        PGLongConverter.toPGString(l)
       case _ =>
         null
     }
 
-  def fromString(value: String): Option[Long] =
+  def fromPGString(value: String): Option[Long] =
     if(value != null && value.nonEmpty) {
-      Some(PGLongConverter.fromString(value))
+      Some(PGLongConverter.fromPGString(value))
     }
     else {
       None

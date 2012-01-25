@@ -1,15 +1,18 @@
 package hr.element.pgscala
 package converters
 
-import org.joda.convert.StringConverter
+trait PGTypeConverter[T] {
+  def toPGString(t: T): String;
+  def fromPGString(value: String): T;
+}
 
-trait PGTypeConverter[T] extends StringConverter[T] {
-
-// -----------------------------------------------------------------------------
-
-  def convertToString(t: T): String = toString(t)
-  def convertFromString(clazz: Class[_ <: T], value: String): T = fromString(value)
-
-  def toString(t: T): String;
-  def fromString(value: String): T;
+object Conversions {
+  def toPGString[T](t: T)(implicit impl: PGTypeConverter[T]): String = impl.toPGString(t)
+  
+  /* Alternative version */
+//  def toPGString[T: PGTypeConverter](t: T): String = 
+//    implicitly[PGTypeConverter[T]].toPGString(t)
+  
+  def fromPGString[T](value: String)(implicit impl: PGTypeConverter[T]): T =
+    impl.fromPGString(value)
 }

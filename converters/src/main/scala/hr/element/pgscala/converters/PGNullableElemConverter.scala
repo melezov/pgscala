@@ -3,17 +3,17 @@ package hr.element.pgscala.converters
 import scala.xml.Elem
 
 object PGNullableElemConverter extends PGTypeConverter[Option[Elem]] {
-  def toString(value: Option[Elem]): String =
+  def toPGString(value: Option[Elem]): String =
     value match {
       case Some(e) =>
-        PGElemConverter.toString(e)
+        PGElemConverter.toPGString(e)
       case _ =>
         null
     }
 
-  def fromString(value: String): Option[Elem] =
+  def fromPGString(value: String): Option[Elem] =
     if(value != null && value.nonEmpty) {
-      Some(PGElemConverter.fromString(value))
+      Some(PGElemConverter.fromPGString(value))
     }
     else {
       None

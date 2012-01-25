@@ -1,9 +1,9 @@
 package hr.element.pgscala.converters
 
 object PGBooleanConverter extends PGTypeConverter[Boolean] {
-  def toString(b: Boolean): String =
+  def toPGString(b: Boolean): String =
     if (b) "t" else "f"
 
-  def fromString(value: String): Boolean =
+  def fromPGString(value: String): Boolean =
     value == "t"
 }

@@ -3,17 +3,17 @@ package hr.element.pgscala.converters
 import java.util.UUID
 
 object PGNullableUUIDConverter extends PGTypeConverter[Option[UUID]] {
-  def toString(value: Option[UUID]): String =
+  def toPGString(value: Option[UUID]): String =
     value match {
       case Some(u) =>
-        PGUUIDConverter.toString(u)
+        PGUUIDConverter.toPGString(u)
       case _ =>
         null
     }
 
-  def fromString(value: String): Option[UUID] =
+  def fromPGString(value: String): Option[UUID] =
     if(value != null && value.nonEmpty) {
-      Some(PGUUIDConverter.fromString(value))
+      Some(PGUUIDConverter.fromPGString(value))
     }
     else {
       None

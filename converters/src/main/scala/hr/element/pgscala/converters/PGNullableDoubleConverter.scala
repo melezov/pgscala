@@ -1,17 +1,17 @@
 package hr.element.pgscala.converters
 
 object PGNullableDoubleConverter extends PGTypeConverter[Option[Double]] {
-  def toString(value: Option[Double]): String =
+  def toPGString(value: Option[Double]): String =
     value match {
       case Some(d) =>
-        PGDoubleConverter.toString(d)
+        PGDoubleConverter.toPGString(d)
       case _ =>
         null
     }
 
-  def fromString(value: String): Option[Double] =
+  def fromPGString(value: String): Option[Double] =
     if(value != null && value.nonEmpty) {
-      Some(PGDoubleConverter.fromString(value))
+      Some(PGDoubleConverter.fromPGString(value))
     }
     else {
       None
