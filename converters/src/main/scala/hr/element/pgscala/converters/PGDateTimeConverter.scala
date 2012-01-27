@@ -10,4 +10,6 @@ object PGDateTimeConverter extends PGTypeConverter[DateTime] {
   //TODO HACK... fix as soon as possible
   def fromPGString(value: String): DateTime =
     DateTime.parse(value.replace(' ', 'T'))
+
+  override val PGType = java.sql.Types.TIMESTAMP
 }

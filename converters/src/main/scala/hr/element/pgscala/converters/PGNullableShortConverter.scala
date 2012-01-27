@@ -16,4 +16,6 @@ object PGNullableShortConverter extends PGTypeConverter[Option[Short]] {
     else {
       None
     }
+
+  override val PGType = java.sql.Types.SMALLINT
 }

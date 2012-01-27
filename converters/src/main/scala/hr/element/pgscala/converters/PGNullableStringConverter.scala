@@ -16,4 +16,6 @@ object PGNullableStringConverter extends PGTypeConverter[Option[String]] {
     else {
       None
     }
+
+  override val PGType = java.sql.Types.VARCHAR
 }

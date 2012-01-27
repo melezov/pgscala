@@ -18,4 +18,6 @@ object PGNullableDateTimeConverter extends PGTypeConverter[Option[DateTime]] {
     else {
       None
     }
+
+  override val PGType = java.sql.Types.TIMESTAMP
 }

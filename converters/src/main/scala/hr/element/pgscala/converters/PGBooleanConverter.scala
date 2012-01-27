@@ -6,4 +6,6 @@ object PGBooleanConverter extends PGTypeConverter[Boolean] {
 
   def fromPGString(value: String): Boolean =
     value == "t"
+
+  override val PGType = java.sql.Types.BIT
 }

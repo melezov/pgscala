@@ -6,4 +6,6 @@ object PGFloatConverter extends PGTypeConverter[Float] {
 
   def fromPGString(value: String): Float =
     java.lang.Float.parseFloat(value)
+
+  override val PGType = java.sql.Types.FLOAT
 }

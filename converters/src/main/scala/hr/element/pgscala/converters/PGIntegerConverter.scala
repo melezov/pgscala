@@ -6,4 +6,6 @@ object PGIntegerConverter extends PGTypeConverter[Int] {
 
   def fromPGString(value: String): Int =
     java.lang.Integer.parseInt(value)
+
+  override val PGType = java.sql.Types.INTEGER
 }

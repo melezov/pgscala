@@ -16,4 +16,6 @@ object PGNullableBooleanConverter extends PGTypeConverter[Option[Boolean]] {
     else {
       None
     }
+
+  override val PGType = java.sql.Types.BIT
 }
