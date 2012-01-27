@@ -16,4 +16,6 @@ object PGNullableBigDecimalConverter extends PGTypeConverter[Option[BigDecimal]]
     else {
       None
     }
+
+  override val PGType = java.sql.Types.NUMERIC
 }

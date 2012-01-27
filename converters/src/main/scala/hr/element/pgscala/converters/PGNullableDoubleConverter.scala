@@ -16,4 +16,6 @@ object PGNullableDoubleConverter extends PGTypeConverter[Option[Double]] {
     else {
       None
     }
+
+  override val PGType = java.sql.Types.DOUBLE
 }

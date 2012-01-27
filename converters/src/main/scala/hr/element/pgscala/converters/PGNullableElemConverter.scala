@@ -18,4 +18,6 @@ object PGNullableElemConverter extends PGTypeConverter[Option[Elem]] {
     else {
       None
     }
+
+  override val PGType = java.sql.Types.SQLXML
 }

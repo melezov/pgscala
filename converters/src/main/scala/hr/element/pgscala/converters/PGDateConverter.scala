@@ -8,4 +8,6 @@ object PGDateConverter extends PGTypeConverter[LocalDate] {
 
   def fromPGString(value: String): LocalDate =
     LocalDate.parse(value)
+
+  override val PGType = java.sql.Types.DATE
 }

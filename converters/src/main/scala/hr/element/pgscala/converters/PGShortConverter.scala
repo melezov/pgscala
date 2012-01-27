@@ -6,4 +6,6 @@ object PGShortConverter extends PGTypeConverter[Short] {
 
   def fromPGString(value: String): Short =
     java.lang.Short.parseShort(value)
+
+  override val PGType = java.sql.Types.SMALLINT
 }

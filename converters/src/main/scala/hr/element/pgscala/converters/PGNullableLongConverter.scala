@@ -16,4 +16,6 @@ object PGNullableLongConverter extends PGTypeConverter[Option[Long]] {
     else {
       None
     }
+
+  override val PGType = java.sql.Types.BIGINT
 }
