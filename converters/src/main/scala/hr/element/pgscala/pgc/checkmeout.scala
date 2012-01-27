@@ -7,7 +7,7 @@ object CheckMeOut extends App {
   import Implicits._
 
   def impale [T: Encode] (t: T) {
-    println (">> " + encode [T] (t))
+    println ("impale >> " + encode (t))
   }
 
   impale (1)
