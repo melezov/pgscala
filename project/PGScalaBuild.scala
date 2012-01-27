@@ -101,8 +101,8 @@ object ProjectDeps {
   )
 
   val depsPGScala = libDeps(
-    pgscalaUtil,
-    pgscalaConverters,
+//     pgscalaUtil,
+//     pgscalaConverters,
 
     iorc,
     postgres,
@@ -144,7 +144,7 @@ object PGScalaBuild extends Build {
     "PGScala",
     file("pgscala"),
     settings = bsPGScala :+ depsPGScala
-  ) // dependsOn(pgscalaUtil, pgscalaConverters)
+  ) dependsOn(pgscalaUtil, pgscalaConverters)
 
   lazy val pgscalaPGPool = Project(
     "PGPool",

@@ -18,4 +18,6 @@ object PGNullableDateConverter extends PGTypeConverter[Option[LocalDate]] {
     else {
       None
     }
+
+  override val PGType = java.sql.Types.DATE
 }

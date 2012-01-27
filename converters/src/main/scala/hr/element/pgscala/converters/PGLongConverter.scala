@@ -6,4 +6,6 @@ object PGLongConverter extends PGTypeConverter[Long] {
 
   def fromPGString(value: String): Long =
     java.lang.Long.parseLong(value)
+
+  override val PGType = java.sql.Types.BIGINT
 }

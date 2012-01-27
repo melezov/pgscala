@@ -16,4 +16,6 @@ object PGNullableIntegerConverter extends PGTypeConverter[Option[Int]] {
     else {
       None
     }
+
+  override val PGType = java.sql.Types.INTEGER
 }

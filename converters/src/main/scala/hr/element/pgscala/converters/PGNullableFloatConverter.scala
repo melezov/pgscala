@@ -16,4 +16,6 @@ object PGNullableFloatConverter extends PGTypeConverter[Option[Float]] {
     else {
       None
     }
+
+  override val PGType = java.sql.Types.FLOAT
 }

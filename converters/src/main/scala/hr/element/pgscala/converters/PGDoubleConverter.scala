@@ -6,4 +6,6 @@ object PGDoubleConverter extends PGTypeConverter[Double] {
 
   def fromPGString(value: String): Double =
     java.lang.Double.parseDouble(value)
+
+  override val PGType = java.sql.Types.DOUBLE
 }

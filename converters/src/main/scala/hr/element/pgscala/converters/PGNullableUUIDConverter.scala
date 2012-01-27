@@ -18,4 +18,5 @@ object PGNullableUUIDConverter extends PGTypeConverter[Option[UUID]] {
     else {
       None
     }
+
 }
