@@ -6,4 +6,6 @@ object PGBigDecimalConverter extends PGTypeConverter[BigDecimal] {
 
   def fromPGString(value: String): BigDecimal =
     BigDecimal(value)
+
+  override val PGType = java.sql.Types.NUMERIC
 }
