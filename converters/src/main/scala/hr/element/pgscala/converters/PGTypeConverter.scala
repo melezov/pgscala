@@ -33,7 +33,7 @@ object PGTypeConverter {
 }
 
 // // A bundle of type-specific PG functionality.
-// trait PG [T] {
+// trait PGC [T] {
 
 //   val PGType : PGTypeRep
 //   type PGT <: AnyRef
