@@ -10,7 +10,7 @@ import org.joda.time.{DateTime, LocalDate}
 
 import java.util.regex.Matcher
 import javax.sql.DataSource
-import java.sql.PreparedStatement 
+import java.sql.PreparedStatement
 
 object PGScala{
 
@@ -211,7 +211,7 @@ class PGScala(con: java.sql.Connection) {
     qry(query, params: _*){_.map(processTuple).toIndexedSeq}
 
   def arr[T1: PGTypeConverter, A]
-      (query: String, param1: T1) 
+      (query: String, param1: T1)
       (f: PGScalaResultSet => A)
       : IndexedSeq[A]
       = qry (query, param1) (_ map f toIndexedSeq)

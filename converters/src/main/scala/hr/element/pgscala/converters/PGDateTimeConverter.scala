@@ -1,15 +1,17 @@
 package hr.element.pgscala.converters
 
 import org.joda.time._
+import org.joda.time.format._
 
 object PGDateTimeConverter extends PGTypeConverter[DateTime] {
-  //TODO convert to postgres default
-  def toPGString(dT: DateTime): String =
-    dT.toString()/*("yyyy-MM-dd HH:mm:ss.ffffffK")*/
+  private val PGTimestamptzFormat =
+    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSZZ")
 
-  //TODO HACK... fix as soon as possible
+  def toPGString(dT: DateTime): String =
+    PGTimestamptzFormat.print(dT)
+
   def fromPGString(value: String): DateTime =
-    DateTime.parse(value.replace(' ', 'T'))
+    PGTimestamptzFormat.parseDateTime(value)
 
   override val PGType = java.sql.Types.TIMESTAMP
 }

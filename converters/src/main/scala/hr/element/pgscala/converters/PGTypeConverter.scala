@@ -38,7 +38,7 @@ object PGTypeConverter {
 //   val PGType : PGTypeRep
 //   type PGT <: AnyRef
 //   def toBaseRep (t: T): PGT
-//   def fromBaseRep (pg: PGT): 
+//   def fromBaseRep (pg: PGT):
 
 // }
 
@@ -51,7 +51,7 @@ object PGTypeConverter {
 //   val impaleBool : PG[Boolean] = new PG [....] ...
 //   val impaleInt  : PG[Int] = new PG [Int] {...}
 
-//   impaleByteArray : PG[Array[Byte]] = new 
+//   impaleByteArray : PG[Array[Byte]] = new
 
 // }
 
