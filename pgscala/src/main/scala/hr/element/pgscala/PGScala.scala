@@ -1,5 +1,7 @@
 package hr.element.pgscala
 
+import hr.element.pgscala.converters.PGTypeConverter
+
 import scala.collection.immutable.{VectorBuilder, IndexedSeqMap}
 import scala.collection.mutable.LinkedHashMap
 
@@ -8,6 +10,7 @@ import org.joda.time.{DateTime, LocalDate}
 
 import java.util.regex.Matcher
 import javax.sql.DataSource
+import java.sql.PreparedStatement
 
 object PGScala{
 
@@ -45,6 +48,8 @@ class PGScala(con: java.sql.Connection) {
     if (null eq lD) null else new java.sql.Date(lD.toDateTimeAtStartOfDay.getMillis)
 
 //  ----------------------------------------------------------------
+
+  import PGTypeConverter.pgType
 
   protected def parametrify(st: java.sql.PreparedStatement, params: Any*) {
 
@@ -118,6 +123,37 @@ class PGScala(con: java.sql.Connection) {
 
 //  ################################################################
 
+
+  protected def prep_1 [R] (query: String) (f: PreparedStatement => R): R = {
+    val st = con.prepareStatement (query)
+    try f (st) finally st.close
+  }
+
+  protected def prep_1 [T1: PGTypeConverter, R]
+    (query: String, param1: T1)
+    (f: PreparedStatement => R): R = {
+
+    val st = con.prepareStatement (query)
+    try {
+      st.setObject (1, param1, pgType [T1])
+      f (st)
+    } finally st.close
+  }
+
+  protected def prep_1
+    [T1: PGTypeConverter, T2: PGTypeConverter, R]
+    (query: String, param1: T1, param2: T2)
+    (f: PreparedStatement => R): R = {
+
+    val st = con.prepareStatement (query)
+    try {
+      st.setObject (1, param1, pgType [T1])
+      st.setObject (2, param2, pgType [T2])
+      f (st)
+    } finally st.close
+  }
+
+
   protected def prep[P](query: String, params: Any*)(useStatement: java.sql.PreparedStatement => P) = {
     val st = con.prepareStatement(query)
     try{
@@ -129,9 +165,32 @@ class PGScala(con: java.sql.Connection) {
     }
   }
 
+//   bracket [R, A] (create: => R, destroy: (R) => Any) (consume: R => A): A = {
+//     val r = create
+//     try consume (r) finally destroy (r)
+//   }
+
+
   /**
    * Generic database query
    */
+
+  protected def qry_1 [Q](query: String)(f: PGScalaResultSet => Q) =
+    prep_1 (query) { st =>
+      val rS = new PGScalaResultSet(st.executeQuery())
+      try f (rS) finally rS.close
+    }
+  protected def qry_1 [T1: PGTypeConverter, Q](query: String, param1: T1)(f: PGScalaResultSet => Q) =
+    prep_1 (query, param1) { st =>
+      val rS = new PGScalaResultSet(st.executeQuery())
+      try f (rS) finally rS.close
+    }
+
+  protected def qry_1 [T1: PGTypeConverter, T2: PGTypeConverter, Q](query: String, param1: T1, param2: T1)(f: PGScalaResultSet => Q) =
+    prep_1 (query, param1, param2) { st =>
+      val rS = new PGScalaResultSet(st.executeQuery())
+      try f (rS) finally rS.close
+    }
 
   def qry[Q](query: String, params: Any*)(usePGScalaResultSet: PGScalaResultSet => Q) =
     prep(query, params: _*){ st => {
@@ -150,6 +209,12 @@ class PGScala(con: java.sql.Connection) {
 
   def arr[A](query: String, params: Any*)(processTuple: PGScalaResultSet => A): IndexedSeq[A] =
     qry(query, params: _*){_.map(processTuple).toIndexedSeq}
+
+  def arr[T1: PGTypeConverter, A]
+      (query: String, param1: T1)
+      (f: PGScalaResultSet => A)
+      : IndexedSeq[A]
+      = qry (query, param1) (_ map f toIndexedSeq)
 
   /**
    * Query one database tuple.
