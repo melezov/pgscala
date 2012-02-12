@@ -29,12 +29,12 @@ object BuildSettings {
 
   val bsPGScala = commonSettings ++ Seq(
     name    := "PGScala",
-    version := "0.7.3"
+    version := "0.7.4"
   )
 
   val bsPGScalaPGPool = commonSettings ++ Seq(
     name    := "PGScala-PGPool",
-    version := "0.1.6"
+    version := "0.1.7"
   )
 }
 
@@ -43,8 +43,8 @@ object BuildSettings {
 object Publications {
   val pgscalaUtil       = "hr.element.pgscala" %  "pgscala-util"       % "0.2.5"
   val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters" % "0.2.0"
-  val pgscala           = "hr.element.pgscala" %% "pgscala"            % "0.7.3"
-  val pgpool            = "hr.element.pgscala" %% "pgscala-pgpool"     % "0.1.6"
+  val pgscala           = "hr.element.pgscala" %% "pgscala"            % "0.7.4"
+  val pgpool            = "hr.element.pgscala" %% "pgscala-pgpool"     % "0.1.7"
 }
 
 //  ---------------------------------------------------------------------------
