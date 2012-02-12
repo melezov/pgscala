@@ -192,7 +192,7 @@ class PGScala(con: java.sql.Connection) {
       try f (rS) finally rS.close
     }
 
-  def qry[Q](query: String, params: Any*)(usePGScalaResultSet: PGScalaResultSet => Q) =
+  protected def qry[Q](query: String, params: Any*)(usePGScalaResultSet: PGScalaResultSet => Q) =
     prep(query, params: _*){ st => {
       val rs = new PGScalaResultSet(st.executeQuery())
       try{

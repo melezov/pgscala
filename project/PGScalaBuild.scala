@@ -48,7 +48,7 @@ object Dependencies {
   import Publications._
 
   val jodaTime = Seq(
-    "org.joda" % "joda-convert" % "1.1",
+    "org.joda" % "joda-convert" % "1.2",
     "joda-time" % "joda-time" % "2.0"
   )
 
