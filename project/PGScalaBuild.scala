@@ -67,7 +67,7 @@ object Dependencies {
     "org.streum" % ("configrity_" + sV) % "0.9.0" % "test"
   }
 
-  val scalaTest = "org.scalatest" %% "scalatest" % "1.6.1" % "test"
+  val scalaTest = "org.scalatest" %% "scalatest" % "1.7" % "test"
 }
 
 //  ---------------------------------------------------------------------------
