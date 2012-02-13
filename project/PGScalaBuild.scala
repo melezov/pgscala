@@ -8,38 +8,38 @@ object BuildSettings {
 
   val bsPGJavaUtil = javaSettings ++ Seq(
     name    := "pgjava-util",
-    version := "0.2.6"
+    version := "0.2.6-1"
   )
 
   val bsPGJavaConverters = javaSettings ++ Seq(
     name    := "pgjava-converters",
-    version := "0.0.1"
+    version := "0.0.1-1"
   )
 
   val bsPGScalaConverters = scalaSettings ++ Seq(
     name    := "pgscala-converters",
-    version := "0.2.2"
+    version := "0.2.2-1"
   )
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala",
-    version := "0.7.4"
+    version := "0.7.4-1"
   )
 
   val bsPGScalaPool = scalaSettings ++ Seq(
     name    := "pgscala-pool",
-    version := "0.1.7"
+    version := "0.1.7-1"
   )
 }
 
 //  ---------------------------------------------------------------------------
 
 object Publications {
-  val pgjavaUtil       = "hr.element.pgscala"  %  "pgjava-util"        % "0.2.6"
-  val pgjavaConverters = "hr.element.pgscala"  %  "pgjava-converters"  % "0.0.1"
-  val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters" % "0.2.2"
-  val pgscala           = "hr.element.pgscala" %% "pgscala"            % "0.7.4"
-  val pgpool            = "hr.element.pgscala" %% "pgscala-pool"       % "0.1.7"
+  val pgjavaUtil       = "hr.element.pgscala"  %  "pgjava-util"        % "latest.integration"
+  val pgjavaConverters = "hr.element.pgscala"  %  "pgjava-converters"  % "latest.integration"
+  val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters" % "latest.integration"
+  val pgscala           = "hr.element.pgscala" %% "pgscala"            % "latest.integration"
+  val pgpool            = "hr.element.pgscala" %% "pgscala-pool"       % "latest.integration"
 }
 
 //  ---------------------------------------------------------------------------
@@ -89,7 +89,7 @@ object ProjectDeps {
     jodaTime,
 
     //test
-//    pgjavaUtil % "test",
+    pgjavaUtil % "test",
     postgres % "test",
     configrity,
     scalaTest
@@ -99,15 +99,15 @@ object ProjectDeps {
     jodaTime,
 
     //test
-//    pgjavaUtil % "test",
+    pgjavaUtil % "test",
     postgres % "test",
     configrity,
     scalaTest
   )
 
   val depsPGScala = libDeps(
-//     pgscalaUtil,
-//     pgscalaConverters,
+    pgjavaUtil,
+    pgscalaConverters,
 
     iorc,
     postgres,
@@ -143,25 +143,25 @@ object PGScalaBuild extends Build {
     "pgjava-converters",
     file("pgjava-converters"),
     settings = bsPGJavaConverters :+ depsPGJavaConverters
-  ) dependsOn(pgjavaUtil % "test")
+  )// dependsOn(pgjavaUtil % "test")
 
   lazy val pgscalaConverters = Project(
     "pgscala-converters",
     file("pgscala-converters"),
     settings = bsPGScalaConverters :+ depsPGScalaConverters
-  ) dependsOn(pgjavaConverters, pgjavaUtil % "test")
+  )// dependsOn(pgjavaConverters, pgjavaUtil % "test")
 
   lazy val pgscala = Project(
     "pgscala",
     file("pgscala"),
     settings = bsPGScala :+ depsPGScala
-  ) dependsOn(pgjavaUtil, pgscalaConverters)
+  )// dependsOn(pgjavaUtil, pgscalaConverters)
 
   lazy val pgscalaPool = Project(
     "pgscala-pool",
     file("pgscala-pool"),
     settings = bsPGScalaPool :+ depsPGScalaPool
-  ) dependsOn(pgscala)
+  )// dependsOn(pgscala)
 }
 
 //  ---------------------------------------------------------------------------
