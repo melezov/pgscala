@@ -32,17 +32,22 @@ object BuildSettings {
     version := "0.1.7-2"
   )
 */
+  val bsPGBuilder = scalaSettings ++ Seq(
+    name    := "pgscala-builder",
+    version := "0.0.0"
+  )
 }
 
 //  ---------------------------------------------------------------------------
 
 object Publications {
 /*
-  val pgjavaUtil       = "hr.element.pgscala"  %  "pgjava-util"        % "0.2.6-2"
-  val pgjavaConverters = "hr.element.pgscala"  %  "pgjava-converters"  % "0.1.1-2"
+  val pgjavaUtil        = "hr.element.pgscala" %  "pgjava-util"        % "0.2.6-2"
+  val pgjavaConverters  = "hr.element.pgscala" %  "pgjava-converters"  % "0.1.1-2"
   val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters" % "0.2.2-2"
   val pgscala           = "hr.element.pgscala" %% "pgscala"            % "0.7.4-2"
   val pgpool            = "hr.element.pgscala" %% "pgscala-pool"       % "0.1.7-2"
+  val pgbuilder         = "hr.element.pgscala" %% "pgbuilder"          % "0.0.0"
 */
 }
 
@@ -98,7 +103,6 @@ object ProjectDeps {
     configrity,
     scalaTest
   )
-
 /*
   val depsPGScalaConverters = libDeps(
     jodaTime,
@@ -131,6 +135,7 @@ object ProjectDeps {
     scalaTest
   )
 */  
+  val depsPGBuilder = libDeps()
 }
 
 //  ---------------------------------------------------------------------------
@@ -169,6 +174,11 @@ object PGScalaBuild extends Build {
     settings = bsPGScalaPool :+ depsPGScalaPool
   )// dependsOn(pgscala)
 */
+  lazy val pgBuilder = Project(
+    "pgbuilder",
+    file("pgbuilder"),
+    settings = bsPGBuilder :+ depsPGBuilder
+  )
 }
 
 //  ---------------------------------------------------------------------------
@@ -218,7 +228,7 @@ object Default {
       scalaVersion <<= (crossScalaVersions) { versions => versions.head },
       scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise"), // , "-Yrepl-sync"
       unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)( _ :: Nil),
-      unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )( _ :: Nil)
+      unmanagedSourceDirectories in Test    := Nil
     )
 
   val javaSettings =

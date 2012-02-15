@@ -5,21 +5,31 @@ import org.joda.convert.*;
 import org.joda.time.*;
 import org.joda.time.format.*;
 
-public final class PGNullableDateTimeConverter implements StringConverter<DateTime> {
+public enum PGNullableDateTimeConverter implements StringConverter<DateTime> {
+  INSTANCE;
+
   public static final String pgType = "timestamptz";
 
-  private PGNullableDateTimeConverter() {}
-  
   private static final DateTimeFormatter dateTimeFormat =
     DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSZZ");
 
   @ToString
-  public static String toPGString(final DateTime dT) {
+  public static String dateTimeToString(final DateTime dT) {
     return null == dT ? null : dateTimeFormat.print(dT);
   }
 
   @FromString
-  public static DateTime fromPGString(final String dT) {
+  public static DateTime stringToDateTime(final String dT) {
     return null == dT ? null : dateTimeFormat.parseDateTime(dT);
+  }
+
+// ----------------------------------------------------------------------------
+
+  public String convertToString(final DateTime dT) {
+    return dateTimeToString(dT);
+  }
+
+  public DateTime convertFromString(final Class<? extends DateTime> clazz, final String dT) {
+    return stringToDateTime(dT);
   }
 }
