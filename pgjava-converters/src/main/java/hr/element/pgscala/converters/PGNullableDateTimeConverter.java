@@ -8,6 +8,8 @@ import org.joda.time.format.*;
 public final class PGNullableDateTimeConverter implements StringConverter<DateTime> {
   public static final String pgType = "timestamptz";
 
+  private PGNullableDateTimeConverter() {}
+  
   private static final DateTimeFormatter dateTimeFormat =
     DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSZZ");
 
@@ -19,20 +21,5 @@ public final class PGNullableDateTimeConverter implements StringConverter<DateTi
   @FromString
   public static DateTime fromPGString(final String dT) {
     return null == dT ? null : dateTimeFormat.parseDateTime(dT);
-  }
-  
-// ----------------------------------------------------------------------------
-
-  private PGNullableDateTimeConverter() {}
-  
-  public static final PGNullableDateTimeConverter INSTANCE =
-    new PGNullableDateTimeConverter();
-  
-  public String convertToString(final DateTime dT) {
-    return toPGString(dT);
-  }
-  
-  public DateTime convertFromString(final Class<? extends DateTime> clazz, final String dT) {
-    return fromPGString(dT);
   }
 }
