@@ -67,6 +67,8 @@ object Dependencies {
 
   val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
 
+  val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.3.0" 
+  
   val configrity = (scalaVersion: String) => {
     val sV = scalaVersion match {
       case "2.9.0" => "2.9.0-1"
@@ -135,7 +137,9 @@ object ProjectDeps {
     scalaTest
   )
 */  
-  val depsPGBuilder = libDeps()
+  val depsPGBuilder = libDeps(
+    scalaIo
+  )
 }
 
 //  ---------------------------------------------------------------------------
