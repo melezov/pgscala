@@ -6,7 +6,7 @@ object BooleanBuilder extends Builder {
 
   val pgType = "boolean"
 
-  val to = "t"
+  val to = """b ? "t" : "f""""
 
-  val from = "f"
+  val from = """b.equals("t") ? Boolean.TRUE : Boolean.FALSE"""
 }

@@ -13,11 +13,23 @@ trait Builder {
   def javaType =
     clazz.replaceFirst(".*?([^.]+)$", "$1")
 
-  def javaVar =
-    l(javaType.replaceAll("[a-z]", ""))
+  def javaVar = {
+    if (javaType.toUpperCase == javaType) {
+      javaType.toLowerCase
+    }
+    else {
+      val v = javaType.replaceAll("[a-z]", "")
+      v.head.toLower + v.tail
+    }
+  }
 
   def javaTypeLower =
-    l(javaType)
+    if (javaType.toUpperCase == javaType) {
+      javaType.toLowerCase
+    }
+    else {
+      javaType.head.toLower + javaType.tail
+    }
 
   def javaImports =
     (if (clazz.contains('.')) {
@@ -42,8 +54,11 @@ trait Builder {
   , i("from",           from)
   )
 
-  def inject(body: String) =
+  def inject(body: String) = (
     (filters :\ body){ _(_) }
+      split("\n{3,}")
+      mkString "\n\n"
+  )
 }
 
 import scalax.file._
@@ -54,8 +69,21 @@ import builders._
 
 object PGBuilder extends App {
   val nullableConverters = Seq(
-    DateTimeBuilder,
-    BooleanBuilder
+    StringBuilder
+
+  , BooleanBuilder
+  , ShortBuilder
+  , IntegerBuilder
+  , LongBuilder
+
+  , FloatBuilder
+  , DoubleBuilder
+
+  , BigDecimalBuilder
+  , BigIntegerBuilder
+
+  , LocalDateBuilder
+  , DateTimeBuilder
   )
 
   val nullableTemplate =
@@ -63,7 +91,11 @@ object PGBuilder extends App {
       .slurpString(UTF8)
 
   for (c <- nullableConverters) {
-    Path("PGNullable%sConverter.java" format c.javaType)
-      .write(c.inject(nullableTemplate))(UTF8)
+    val path = Path("pgjava-converters") /
+      "src" / "main" / "java" /
+      "hr" / "element" / "pgscala" / "converters" /
+      ("PGNullable%sConverter.java" format c.javaType)
+
+    path.write(c.inject(nullableTemplate))(UTF8)
   }
 }

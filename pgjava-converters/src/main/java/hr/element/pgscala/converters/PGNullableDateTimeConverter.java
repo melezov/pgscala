@@ -2,7 +2,7 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
-import org.joda.time.*;
+import org.joda.time.DateTime;
 import org.joda.time.format.*;
 
 public enum PGNullableDateTimeConverter implements StringConverter<DateTime> {

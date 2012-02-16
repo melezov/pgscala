@@ -7,7 +7,7 @@ import org.joda.convert.*;
 public enum PGNullable{ javaType }Converter implements StringConverter<{ javaType }> {
   INSTANCE;
 
-  public static final String pgType = "timestamptz";
+  public static final String pgType = "{ pgType }";
 
 { pre }
 
@@ -27,7 +27,7 @@ public enum PGNullable{ javaType }Converter implements StringConverter<{ javaTyp
     return { javaTypeLower }ToString({ javaVar });
   }
 
-  public { javaType } convertFromString(final Class<{ javaType }> clazz, final String { javaVar }) {
+  public { javaType } convertFromString(final Class<? extends { javaType }> clazz, final String { javaVar }) {
     return stringTo{ javaType }({ javaVar });
   }
 }
