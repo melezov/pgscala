@@ -67,8 +67,8 @@ object Dependencies {
 
   val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
 
-  val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.3.0" 
-  
+  val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.3.0"
+
   val configrity = (scalaVersion: String) => {
     val sV = scalaVersion match {
       case "2.9.0" => "2.9.0-1"
@@ -78,7 +78,7 @@ object Dependencies {
     "org.streum" % ("configrity_" + sV) % "0.9.0" % "test"
   }
 
-  val scalaTest = "org.scalatest" %% "scalatest" % "1.7" % "test"
+  val scalaTest = "org.scalatest" %% "scalatest" % "1.6.1" % "test"
 }
 
 //  ---------------------------------------------------------------------------
@@ -136,7 +136,7 @@ object ProjectDeps {
     configrity,
     scalaTest
   )
-*/  
+*/
   val depsPGBuilder = libDeps(
     scalaIo
   )
@@ -239,9 +239,9 @@ object Default {
     scalaSettings ++ Seq(
       autoScalaLibrary := false,
       crossPaths := false,
-      javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5"),      
+      javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5"),
       unmanagedSourceDirectories in Compile <<= (javaSource in Compile)( _ :: Nil)
-    )    
+    )
 }
 
 //  ---------------------------------------------------------------------------

@@ -4,7 +4,7 @@ import org.joda.convert.*;
 
 { javaImports }
 
-public enum PGNullable{ javaType }Converter implements StringConverter<{ javaType }> {
+public enum PGNullable{ fileName }Converter implements StringConverter<{ javaType }> {
   INSTANCE;
 
   public static final String pgType = "{ pgType }";
@@ -17,7 +17,7 @@ public enum PGNullable{ javaType }Converter implements StringConverter<{ javaTyp
   }
 
   @FromString
-  public static { javaType } stringTo{ javaType }(final String { javaVar }) {
+  public static { javaType } stringTo{ fileName }(final String { javaVar }) {
     return null == { javaVar } ? null : { from };
   }
 
@@ -28,6 +28,6 @@ public enum PGNullable{ javaType }Converter implements StringConverter<{ javaTyp
   }
 
   public { javaType } convertFromString(final Class<? extends { javaType }> clazz, final String { javaVar }) {
-    return stringTo{ javaType }({ javaVar });
+    return stringTo{ fileName }({ javaVar });
   }
 }
