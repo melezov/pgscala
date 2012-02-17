@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builders
 
 object FloatBuilder extends Builder {
-  val clazz = "Float"
+  val clazz = "java.lang.Float"
 
   val pgType = "real"
 

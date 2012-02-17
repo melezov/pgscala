@@ -33,6 +33,9 @@ trait Builder {
       fileName.head.toLower + fileName.tail
     }
 
+  def jasminClass =
+    "L%s;" format clazz.replace('.', '/')
+
   def javaImports =
     (if (clazz.contains('.')) {
 """import %s;
@@ -50,6 +53,7 @@ trait Builder {
   , i("javaImports",    javaImports)
   , i("pgType",         pgType)
   , i("javaType",       javaType)
+  , i("jasminClass",    jasminClass)
   , i("fileName",       fileName)
   , i("javaVar",        javaVar)
   , i("javaTypeLower",  javaTypeLower)
@@ -97,6 +101,13 @@ object PGBuilder extends App {
     Resource.fromClasspath("PGNullableConverter.java")
       .slurpString(UTF8)
 
+  val sB = new StringBuilder
+
+  sB ++=
+""".class public hr.element.pgscala.converters.PGConverter
+.super java/lang/Object
+"""
+
   for (c <- nullableConverters) {
     val path = Path("pgjava-converters") /
       "src" / "main" / "java" /
@@ -104,5 +115,20 @@ object PGBuilder extends App {
       ("PGNullable%sConverter.java" format c.fileName)
 
     path.write(c.inject(nullableTemplate))(UTF8)
+
+    val body = """
+.method public static fromString(Ljava/lang/String;){ jasminClass }
+  .limit locals 1
+  .limit stack 2
+
+  aload_0
+  invokestatic hr/element/pgscala/converters/PGNullable{ fileName }Converter.stringTo{ fileName }(Ljava/lang/String;){ jasminClass }
+  areturn
+.end method
+"""
+
+    sB ++= (c.filters :\ body)( _(_) )
   }
+
+  Path("PGNullableConverter.j").write(sB.toString)(UTF8)
 }

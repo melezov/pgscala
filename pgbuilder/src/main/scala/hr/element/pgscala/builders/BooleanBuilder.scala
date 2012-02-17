@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builders
 
 object BooleanBuilder extends Builder {
-  val clazz = "Boolean"
+  val clazz = "java.lang.Boolean"
 
   val pgType = "boolean"
 

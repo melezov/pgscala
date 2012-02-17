@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builders
 
 object ShortBuilder extends Builder {
-  val clazz = "Short"
+  val clazz = "java.lang.Short"
 
   val pgType = "smallint"
 

@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builders
 
 object IntegerBuilder extends Builder {
-  val clazz = "Integer"
+  val clazz = "java.lang.Integer"
 
   val pgType = "integer"
 
