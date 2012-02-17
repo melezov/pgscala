@@ -2,6 +2,8 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
+import java.lang.Double;
+
 public enum PGNullableDoubleConverter implements StringConverter<Double> {
   INSTANCE;
 

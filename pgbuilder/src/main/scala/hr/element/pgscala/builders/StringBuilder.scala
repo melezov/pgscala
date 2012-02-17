@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builders
 
 object StringBuilder extends Builder {
-  val clazz = "String"
+  val clazz = "java.lang.String"
 
   val pgType = "text"
 

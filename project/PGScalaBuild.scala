@@ -16,12 +16,12 @@ object BuildSettings {
     version := "0.0.1-2",
     initialCommands := "import hr.element.pgscala.converters._"
   )
-/*
+
   val bsPGScalaConverters = scalaSettings ++ Seq(
     name    := "pgscala-converters",
     version := "0.2.2-2"
   )
-
+/*
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala",
     version := "0.7.4-2"
@@ -105,17 +105,17 @@ object ProjectDeps {
     configrity,
     scalaTest
   )
-/*
+
   val depsPGScalaConverters = libDeps(
     jodaTime,
 
     //test
-    pgjavaUtil % "test",
+//    pgjavaUtil % "test",
     postgres % "test",
     configrity,
     scalaTest
   )
-
+/*
   val depsPGScala = libDeps(
     pgjavaUtil,
     pgscalaConverters,
@@ -159,13 +159,13 @@ object PGScalaBuild extends Build {
     file("pgjava-converters"),
     settings = bsPGJavaConverters :+ depsPGJavaConverters
   )// dependsOn(pgjavaUtil % "test")
-/*
+
   lazy val pgscalaConverters = Project(
     "pgscala-converters",
     file("pgscala-converters"),
     settings = bsPGScalaConverters :+ depsPGScalaConverters
-  )// dependsOn(pgjavaConverters, pgjavaUtil % "test")
-
+  ) dependsOn(pgjavaConverters /*, pgjavaUtil % "test" */)
+/*
   lazy val pgscala = Project(
     "pgscala",
     file("pgscala"),

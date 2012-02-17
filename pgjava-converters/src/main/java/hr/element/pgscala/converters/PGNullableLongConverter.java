@@ -2,6 +2,8 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
+import java.lang.Long;
+
 public enum PGNullableLongConverter implements StringConverter<Long> {
   INSTANCE;
 

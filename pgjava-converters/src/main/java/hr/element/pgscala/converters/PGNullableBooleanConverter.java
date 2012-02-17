@@ -2,6 +2,8 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
+import java.lang.Boolean;
+
 public enum PGNullableBooleanConverter implements StringConverter<Boolean> {
   INSTANCE;
 

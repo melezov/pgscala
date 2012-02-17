@@ -2,6 +2,8 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
+import java.lang.Integer;
+
 public enum PGNullableIntegerConverter implements StringConverter<Integer> {
   INSTANCE;
 

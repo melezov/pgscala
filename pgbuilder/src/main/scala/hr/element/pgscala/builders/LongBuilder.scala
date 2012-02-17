@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builders
 
 object LongBuilder extends Builder {
-  val clazz = "Long"
+  val clazz = "java.lang.Long"
 
   val pgType = "bigint"
 

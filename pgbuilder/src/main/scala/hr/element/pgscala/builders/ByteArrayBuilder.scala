@@ -69,4 +69,6 @@ object ByteArrayBuilder extends Builder {
         "if (null == bA) return null;"
       )
   }
+
+  override def jasminClass = "[B"
 }

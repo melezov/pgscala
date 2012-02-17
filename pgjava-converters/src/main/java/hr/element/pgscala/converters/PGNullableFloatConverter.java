@@ -2,6 +2,8 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
+import java.lang.Float;
+
 public enum PGNullableFloatConverter implements StringConverter<Float> {
   INSTANCE;
 

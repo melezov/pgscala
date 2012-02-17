@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builders
 
 object DoubleBuilder extends Builder {
-  val clazz = "Double"
+  val clazz = "java.lang.Double"
 
   val pgType = "double precision"
 
