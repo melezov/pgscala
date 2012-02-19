@@ -15,6 +15,7 @@ object StringBuilder extends Builder {
 
     code
       .replaceFirst("""(?s)(  @ToString\n).*(  @FromString)""", "$1$2")
-      .replaceAll("return.*", "return s;")
+      .replaceAll("return null.*", "return s;")
+      .replaceFirst("""(?s)\n\.method.*?\.end method\n""", "")
   }
 }

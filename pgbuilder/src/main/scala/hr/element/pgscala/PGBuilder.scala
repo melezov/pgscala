@@ -97,43 +97,45 @@ object PGBuilder extends App {
   , UUIDBuilder
   )
 
-  val nullableTemplate =
-    Resource.fromClasspath("PGNullableConverter.java")
-      .slurpString(UTF8)
+  def buildJavaConverters() {
+    val nullableTemplate =
+      Resource.fromClasspath("PGNullableConverter.java")
+        .slurpString(UTF8)
 
-  val sB = new StringBuilder
+    for (c <- nullableConverters) {
+      val path = Path("pgjava-converters") /
+        "src" / "main" / "java" /
+        "hr" / "element" / "pgscala" / "converters" /
+        ("PGNullable%sConverter.java" format c.fileName)
 
-  sB ++=
-""".class public hr.element.pgscala.converters.PGNullableConverter
-.super java/lang/Object
-"""
-
-  for (c <- nullableConverters) {
-    val path = Path("pgjava-converters") /
-      "src" / "main" / "java" /
-      "hr" / "element" / "pgscala" / "converters" /
-      ("PGNullable%sConverter.java" format c.fileName)
-
-    path.write(c.inject(nullableTemplate))(UTF8)
-
-    val body = """
-.method public static fromString(Ljava/lang/String;){ jasminClass }
-  .limit locals 1
-  .limit stack 2
-
-  aload_0
-  invokestatic hr/element/pgscala/converters/PGNullable{ fileName }Converter.stringTo{ fileName }(Ljava/lang/String;){ jasminClass }
-  areturn
-.end method
-"""
-
-    sB ++= (c.filters :\ body)( _(_) )
+      path.write(c.inject(nullableTemplate))(UTF8)
+    }
   }
 
-  val jasminPath = Path("pgscala-converters") /
+  def buildJasminProxies() {
+    val nullableTemplate =
+      Resource.fromClasspath("PGNullableConverter.j")
+        .slurpString(UTF8)
+
+    val sB = new StringBuilder
+
+    for (c <- nullableConverters) {
+      val templateBody =
+        if (c ne nullableConverters.head) {
+          nullableTemplate.split('\n').drop(2).mkString("\n")
+        }
+        else nullableTemplate
+
+        sB ++= c.inject(templateBody)
+    }
+
+    val path = Path("pgscala-converters") /
       "src" / "main" / "jasmin" /
       "hr" / "element" / "pgscala" / "converters" /
       "PGNullableConverter.j"
 
-  jasminPath.write(sB.toString)(UTF8)
+    path.write(sB.toString)(UTF8)
+  }
+
+  buildJasminProxies()
 }
