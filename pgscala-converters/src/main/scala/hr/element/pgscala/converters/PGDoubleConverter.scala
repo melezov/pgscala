@@ -1,11 +1,13 @@
 package hr.element.pgscala.converters
 
+import java.lang.Double
+
 object PGDoubleConverter extends PGTypeConverter[Double] {
+  val PGType = PGNullableDoubleConverter.pgType
+
   def toPGString(d: Double): String =
-    d.toString
+    PGNullableConverter.toPGString(d)
 
-  def fromPGString(value: String): Double =
-    java.lang.Double.parseDouble(value)
-
-  override val PGType = java.sql.Types.DOUBLE
+  def fromPGString(d: String): Double =
+    PGNullableConverter.fromPGString(d)
 }

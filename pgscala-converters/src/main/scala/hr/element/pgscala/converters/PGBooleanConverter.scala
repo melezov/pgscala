@@ -1,11 +1,13 @@
 package hr.element.pgscala.converters
 
+import java.lang.Boolean
+
 object PGBooleanConverter extends PGTypeConverter[Boolean] {
+  val PGType = PGNullableBooleanConverter.pgType
+
   def toPGString(b: Boolean): String =
-    if (b) "t" else "f"
+    PGNullableConverter.toPGString(b)
 
-  def fromPGString(value: String): Boolean =
-    value == "t"
-
-  override val PGType = java.sql.Types.BIT
+  def fromPGString(b: String): Boolean =
+    PGNullableConverter.fromPGString(b)
 }

@@ -1,11 +1,11 @@
 package hr.element.pgscala.converters
 
+import java.lang.String
+
 object PGStringConverter extends PGTypeConverter[String] {
-  def toPGString(s: String): String =
-    s
+  val PGType = PGNullableStringConverter.pgType
 
-  def fromPGString(value: String): String =
-    value
+  def toPGString(s: String): String = s
 
-  override val PGType = java.sql.Types.VARCHAR
+  def fromPGString(s: String): String = s
 }

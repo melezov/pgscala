@@ -6,6 +6,8 @@ object ByteArrayBuilder extends Builder {
 
   override def fileName = "ByteArray"
 
+  override def scalaType = "Array[Byte]"
+
   val pgType = "bytea"
 
   override val pre =

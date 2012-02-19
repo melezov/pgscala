@@ -1,11 +1,13 @@
 package hr.element.pgscala.converters
 
+import java.lang.Long
+
 object PGLongConverter extends PGTypeConverter[Long] {
+  val PGType = PGNullableLongConverter.pgType
+
   def toPGString(l: Long): String =
-    l.toString
+    PGNullableConverter.toPGString(l)
 
-  def fromPGString(value: String): Long =
-    java.lang.Long.parseLong(value)
-
-  override val PGType = java.sql.Types.BIGINT
+  def fromPGString(l: String): Long =
+    PGNullableConverter.fromPGString(l)
 }

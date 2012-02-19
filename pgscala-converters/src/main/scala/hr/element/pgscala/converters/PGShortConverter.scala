@@ -1,11 +1,13 @@
 package hr.element.pgscala.converters
 
+import java.lang.Short
+
 object PGShortConverter extends PGTypeConverter[Short] {
+  val PGType = PGNullableShortConverter.pgType
+
   def toPGString(s: Short): String =
-    s.toString
+    PGNullableConverter.toPGString(s)
 
-  def fromPGString(value: String): Short =
-    java.lang.Short.parseShort(value)
-
-  override val PGType = java.sql.Types.SMALLINT
+  def fromPGString(s: String): Short =
+    PGNullableConverter.fromPGString(s)
 }

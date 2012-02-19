@@ -1,11 +1,13 @@
 package hr.element.pgscala.converters
 
+import java.lang.Float
+
 object PGFloatConverter extends PGTypeConverter[Float] {
+  val PGType = PGNullableFloatConverter.pgType
+
   def toPGString(f: Float): String =
-    f.toString
+    PGNullableConverter.toPGString(f)
 
-  def fromPGString(value: String): Float =
-    java.lang.Float.parseFloat(value)
-
-  override val PGType = java.sql.Types.FLOAT
+  def fromPGString(f: String): Float =
+    PGNullableConverter.fromPGString(f)
 }

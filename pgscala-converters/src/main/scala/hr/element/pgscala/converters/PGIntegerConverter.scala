@@ -1,11 +1,13 @@
 package hr.element.pgscala.converters
 
-object PGIntegerConverter extends PGTypeConverter[Int] {
-  def toPGString(i: Int): String =
-    i.toString
+import java.lang.Integer
 
-  def fromPGString(value: String): Int =
-    java.lang.Integer.parseInt(value)
+object PGIntegerConverter extends PGTypeConverter[Integer] {
+  val PGType = PGNullableIntegerConverter.pgType
 
-  override val PGType = java.sql.Types.INTEGER
+  def toPGString(i: Integer): String =
+    PGNullableConverter.toPGString(i)
+
+  def fromPGString(i: String): Integer =
+    PGNullableConverter.fromPGString(i)
 }

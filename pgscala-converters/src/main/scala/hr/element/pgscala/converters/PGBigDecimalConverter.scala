@@ -1,11 +1,11 @@
 package hr.element.pgscala.converters
 
 object PGBigDecimalConverter extends PGTypeConverter[BigDecimal] {
+  val PGType = PGNullableBigDecimalConverter.pgType
+
   def toPGString(bD: BigDecimal): String =
-    bD.toString
+    PGNullableConverter.toPGString(bD.bigDecimal)
 
-  def fromPGString(value: String): BigDecimal =
-    BigDecimal(value)
-
-  override val PGType = java.sql.Types.NUMERIC
+  def fromPGString(bD: String): BigDecimal =
+    PGNullableConverter.fromPGString(bD)
 }
