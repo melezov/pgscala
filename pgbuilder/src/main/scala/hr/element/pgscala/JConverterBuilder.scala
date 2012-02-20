@@ -1,7 +1,7 @@
 package hr.element.pgscala
 package builder
 
-trait JConverterBuilderLike {
+trait JConverterBuilderLike extends BuilderLike {
   def imports: String       // Java imports
   def pgType: String        // PostgreSQL type
 
@@ -17,9 +17,6 @@ trait JConverterBuilderLike {
   def to: String            // Converter code from current type to String
   def from: String          // Converter code from String to current type
 
-  def i(key: String, value: String) =
-    (_: String).replace("{ "+ key +" }", value)
-
   def filters = Seq(
     i("imports",    imports)
   , i("pgType",     pgType)
@@ -31,13 +28,7 @@ trait JConverterBuilderLike {
   , i("javaVar",    javaVar)
   , i("body",       body)
   , i("to",         to)
-  , i("from",     from)
-  )
-
-  def inject(body: String) = (
-    (filters :\ body)( _(_) )  // (-_(-_-)_-) The hood is watching
-      split("\n{3,}")
-      mkString "\n\n"
+  , i("from",       from)
   )
 }
 
@@ -55,22 +46,17 @@ trait JConverterBuilder extends JConverterBuilderLike {
     javaType
 
   override def lowerType =
-    if (isUp) upperType.toLowerCase else {
-      lowerize(upperType)
-    }
+    if (isUp) upperType.toLowerCase else l(upperType)
 
   override def javaVar =
     if (isUp) upperType.toLowerCase else {
-      lowerize(upperType.replaceAll("[a-z]", ""))
+      l(upperType.replaceAll("[a-z]", ""))
     }
   
-  override def body = ""
+  override val body = ""
 
   def isUp = 
     upperType.toUpperCase == upperType
-  
-  def lowerize(word: String) =
-    word.head.toLower + word.tail
 }
 
 trait JPredefConverterBuilder extends JConverterBuilder {
@@ -84,6 +70,7 @@ import Codec.UTF8
 object JConverterBuilder {
   val converters = Seq(
     JStringConverterBuilder
+    
   , JBooleanConverterBuilder
   , JShortConverterBuilder
   , JIntegerConverterBuilder
@@ -102,7 +89,7 @@ object JConverterBuilder {
   , JUUIDConverterBuilder
   )
 
-  def buildJavaConverters() {
+  def buildJavaNullableConverters() {
     val nullableTemplate =
       Resource.fromClasspath("PGNullableConverter.java")
         .slurpString(UTF8)
