@@ -1,16 +1,16 @@
 package hr.element.pgscala
-package builders
+package builder
 
-object ByteArrayBuilder extends Builder {
+object JByteArrayConverterBuilder extends JConverterBuilder {
+  override val pgType = "bytea"
+
   val clazz = "byte[]"
 
-  override def fileName = "ByteArray"
+  override val jasminType = "[B"
 
-  override def scalaType = "Array[Byte]"
+  override val upperType = "ByteArray"
 
-  val pgType = "bytea"
-
-  override val pre =
+  override val body =
 """  private static final char[] HEX_DIGITS =
     "0123456789abcdef".toCharArray();
 
@@ -71,6 +71,4 @@ object ByteArrayBuilder extends Builder {
         "if (null == bA) return null;"
       )
   }
-
-  override def jasminClass = "[B"
 }

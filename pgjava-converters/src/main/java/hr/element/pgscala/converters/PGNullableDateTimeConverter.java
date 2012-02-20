@@ -2,32 +2,34 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
-{ imports }
+import org.joda.time.DateTime;
+import org.joda.time.format.*;
 
-public enum PGNullable{ upperType }Converter implements StringConverter<DateTime> {
+public enum PGNullableDateTimeConverter implements StringConverter<DateTime> {
   INSTANCE;
 
   public static final String pgType = "timestamptz";
 
-{ body }
+  private static final DateTimeFormatter dateTimeFormat =
+    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSZZ");
 
   @ToString
-  public static String { lowerType }ToString(final DateTime dT) {
+  public static String dateTimeToString(final DateTime dT) {
     return null == dT ? null : dateTimeFormat.print(dT);
   }
 
   @FromString
-  public static DateTime stringTo{ upperType }(final String dT) {
+  public static DateTime stringToDateTime(final String dT) {
     return null == dT ? null : dateTimeFormat.parseDateTime(dT);
   }
 
 // ----------------------------------------------------------------------------
 
   public String convertToString(final DateTime dT) {
-    return { lowerType }ToString(dT);
+    return dateTimeToString(dT);
   }
 
   public DateTime convertFromString(final Class<? extends DateTime> clazz, final String dT) {
-    return stringTo{ upperName }(dT);
+    return stringToDateTime(dT);
   }
 }

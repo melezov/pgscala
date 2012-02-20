@@ -1,14 +1,12 @@
 package hr.element.pgscala
-package builders
+package builder
 
-object DoubleBuilder extends Builder {
-  val clazz = "java.lang.Double"
-
+object JDoubleConverterBuilder extends JConverterBuilder {
   val pgType = "double precision"
+
+  val clazz = "java.lang.Double"
 
   val to = "Double.toString(d)"
 
   val from = "Double.valueOf(d)"
-
-  override def javaImports = ""
 }

@@ -1,15 +1,15 @@
 package hr.element.pgscala
 package builders
 
-object StringBuilder extends Builder {
-  val clazz = "java.lang.String"
-
+object JStringConverterBuilder extends JConverterBuilder {
   val pgType = "text"
+
+  val clazz = "java.lang.String"
 
   val to = "s"
 
   val from = "s"
-
+/*
   override def inject(body: String) = {
     val code = super.inject(body)
 
@@ -19,4 +19,5 @@ object StringBuilder extends Builder {
       .replaceFirst("""(?s)\n\.method.*?\.end method\n""", "")
       .replaceAll("""\s+PGNullableConverter\..*""", " s")
   }
+*/
 }

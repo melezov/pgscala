@@ -2,32 +2,28 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
-{ imports }
-
-public enum PGNullable{ upperType }Converter implements StringConverter<Integer> {
+public enum PGNullableIntegerConverter implements StringConverter<Integer> {
   INSTANCE;
 
   public static final String pgType = "integer";
 
-{ body }
-
   @ToString
-  public static String { lowerType }ToString(final Integer i) {
+  public static String integerToString(final Integer i) {
     return null == i ? null : Integer.toString(i);
   }
 
   @FromString
-  public static Integer stringTo{ upperType }(final String i) {
+  public static Integer stringToInteger(final String i) {
     return null == i ? null : Integer.valueOf(i);
   }
 
 // ----------------------------------------------------------------------------
 
   public String convertToString(final Integer i) {
-    return { lowerType }ToString(i);
+    return integerToString(i);
   }
 
   public Integer convertFromString(final Class<? extends Integer> clazz, final String i) {
-    return stringTo{ upperName }(i);
+    return stringToInteger(i);
   }
 }

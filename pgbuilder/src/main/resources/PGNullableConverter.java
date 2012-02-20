@@ -28,6 +28,6 @@ public enum PGNullable{ upperType }Converter implements StringConverter<{ javaTy
   }
 
   public { javaType } convertFromString(final Class<? extends { javaType }> clazz, final String { javaVar }) {
-    return stringTo{ upperName }({ javaVar });
+    return stringTo{ upperType }({ javaVar });
   }
 }

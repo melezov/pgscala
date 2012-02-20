@@ -1,14 +1,12 @@
 package hr.element.pgscala
-package builders
+package builder
 
-object ShortBuilder extends Builder {
-  val clazz = "java.lang.Short"
-
+object JShortConverterBuilder extends JConverterBuilder {
   val pgType = "smallint"
+
+  val clazz = "java.lang.Short"
 
   val to = "Short.toString(s)"
 
   val from = "Short.valueOf(s)"
-
-  override def javaImports = ""
 }

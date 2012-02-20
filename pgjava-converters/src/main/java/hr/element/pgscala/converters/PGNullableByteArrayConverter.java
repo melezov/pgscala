@@ -2,17 +2,23 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
-{ imports }
-
-public enum PGNullable{ upperType }Converter implements StringConverter<byte[]> {
+public enum PGNullableByteArrayConverter implements StringConverter<byte[]> {
   INSTANCE;
 
   public static final String pgType = "bytea";
 
-{ body }
+  private static final char[] HEX_DIGITS =
+    "0123456789abcdef".toCharArray();
+
+  private static final int[] HEX_INDEXES = new int['f' + 1];
+  static {
+    for (int i = 0; i < HEX_DIGITS.length; i++) {
+      HEX_INDEXES[HEX_DIGITS[i]] = i;
+    }
+  }
 
   @ToString
-  public static String { lowerType }ToString(final byte[] bA) {
+  public static String byteArrayToString(final byte[] bA) {
     if (null == bA) return null; 
 
     final int len = bA.length;
@@ -37,7 +43,7 @@ public enum PGNullable{ upperType }Converter implements StringConverter<byte[]> 
   }
 
   @FromString
-  public static byte[] stringTo{ upperType }(final String bA) {
+  public static byte[] stringToByteArray(final String bA) {
     if (null == bA) return null; 
 
     final int len = bA.length();
@@ -62,10 +68,10 @@ public enum PGNullable{ upperType }Converter implements StringConverter<byte[]> 
 // ----------------------------------------------------------------------------
 
   public String convertToString(final byte[] bA) {
-    return { lowerType }ToString(bA);
+    return byteArrayToString(bA);
   }
 
   public byte[] convertFromString(final Class<? extends byte[]> clazz, final String bA) {
-    return stringTo{ upperName }(bA);
+    return stringToByteArray(bA);
   }
 }

@@ -1,14 +1,12 @@
 package hr.element.pgscala
-package builders
+package builder
 
-object BooleanBuilder extends Builder {
-  val clazz = "java.lang.Boolean"
-
+object JBooleanConverterBuilder extends JConverterBuilder {
   val pgType = "boolean"
+
+  val clazz = "java.lang.Boolean"
 
   val to = """b ? "t" : "f""""
 
   val from = """b.equals("t") ? Boolean.TRUE : Boolean.FALSE"""
-
-  override def javaImports = ""
 }
