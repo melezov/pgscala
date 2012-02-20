@@ -49,7 +49,7 @@
   .limit stack 2
 
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableIntegerConverter.stringToInteger(Ljava/lang/String;)Ljava/lang/Integer;
+  invokestatic hr/element/pgscala/converters/PGNullableIntConverter.stringToInt(Ljava/lang/String;)Ljava/lang/Integer;
   areturn
 .end method
 
@@ -58,7 +58,7 @@
   .limit stack 2
 
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableIntegerConverter.integerToString(Ljava/lang/Integer;)Ljava/lang/String;
+  invokestatic hr/element/pgscala/converters/PGNullableIntConverter.intToString(Ljava/lang/Integer;)Ljava/lang/String;
   areturn
 .end method
 .method public static fromPGString(Ljava/lang/String;)Ljava/lang/Long;
@@ -134,7 +134,7 @@
   .limit stack 2
 
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableBigIntegerConverter.stringToBigInteger(Ljava/lang/String;)Ljava/math/BigInteger;
+  invokestatic hr/element/pgscala/converters/PGNullableBigIntConverter.stringToBigInt(Ljava/lang/String;)Ljava/math/BigInteger;
   areturn
 .end method
 
@@ -143,7 +143,7 @@
   .limit stack 2
 
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableBigIntegerConverter.bigIntegerToString(Ljava/math/BigInteger;)Ljava/lang/String;
+  invokestatic hr/element/pgscala/converters/PGNullableBigIntConverter.bigIntToString(Ljava/math/BigInteger;)Ljava/lang/String;
   areturn
 .end method
 .method public static fromPGString(Ljava/lang/String;)[B

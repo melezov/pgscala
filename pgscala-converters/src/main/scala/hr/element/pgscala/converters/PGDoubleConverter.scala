@@ -1,7 +1,5 @@
 package hr.element.pgscala.converters
 
-import java.lang.Double
-
 object PGDoubleConverter extends PGTypeConverter[Double] {
   val PGType = PGNullableDoubleConverter.pgType
 

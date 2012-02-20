@@ -2,30 +2,32 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
-import java.lang.Boolean;
+{ imports }
 
-public enum PGNullableBooleanConverter implements StringConverter<Boolean> {
+public enum PGNullable{ upperType }Converter implements StringConverter<Boolean> {
   INSTANCE;
 
   public static final String pgType = "boolean";
 
+{ body }
+
   @ToString
-  public static String booleanToString(final Boolean b) {
+  public static String { lowerType }ToString(final Boolean b) {
     return null == b ? null : b ? "t" : "f";
   }
 
   @FromString
-  public static Boolean stringToBoolean(final String b) {
+  public static Boolean stringTo{ upperType }(final String b) {
     return null == b ? null : b.equals("t") ? Boolean.TRUE : Boolean.FALSE;
   }
 
 // ----------------------------------------------------------------------------
 
   public String convertToString(final Boolean b) {
-    return booleanToString(b);
+    return { lowerType }ToString(b);
   }
 
   public Boolean convertFromString(final Class<? extends Boolean> clazz, final String b) {
-    return stringToBoolean(b);
+    return stringTo{ upperName }(b);
   }
 }

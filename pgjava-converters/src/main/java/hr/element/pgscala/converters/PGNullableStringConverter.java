@@ -2,23 +2,25 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
-import java.lang.String;
+{ imports }
 
-public enum PGNullableStringConverter implements StringConverter<String> {
+public enum PGNullable{ upperType }Converter implements StringConverter<String> {
   INSTANCE;
 
   public static final String pgType = "text";
 
+{ body }
+
   @ToString
   @FromString
-  public static String stringToString(final String s) {
+  public static String stringTo{ upperType }(final String s) {
     return s;
   }
 
 // ----------------------------------------------------------------------------
 
   public String convertToString(final String s) {
-    return s;
+    return { lowerType }ToString(s);
   }
 
   public String convertFromString(final Class<? extends String> clazz, final String s) {

@@ -9,4 +9,6 @@ object DoubleBuilder extends Builder {
   val to = "Double.toString(d)"
 
   val from = "Double.valueOf(d)"
+
+  override def javaImports = ""
 }

@@ -9,4 +9,6 @@ object FloatBuilder extends Builder {
   val to = "Float.toString(f)"
 
   val from = "Float.valueOf(f)"
+
+  override def javaImports = ""
 }

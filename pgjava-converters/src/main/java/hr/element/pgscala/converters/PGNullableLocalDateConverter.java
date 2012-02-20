@@ -2,30 +2,32 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
-import org.joda.time.LocalDate;
+{ imports }
 
-public enum PGNullableLocalDateConverter implements StringConverter<LocalDate> {
+public enum PGNullable{ upperType }Converter implements StringConverter<LocalDate> {
   INSTANCE;
 
   public static final String pgType = "date";
 
+{ body }
+
   @ToString
-  public static String localDateToString(final LocalDate lD) {
+  public static String { lowerType }ToString(final LocalDate lD) {
     return null == lD ? null : lD.toString();
   }
 
   @FromString
-  public static LocalDate stringToLocalDate(final String lD) {
+  public static LocalDate stringTo{ upperType }(final String lD) {
     return null == lD ? null : new LocalDate(lD);
   }
 
 // ----------------------------------------------------------------------------
 
   public String convertToString(final LocalDate lD) {
-    return localDateToString(lD);
+    return { lowerType }ToString(lD);
   }
 
   public LocalDate convertFromString(final Class<? extends LocalDate> clazz, final String lD) {
-    return stringToLocalDate(lD);
+    return stringTo{ upperName }(lD);
   }
 }

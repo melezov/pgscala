@@ -2,30 +2,32 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
-import java.lang.Long;
+{ imports }
 
-public enum PGNullableLongConverter implements StringConverter<Long> {
+public enum PGNullable{ upperType }Converter implements StringConverter<Long> {
   INSTANCE;
 
   public static final String pgType = "bigint";
 
+{ body }
+
   @ToString
-  public static String longToString(final Long l) {
+  public static String { lowerType }ToString(final Long l) {
     return null == l ? null : Long.toString(l);
   }
 
   @FromString
-  public static Long stringToLong(final String l) {
+  public static Long stringTo{ upperType }(final String l) {
     return null == l ? null : Long.valueOf(l);
   }
 
 // ----------------------------------------------------------------------------
 
   public String convertToString(final Long l) {
-    return longToString(l);
+    return { lowerType }ToString(l);
   }
 
   public Long convertFromString(final Class<? extends Long> clazz, final String l) {
-    return stringToLong(l);
+    return stringTo{ upperName }(l);
   }
 }

@@ -1,12 +1,18 @@
 package hr.element.pgscala
 package builders
 
-object BigDecimalBuilder extends Builder {
-  val clazz = "java.math.BigDecimal"
+object BigIntegerBuilder extends Builder {
+  val clazz = "java.math.BigInteger"
 
-  val pgType = "decimal"
+  val pgType = "numeric"
 
-  val to = "bD.toString()"
+  val to = "bI.toString()"
 
-  val from = "new BigDecimal(bD)"
+  val from = "new BigInteger(bI)"
+
+  override def scalaType =
+    "BigInt"
+
+  override def fileName =
+    scalaType
 }

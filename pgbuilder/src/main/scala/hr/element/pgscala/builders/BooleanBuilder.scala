@@ -9,4 +9,6 @@ object BooleanBuilder extends Builder {
   val to = """b ? "t" : "f""""
 
   val from = """b.equals("t") ? Boolean.TRUE : Boolean.FALSE"""
+
+  override def javaImports = ""
 }

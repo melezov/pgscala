@@ -1,7 +1,5 @@
 package hr.element.pgscala.converters
 
-import java.lang.Boolean
-
 object PGBooleanConverter extends PGTypeConverter[Boolean] {
   val PGType = PGNullableBooleanConverter.pgType
 

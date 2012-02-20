@@ -2,30 +2,32 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
-import java.lang.Short;
+{ imports }
 
-public enum PGNullableShortConverter implements StringConverter<Short> {
+public enum PGNullable{ upperType }Converter implements StringConverter<Short> {
   INSTANCE;
 
   public static final String pgType = "smallint";
 
+{ body }
+
   @ToString
-  public static String shortToString(final Short s) {
+  public static String { lowerType }ToString(final Short s) {
     return null == s ? null : Short.toString(s);
   }
 
   @FromString
-  public static Short stringToShort(final String s) {
+  public static Short stringTo{ upperType }(final String s) {
     return null == s ? null : Short.valueOf(s);
   }
 
 // ----------------------------------------------------------------------------
 
   public String convertToString(final Short s) {
-    return shortToString(s);
+    return { lowerType }ToString(s);
   }
 
   public Short convertFromString(final Class<? extends Short> clazz, final String s) {
-    return stringToShort(s);
+    return stringTo{ upperName }(s);
   }
 }

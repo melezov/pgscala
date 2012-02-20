@@ -9,4 +9,6 @@ object ShortBuilder extends Builder {
   val to = "Short.toString(s)"
 
   val from = "Short.valueOf(s)"
+
+  override def javaImports = ""
 }

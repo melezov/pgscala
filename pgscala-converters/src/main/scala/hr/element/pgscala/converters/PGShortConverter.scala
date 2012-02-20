@@ -1,7 +1,5 @@
 package hr.element.pgscala.converters
 
-import java.lang.Short
-
 object PGShortConverter extends PGTypeConverter[Short] {
   val PGType = PGNullableShortConverter.pgType
 

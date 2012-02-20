@@ -9,4 +9,6 @@ object LongBuilder extends Builder {
   val to = "Long.toString(l)"
 
   val from = "Long.valueOf(l)"
+
+  override def javaImports = ""
 }

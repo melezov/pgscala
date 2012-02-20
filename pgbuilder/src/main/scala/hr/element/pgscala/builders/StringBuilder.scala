@@ -15,7 +15,7 @@ object StringBuilder extends Builder {
 
     code
       .replaceFirst("""(?s)(  @ToString\n).*(  @FromString)""", "$1$2")
-      .replaceAll("return null.*", "return s;")
+      .replaceAll("return (?:null|string).*", "return s;")
       .replaceFirst("""(?s)\n\.method.*?\.end method\n""", "")
       .replaceAll("""\s+PGNullableConverter\..*""", " s")
   }

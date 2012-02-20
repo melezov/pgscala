@@ -9,4 +9,10 @@ object IntegerBuilder extends Builder {
   val to = "Integer.toString(i)"
 
   val from = "Integer.valueOf(i)"
+
+  override def scalaType =
+    "Int"
+
+  override def fileName =
+    scalaType
 }
