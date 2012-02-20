@@ -10,7 +10,7 @@ public enum PGNullableUUIDConverter implements StringConverter<UUID> {
   public static final String pgType = "text";
 
   @ToString
-  public static String uUIDToString(final UUID uuid) {
+  public static String uuidToString(final UUID uuid) {
     return null == uuid ? null : uuid.toString();
   }
 
@@ -22,7 +22,7 @@ public enum PGNullableUUIDConverter implements StringConverter<UUID> {
 // ----------------------------------------------------------------------------
 
   public String convertToString(final UUID uuid) {
-    return uUIDToString(uuid);
+    return uuidToString(uuid);
   }
 
   public UUID convertFromString(final Class<? extends UUID> clazz, final String uuid) {

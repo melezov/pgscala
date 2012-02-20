@@ -55,19 +55,20 @@ trait JConverterBuilder extends JConverterBuilderLike {
     javaType
 
   override def lowerType =
-    lowerize(upperType)
-
-  override def javaVar = {
-    if (upperType.toUpperCase == upperType) {
-      upperType.toLowerCase
+    if (isUp) upperType.toLowerCase else {
+      lowerize(upperType)
     }
-    else {
+
+  override def javaVar =
+    if (isUp) upperType.toLowerCase else {
       lowerize(upperType.replaceAll("[a-z]", ""))
     }
-  }
-
+  
   override def body = ""
 
+  def isUp = 
+    upperType.toUpperCase == upperType
+  
   def lowerize(word: String) =
     word.head.toLower + word.tail
 }
@@ -115,15 +116,8 @@ object JConverterBuilder {
       path.write(c.inject(nullableTemplate))(UTF8)
     }
   }
-}
 
-/*
-
-import builders._
-
-object PGBuilder extends App {
-
-  def buildJasminProxies() {
+  def buildJasminProxy() {
     val nullableTemplate =
       Resource.fromClasspath("PGNullableConverter.j")
         .slurpString(UTF8)
@@ -131,13 +125,18 @@ object PGBuilder extends App {
     val sB = new StringBuilder
 
     for (c <- converters) {
-      val templateBody =
-        if (c ne converters.head) {
-          nullableTemplate.split('\n').drop(2).mkString("\n")
-        }
-        else nullableTemplate
+      val lines = 
+        nullableTemplate.split('\n')
 
-        sB ++= c.inject(templateBody)
+      val templateBody =
+        (if (c eq converters.head) {
+          lines.take(2)
+        }
+        else {
+          lines.drop(2)
+        }).mkString("\n")
+
+      sB ++= c.inject(templateBody) += '\n'
     }
 
     val path = Path("pgscala-converters") /
@@ -147,24 +146,4 @@ object PGBuilder extends App {
 
     path.write(sB.toString)(UTF8)
   }
-
-  def buildScalaConverters() {
-    val baseTemplate =
-      Resource.fromClasspath("PGConverter.scala")
-        .slurpString(UTF8)
-
-    for (c <- converters) {
-      val path = Path("pgscala-converters") /
-        "src" / "main" / "scala" /
-        "hr" / "element" / "pgscala" / "converters" /
-        ("PG%sConverter.scala" format c.fileName)
-
-      path.write(c.inject(baseTemplate))(UTF8)
-    }
-  }
-
-  buildJavaConverters()
-  buildJasminProxies()
-  buildScalaConverters()
 }
-*/
