@@ -42,7 +42,8 @@ trait JConverterBuilderLike {
 }
 
 trait JConverterBuilder extends JConverterBuilderLike {
-  override def imports = ""
+  override def imports = 
+    "import %s;" format clazz
 
   override def javaType =
     clazz.replaceFirst("^.*\\.", "")
@@ -71,29 +72,32 @@ trait JConverterBuilder extends JConverterBuilderLike {
     word.head.toLower + word.tail
 }
 
+trait JPredefConverterBuilder extends JConverterBuilder {
+  override val imports = ""
+}
+
 import scalax.file._
 import scalax.io._
 import Codec.UTF8
 
 object JConverterBuilder {
   val converters = Seq(
-//    JStringConverterBuilder
-   JBooleanConverterBuilder
+    JStringConverterBuilder
+  , JBooleanConverterBuilder
   , JShortConverterBuilder
   , JIntegerConverterBuilder
   , JLongConverterBuilder
-//
+
   , JFloatConverterBuilder
   , JDoubleConverterBuilder
 
   , JBigDecimalConverterBuilder
   , JBigIntegerConverterBuilder
 
-  , JByteArrayConverterBuilder
-
   , JLocalDateConverterBuilder
   , JDateTimeConverterBuilder
 
+  , JByteArrayConverterBuilder
   , JUUIDConverterBuilder
   )
 

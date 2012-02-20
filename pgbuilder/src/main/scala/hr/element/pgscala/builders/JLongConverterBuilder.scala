@@ -1,7 +1,7 @@
 package hr.element.pgscala
 package builder
 
-object JLongConverterBuilder extends JConverterBuilder {
+object JLongConverterBuilder extends JPredefConverterBuilder {
   val pgType = "bigint"
 
   val clazz = "java.lang.Long"

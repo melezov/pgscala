@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builder
 
 object JBigDecimalConverterBuilder extends JConverterBuilder {
-  override val imports = "import java.math.BigInteger;"
+  override val imports = "import java.math.BigDecimal;"
 
   val pgType = "decimal"
 

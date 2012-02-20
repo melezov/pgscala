@@ -1,7 +1,7 @@
 package hr.element.pgscala
 package builder
 
-object JDoubleConverterBuilder extends JConverterBuilder {
+object JDoubleConverterBuilder extends JPredefConverterBuilder {
   val pgType = "double precision"
 
   val clazz = "java.lang.Double"

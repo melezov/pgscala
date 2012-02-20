@@ -2,7 +2,7 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 public enum PGNullableBigDecimalConverter implements StringConverter<BigDecimal> {
   INSTANCE;

@@ -1,7 +1,7 @@
 package hr.element.pgscala
 package builder
 
-object JShortConverterBuilder extends JConverterBuilder {
+object JShortConverterBuilder extends JPredefConverterBuilder {
   val pgType = "smallint"
 
   val clazz = "java.lang.Short"

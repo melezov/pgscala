@@ -1,7 +1,7 @@
 package hr.element.pgscala
 package builder
 
-object JByteArrayConverterBuilder extends JConverterBuilder {
+object JByteArrayConverterBuilder extends JPredefConverterBuilder {
   override val pgType = "bytea"
 
   val clazz = "byte[]"

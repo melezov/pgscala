@@ -1,7 +1,7 @@
 package hr.element.pgscala
 package builder
 
-object JBooleanConverterBuilder extends JConverterBuilder {
+object JBooleanConverterBuilder extends JPredefConverterBuilder {
   val pgType = "boolean"
 
   val clazz = "java.lang.Boolean"

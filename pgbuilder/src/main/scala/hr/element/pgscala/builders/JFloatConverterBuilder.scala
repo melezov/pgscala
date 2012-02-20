@@ -1,7 +1,7 @@
 package hr.element.pgscala
 package builder
 
-object JFloatConverterBuilder extends JConverterBuilder {
+object JFloatConverterBuilder extends JPredefConverterBuilder {
   val pgType = "real"
 
   val clazz = "java.lang.Float"
