@@ -192,3 +192,19 @@
   invokestatic hr/element/pgscala/converters/PGNullableUUIDConverter.uuidToString(Ljava/util/UUID;)Ljava/lang/String;
   areturn
 .end method
+
+.method public static fromPGString(Ljava/lang/String;)Lscala/xml/Elem;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic hr/element/pgscala/converters/PGNullableElemConverter.stringToElem(Ljava/lang/String;)Lscala/xml/Elem;
+  areturn
+.end method
+
+.method public static toPGString(Lscala/xml/Elem;)Ljava/lang/String;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic hr/element/pgscala/converters/PGNullableElemConverter.elemToString(Lscala/xml/Elem;)Ljava/lang/String;
+  areturn
+.end method

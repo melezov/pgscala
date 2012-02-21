@@ -92,6 +92,8 @@ object SConverterBuilder {
 
   , ByteArrayConverterBuilder
   , UUIDConverterBuilder
+
+  , ElemConverterBuilder
   )
 
   def buildScalaConverters() {

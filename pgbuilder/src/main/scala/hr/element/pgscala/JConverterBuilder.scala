@@ -17,6 +17,8 @@ trait JConverterBuilderLike extends BuilderLike {
   def to: String            // Converter code from current type to String
   def from: String          // Converter code from String to current type
 
+  def isScala: Boolean      // Should the source be build in java or scala project
+
   def filters = Seq(
     i("imports",    imports)
   , i("pgType",     pgType)
@@ -33,7 +35,7 @@ trait JConverterBuilderLike extends BuilderLike {
 }
 
 trait JConverterBuilder extends JConverterBuilderLike {
-  override def imports = 
+  override def imports =
     "import %s;" format clazz
 
   override def javaType =
@@ -52,11 +54,13 @@ trait JConverterBuilder extends JConverterBuilderLike {
     if (isUp) upperType.toLowerCase else {
       l(upperType.replaceAll("[a-z]", ""))
     }
-  
+
   override val body = ""
 
-  def isUp = 
+  def isUp =
     upperType.toUpperCase == upperType
+
+  def isScala = false
 }
 
 trait JPredefConverterBuilder extends JConverterBuilder {
@@ -70,7 +74,7 @@ import Codec.UTF8
 object JConverterBuilder {
   val converters = Seq(
     JStringConverterBuilder
-    
+
   , JBooleanConverterBuilder
   , JShortConverterBuilder
   , JIntegerConverterBuilder
@@ -87,6 +91,8 @@ object JConverterBuilder {
 
   , JByteArrayConverterBuilder
   , JUUIDConverterBuilder
+
+  , JElemConverterBuilder
   )
 
   def buildJavaNullableConverters() {
@@ -95,7 +101,10 @@ object JConverterBuilder {
         .slurpString(UTF8)
 
     for (c <- converters) {
-      val path = Path("pgjava-converters") /
+      val rootProject =
+        if (c.isScala) "pgscala-converters" else "pgjava-converters"
+
+      val path = Path(rootProject) /
         "src" / "main" / "java" /
         "hr" / "element" / "pgscala" / "converters" /
         ("PGNullable%sConverter.java" format c.upperType)
@@ -112,7 +121,7 @@ object JConverterBuilder {
     val sB = new StringBuilder
 
     for (c <- converters) {
-      val lines = 
+      val lines =
         nullableTemplate.split('\n')
 
       val templateBody =

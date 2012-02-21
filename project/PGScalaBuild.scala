@@ -7,34 +7,36 @@ object BuildSettings {
 //  ---------------------------------------------------------------------------
 /*
   val bsPGJavaUtil = javaSettings ++ Seq(
-    name    := "pgjava-util",
-    version := "0.2.6-2"
+    name    := "pgjava-util"
+  , version := "0.2.6-2"
   )
 */
   val bsPGJavaConverters = javaSettings ++ Seq(
-    name    := "pgjava-converters",
-    version := "0.0.1-2",
-    initialCommands := "import hr.element.pgscala.converters._"
+    name    := "pgjava-converters"
+  , version := "0.0.1-2"
+  , initialCommands := "import hr.element.pgscala.converters._"
   )
 
   val bsPGScalaConverters = scalaSettings ++ Seq(
-    name    := "pgscala-converters",
-    version := "0.2.2-2"
+    name    := "pgscala-converters"
+  , version := "0.2.2-2"
+  , initialCommands := "import hr.element.pgscala.converters._"
+  , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)( _ :: _ :: Nil)
   )
 /*
   val bsPGScala = scalaSettings ++ Seq(
-    name    := "pgscala",
-    version := "0.7.4-2"
+    name    := "pgscala"
+  , version := "0.7.4-2"
   )
 
   val bsPGScalaPool = scalaSettings ++ Seq(
-    name    := "pgscala-pool",
-    version := "0.1.7-2"
+    name    := "pgscala-pool"
+  , version := "0.1.7-2"
   )
 */
   val bsPGBuilder = scalaSettings ++ Seq(
-    name    := "pgscala-builder",
-    version := "0.0.0"
+    name    := "pgscala-builder"
+  , version := "0.0.0"
   )
 }
 
@@ -91,50 +93,50 @@ object ProjectDeps {
 /*
   val depsPGJavaUtil = libDeps(
     //test
-    postgres % "test",
-    configrity,
-    scalaTest
+    postgres % "test"
+  , configrity
+  , scalaTest
   )
 */
   val depsPGJavaConverters = libDeps(
-    jodaTime,
+    jodaTime
 
     //test
-//    pgjavaUtil % "test",
-    postgres % "test",
-    configrity,
-    scalaTest
+//  , pgjavaUtil % "test"
+  , postgres % "test"
+  , configrity
+  , scalaTest
   )
 
   val depsPGScalaConverters = libDeps(
-    jodaTime,
+    jodaTime
 
     //test
-//    pgjavaUtil % "test",
-    postgres % "test",
-    configrity,
-    scalaTest
+//  , pgjavaUtil % "test"
+  , postgres % "test"
+  , configrity
+  , scalaTest
   )
 /*
   val depsPGScala = libDeps(
-    pgjavaUtil,
-    pgscalaConverters,
+    pgjavaUtil
+  , pgscalaConverters
 
-    iorc,
-    postgres,
+  , iorc
+  , postgres
 
     //test
-    configrity,
-    scalaTest
+  , configrity
+  , scalaTest
   )
 
   val depsPGScalaPool = libDeps(
-    pgscala,
-    c3p0,
+    pgscala
+  , c3p0
 
     //test
-    configrity,
-    scalaTest
+  , configrity
+  , scalaTest
   )
 */
   val depsPGBuilder = libDeps(
