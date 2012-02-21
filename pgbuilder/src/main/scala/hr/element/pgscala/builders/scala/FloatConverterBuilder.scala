@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builder
 
 object FloatConverterBuilder extends SPredefConverterBuilder {
-  def pgType = "real"
+  val scalaClazz = "scala.Float"
 
-  def clazz = "scala.Float"
+  override val javaClazz = "java.lang.Float"
 }

@@ -19,7 +19,7 @@ public enum PGNullableLocalDateConverter implements StringConverter<LocalDate> {
     return null == lD ? null : new LocalDate(lD);
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final LocalDate lD) {
     return localDateToString(lD);

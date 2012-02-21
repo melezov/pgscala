@@ -17,7 +17,7 @@ public enum PGNullableLongConverter implements StringConverter<Long> {
     return null == l ? null : Long.valueOf(l);
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final Long l) {
     return longToString(l);

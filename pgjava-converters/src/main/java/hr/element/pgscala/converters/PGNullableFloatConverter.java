@@ -17,7 +17,7 @@ public enum PGNullableFloatConverter implements StringConverter<Float> {
     return null == f ? null : Float.valueOf(f);
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final Float f) {
     return floatToString(f);

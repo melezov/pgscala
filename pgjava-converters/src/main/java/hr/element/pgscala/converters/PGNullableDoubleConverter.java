@@ -17,7 +17,7 @@ public enum PGNullableDoubleConverter implements StringConverter<Double> {
     return null == d ? null : Double.valueOf(d);
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final Double d) {
     return doubleToString(d);

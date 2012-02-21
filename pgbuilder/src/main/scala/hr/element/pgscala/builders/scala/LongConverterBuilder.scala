@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builder
 
 object LongConverterBuilder extends SPredefConverterBuilder {
-  val pgType = "bigint"
+  val scalaClazz = "scala.Long"
 
-  val clazz = "scala.Long"
-} 
+  override val javaClazz = "java.lang.Long"
+}

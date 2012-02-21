@@ -17,7 +17,7 @@ public enum PGNullableShortConverter implements StringConverter<Short> {
     return null == s ? null : Short.valueOf(s);
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final Short s) {
     return shortToString(s);

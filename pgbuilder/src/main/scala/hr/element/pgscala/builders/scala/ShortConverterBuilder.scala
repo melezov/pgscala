@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builder
 
 object ShortConverterBuilder extends SPredefConverterBuilder {
-  val pgType = "smallint"
+  val scalaClazz = "scala.Short"
 
-  val clazz = "scala.Short"
-} 
+  override val javaClazz = "java.lang.Short"
+}

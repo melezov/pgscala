@@ -19,7 +19,7 @@ public enum PGNullableBigIntegerConverter implements StringConverter<BigInteger>
     return null == bI ? null : new BigInteger(bI);
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final BigInteger bI) {
     return bigIntegerToString(bI);

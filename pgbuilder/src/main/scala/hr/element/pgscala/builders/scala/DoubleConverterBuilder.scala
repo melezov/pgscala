@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builder
 
 object DoubleConverterBuilder extends SPredefConverterBuilder {
-  val pgType = "double precision"
+  val scalaClazz = "scala.Double"
 
-  val clazz = "scala.Double"
-} 
+  override val javaClazz = "java.lang.Double"
+}

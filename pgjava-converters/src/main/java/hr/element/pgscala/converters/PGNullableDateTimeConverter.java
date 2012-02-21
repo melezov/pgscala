@@ -23,7 +23,7 @@ public enum PGNullableDateTimeConverter implements StringConverter<DateTime> {
     return null == dT ? null : dateTimeFormat.parseDateTime(dT);
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final DateTime dT) {
     return dateTimeToString(dT);

@@ -2,14 +2,11 @@ package hr.element.pgscala
 package builder
 
 object StringConverterBuilder extends SPredefConverterBuilder {
-  val pgType = "text"
+  val scalaClazz = "java.lang.String"
 
-  val clazz = "java.lang.String"
-  
   override def inject(body: String) = {
     val code = super.inject(body)
 
-    code
-      .replaceAll("""=\s*\n\s*PGNullableConverter.*""", "= s")
+    code.replaceAll("""=\s*\n\s*PGNullableConverter.*""", "= s")
   }
-} 
+}

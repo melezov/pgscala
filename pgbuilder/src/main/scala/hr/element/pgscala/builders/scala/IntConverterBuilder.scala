@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builder
 
 object IntConverterBuilder extends SPredefConverterBuilder {
-  val pgType = "integer"
+  val scalaClazz = "scala.Int"
 
-  val clazz = "scala.Int"
-} 
+  override val javaClazz = "java.lang.Integer"
+}

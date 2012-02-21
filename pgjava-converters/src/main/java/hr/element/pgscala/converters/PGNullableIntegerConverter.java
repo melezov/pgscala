@@ -17,7 +17,7 @@ public enum PGNullableIntegerConverter implements StringConverter<Integer> {
     return null == i ? null : Integer.valueOf(i);
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final Integer i) {
     return integerToString(i);

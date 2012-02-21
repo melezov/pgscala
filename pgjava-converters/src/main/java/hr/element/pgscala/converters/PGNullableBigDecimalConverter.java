@@ -19,7 +19,7 @@ public enum PGNullableBigDecimalConverter implements StringConverter<BigDecimal>
     return null == bD ? null : new BigDecimal(bD);
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final BigDecimal bD) {
     return bigDecimalToString(bD);

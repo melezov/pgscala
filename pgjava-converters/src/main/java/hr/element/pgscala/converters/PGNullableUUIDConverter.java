@@ -19,7 +19,7 @@ public enum PGNullableUUIDConverter implements StringConverter<UUID> {
     return null == uuid ? null : UUID.fromString(uuid);
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final UUID uuid) {
     return uuidToString(uuid);

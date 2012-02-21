@@ -65,7 +65,7 @@ public enum PGNullableByteArrayConverter implements StringConverter<byte[]> {
     return buffer;
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final byte[] bA) {
     return byteArrayToString(bA);

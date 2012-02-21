@@ -21,7 +21,7 @@ public enum PGNullable{ upperType }Converter implements StringConverter<{ javaTy
     return null == { javaVar } ? null : { from };
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final { javaType } { javaVar }) {
     return { lowerType }ToString({ javaVar });

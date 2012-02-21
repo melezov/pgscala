@@ -17,7 +17,7 @@ public enum PGNullableBooleanConverter implements StringConverter<Boolean> {
     return null == b ? null : b.equals("t") ? Boolean.TRUE : Boolean.FALSE;
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final Boolean b) {
     return booleanToString(b);

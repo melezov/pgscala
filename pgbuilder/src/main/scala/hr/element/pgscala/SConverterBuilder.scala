@@ -2,55 +2,76 @@ package hr.element.pgscala
 package builder
 
 trait SConverterBuilderLike extends BuilderLike {
-  def imports: String       // Scala imports
+  def imports: String        // Scala imports
 
-  def clazz: String         // Fully qualified java class
-  def scalaType: String     // Class name, used with imports
+  def scalaClazz: String     // Fully qualified scala class
+  def javaClazz: String      // Fully qualified java class
+  def scalaType: String      // Class name, used with imports
 
-  def upperType: String     // Descriptive class name
-  def scalaVar: String      // Abbreviation of the class name for a variable
+  def scalaUpperType: String // Descriptive class name
+  def javaUpperType: String  // Descriptive class name
+  def scalaVar: String       // Abbreviation of the class name for a variable
 
-  def to: String            // Converter code from current type to String
-  def from: String          // Converter code from String to current type
-  
+  def to: String             // Converter code from current type to String
+  def from: String           // Converter code from String to current type
+
   def filters = Seq(
-    i("imports",    imports)
-  , i("clazz",      clazz)
-  , i("scalaType",  scalaType)
-  , i("upperType",  upperType)
-  , i("scalaVar",   scalaVar)
-  , i("to",         to)
-  , i("from",       from)
+    i("imports",        imports)
+  , i("javaClazz",      javaClazz)
+  , i("scalaClazz",     scalaClazz)
+  , i("scalaType",      scalaType)
+  , i("scalaUpperType", scalaUpperType)
+  , i("javaUpperType",  javaUpperType)
+  , i("scalaVar",       scalaVar)
+  , i("to",             to)
+  , i("from",           from)
   )
 }
 
 trait SConverterBuilder extends SConverterBuilderLike {
-  override def scalaType = 
-    clazz.replaceFirst("^.*\\.", "")
+  override def javaClazz =
+    scalaClazz
 
-  override def upperType = 
+  override def scalaType =
+    scalaClazz.replaceFirst("^.*\\.", "")
+
+  override def javaUpperType =
+    javaClazz.replaceFirst("^.*\\.", "")
+
+  override def scalaUpperType =
     scalaType
-    
-  override def scalaVar =
-    if (isUp) upperType.toLowerCase else {
-      l(upperType.replaceAll("[a-z]", ""))
-    }
-    
-  override val to = ""
-  override val from = ""
 
-  def isUp = 
-    upperType.toUpperCase == upperType
+  override def scalaVar =
+    if (isUp) scalaUpperType.toLowerCase else {
+      l(scalaUpperType.replaceAll("[a-z]", ""))
+    }
+
+  def isUp =
+    scalaUpperType.toUpperCase == scalaUpperType
+
+  def imports = "import %s;" format javaClazz
+
+  def to = """ =
+    PGNullableConverter.toPGString(%s)""" format(scalaVar)
+
+  override def from = """ =
+    PGNullableConverter.fromPGString(%s)""" .format(scalaVar)
 }
 
 trait SPredefConverterBuilder extends SConverterBuilder {
-  override val imports = ""
+  override def imports = ""
+
+  override def to = """ =
+    PGNullableConverter.toPGString(%s valueOf %s)""" format(javaClazz, scalaVar)
+
+  override def from = """ =
+    PGNullableConverter.fromPGString(%s)""" .format(scalaVar)
 }
 
 import scalax.file._
 import scalax.io._
 import Codec.UTF8
- 
+
 object SConverterBuilder {
   val converters = Seq(
     StringConverterBuilder
@@ -62,7 +83,7 @@ object SConverterBuilder {
 
   , FloatConverterBuilder
   , DoubleConverterBuilder
-/*
+
   , BigDecimalConverterBuilder
   , BigIntConverterBuilder
 
@@ -71,7 +92,7 @@ object SConverterBuilder {
 
   , ByteArrayConverterBuilder
   , UUIDConverterBuilder
-*/  )
+  )
 
   def buildScalaConverters() {
     val template =
@@ -82,7 +103,7 @@ object SConverterBuilder {
       val path = Path("pgscala-converters") /
         "src" / "main" / "scala" /
         "hr" / "element" / "pgscala" / "converters" /
-        ("PG%sConverter.scala" format c.upperType)
+        ("PG%sConverter.scala" format c.scalaUpperType)
 
       path.write(c.inject(template))(UTF8)
     }

@@ -2,7 +2,7 @@ package hr.element.pgscala
 package builder
 
 object BooleanConverterBuilder extends SPredefConverterBuilder {
-  val pgType = "boolean"
+  val scalaClazz = "scala.Boolean"
 
-  val clazz = "scala.Boolean"
-} 
+  override val javaClazz = "java.lang.Boolean"
+}

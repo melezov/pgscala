@@ -13,7 +13,7 @@ public enum PGNullableStringConverter implements StringConverter<String> {
     return s;
   }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
   public String convertToString(final String s) {
     return s;
