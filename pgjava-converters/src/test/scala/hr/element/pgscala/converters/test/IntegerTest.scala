@@ -9,7 +9,7 @@ import org.scalatest.matchers.ShouldMatchers
 class IntegerTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
   feature("About to test an Integer converter"){
     info("I want to test if PGNullableIntegerConverter works correctly, both in 2 way conversion")
-    info("I am going to perform tests for the Integer edge conditions")
+    info("I am going to perform tests for the Integer boundary cases")
 
     scenario("Integer to String Nr. 1"){
         given ("a starting Integer value of Int.MaxValue")

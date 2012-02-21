@@ -11,7 +11,7 @@ import java.math.BigInteger
 class BigIntegerTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
   feature("About to test a BigInteger converter"){
     info("I want to test if PGNullableBigIntegerConverter works correctly, both in 2 way conversion")
-    info("I am going to perform tests for the BigInteger edge conditions")
+    info("I am going to perform tests for the BigInteger boundary cases")
 
     scenario("BigInteger to String Nr. 1"){
       given ("a starting BigInteger value of 0")
