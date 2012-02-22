@@ -12,18 +12,10 @@ import scala.xml.parsing.ConstructingParser;"""
 
   val to = "e.toString()"
 
-  val from = """return (Elem) ConstructingParser
-    .fromSource(Source.fromString(e),true)
-    .document.docElem"""
-
-  override def inject(body: String) = {
-  super.inject(body)
-    .replace(
-      "return null == e ? null :",
-      "if (null == e) return null;"
-    )
-}
-
+  val from = """
+      (Elem) ConstructingParser
+        .fromSource(Source.fromString(e), true)
+        .document().docElem()"""
 
   override val isScala = true
 }

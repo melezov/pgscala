@@ -13,14 +13,15 @@ public enum PGNullableElemConverter implements StringConverter<Elem> {
 
   @ToString
   public static String elemToString(final Elem e) {
-    if (null == e) return null; e.toString();
+    return null == e ? null : e.toString();
   }
 
   @FromString
   public static Elem stringToElem(final String e) {
-    if (null == e) return null; return (Elem) ConstructingParser
-    .fromSource(Source.fromString(e),true)
-    .document.docElem;
+    return null == e ? null : 
+      (Elem) ConstructingParser
+        .fromSource(Source.fromString(e), true)
+        .document().docElem();
   }
 
 // -----------------------------------------------------------------------------
