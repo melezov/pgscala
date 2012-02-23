@@ -151,5 +151,16 @@ class DateTimeTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
       res.toString() should equal(SQLtimestamp)
     }
 
+    scenario("POSTGRESQL: String to Datetime Nr. 5"){
+      info("test for timezone: SELECT TIMESTAMP WITH TIME ZONE 'now';")
+      val SQLtimestamp = "2012-02-23 15:49:39.466516+01"
+      given(""" a starting String value for sql timestamp "%s""" format SQLtimestamp)
+      when("that value is converted to DateTime")
+      val res = PGNullableDateTimeConverter stringToDateTime SQLtimestamp
+      then ("It should return a DateTime value %s" format res.toString())
+      res.toString() should equal(SQLtimestamp)
+    }
+
+
    }
 }
