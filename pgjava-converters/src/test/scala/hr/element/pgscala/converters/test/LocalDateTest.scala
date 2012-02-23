@@ -92,5 +92,47 @@ class LocalDateTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
       res should equal(t)
     }
 
+    /*
+     * POSTGRESQL
+     */
+    scenario("POSTGRESQL: String to LocalDate Nr. 1"){
+      info("test for 'now'::date")
+      val SQLdate = "2012-02-23"
+      given(""" a starting String value for sql date "%s"""" format SQLdate)
+      when("that value is converted to LocalDate")
+      val res = PGNullableLocalDateConverter stringToLocalDate SQLdate
+      then ("It should return a LocalDate value %s" format res.toString())
+      res.toString() should equal(SQLdate)
+    }
+
+    scenario("POSTGRESQL: String to LocalDate Nr. 2"){
+      info("test for 'epoch'::date")
+      val SQLdate = "1970-01-01"
+      given(""" a starting String value for sql date "%s"""" format SQLdate)
+      when("that value is converted to LocalDate")
+      val res = PGNullableLocalDateConverter stringToLocalDate SQLdate
+      then ("It should return a LocalDate value %s" format res.toString())
+      res.toString() should equal(SQLdate)
+    }
+
+    scenario("POSTGRESQL: String to LocalDate Nr. 3"){
+      info("test for 'today'::date")
+      val SQLdate = "2012-02-23"
+      given(""" a starting String value for sql date "%s"""" format SQLdate)
+      when("that value is converted to LocalDate")
+      val res = PGNullableLocalDateConverter stringToLocalDate SQLdate
+      then ("It should return a LocalDate value %s" format res.toString())
+      res.toString() should equal(SQLdate)
+    }
+
+    scenario("POSTGRESQL: String to LocalDate Nr. 4"){
+      info("test for 'tomorrow'::date")
+      val timestamp = "2012-02-24"
+      given(""" a starting String value for sql date "%s"""" format timestamp)
+      when("that value is converted to DateTime")
+      val res = PGNullableLocalDateConverter stringToLocalDate timestamp
+      then ("It should return a DateTime value %s" format res.toString())
+      res.toString() should equal(timestamp)
+    }
   }
 }

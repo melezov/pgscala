@@ -19,7 +19,7 @@ class DateTimeTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
     info("I am going to perform tests for the DateTime special timestamp inputs")
 
     scenario("Datetime to String Nr. 1."){
-      val t = DateTime.now()//ne podudara se sa postgresom,vremenska zona i zaokruzit na 6 decimala
+      val t = DateTime.now()
       given(" a starting current DateTime value %s" format t)
       when ("that value is converted to String")
       val res = PGNullableDateTimeConverter dateTimeToString t
@@ -106,6 +106,49 @@ class DateTimeTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
       val res = PGNullableDateTimeConverter stringToDateTime dFormat.print(t)
       then ("It should return a DateTime value %s" format res.toString())
       res should equal(t)
+    }
+
+    /*
+     * POSTGRESQL
+     */
+    scenario("POSTGRESQL: String to DateTime Nr. 1"){
+      info("test for 'now'::timestamp")
+      val SQLtimestamp = "2012-02-23 14:27:01.994854"
+      given(""" a starting String value for sql timestamp "%s""" format SQLtimestamp)
+      when("that value is converted to DateTime")
+      val res = PGNullableDateTimeConverter stringToDateTime SQLtimestamp
+      then ("It should return a DateTime value %s" format res.toString())
+      res.toString() should equal(SQLtimestamp)
+    }
+
+    scenario("POSTGRESQL: String to DateTime Nr. 2"){
+      info("test for 'epoch'::timestamp")
+      val SQLtimestamp = "1970-01-01 00:00:00"
+      given(""" a starting String value for sql timestamp "%s""" format SQLtimestamp)
+      when("that value is converted to DateTime")
+      val res = PGNullableDateTimeConverter stringToDateTime SQLtimestamp
+      then ("It should return a DateTime value %s" format res.toString())
+      res.toString() should equal(SQLtimestamp)
+    }
+
+    scenario("POSTGRESQL: String to Datetime Nr. 3"){
+      info("test for 'today'::timestamp")
+      val SQLtimestamp = "2012-02-23 00:00:00"
+      given(""" a starting String value for sql timestamp "%s""" format SQLtimestamp)
+      when("that value is converted to DateTime")
+      val res = PGNullableDateTimeConverter stringToDateTime SQLtimestamp
+      then ("It should return a DateTime value %s" format res.toString())
+      res.toString() should equal(SQLtimestamp)
+    }
+
+    scenario("POSTGRESQL: String to Datetime Nr. 4"){
+      info("test for 'tomorrow'::timestamp")
+      val SQLtimestamp = "2012-02-24 00:00:00"
+      given(""" a starting String value for sql timestamp "%s""" format SQLtimestamp)
+      when("that value is converted to DateTime")
+      val res = PGNullableDateTimeConverter stringToDateTime SQLtimestamp
+      then ("It should return a DateTime value %s" format res.toString())
+      res.toString() should equal(SQLtimestamp)
     }
 
    }
