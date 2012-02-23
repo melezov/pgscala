@@ -71,7 +71,7 @@ import scalax.file._
 import scalax.io._
 import Codec.UTF8
 
-object JConverterBuilder {
+object JConverterBuilder extends PGBuilderPaths {
   val converters = Seq(
     JStringConverterBuilder
 
@@ -109,6 +109,7 @@ object JConverterBuilder {
         "hr" / "element" / "pgscala" / "converters" /
         ("PGNullable%sConverter.java" format c.upperType)
 
+      println("Generated: " + path.toAbsolute.path)
       path.write(c.inject(nullableTemplate))(UTF8)
     }
   }
@@ -140,6 +141,7 @@ object JConverterBuilder {
       "hr" / "element" / "pgscala" / "converters" /
       "PGNullableConverter.j"
 
+    println("Generated: " + path.toAbsolute.path)
     path.write(sB.toString)(UTF8)
   }
 }

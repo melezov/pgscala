@@ -72,7 +72,7 @@ import scalax.file._
 import scalax.io._
 import Codec.UTF8
 
-object SConverterBuilder {
+object SConverterBuilder extends PGBuilderPaths {
   val converters = Seq(
     StringConverterBuilder
 
@@ -107,6 +107,7 @@ object SConverterBuilder {
         "hr" / "element" / "pgscala" / "converters" /
         ("PG%sConverter.scala" format c.scalaUpperType)
 
+      println("Generated: " + path.toAbsolute.path)
       path.write(c.inject(template))(UTF8)
     }
   }
