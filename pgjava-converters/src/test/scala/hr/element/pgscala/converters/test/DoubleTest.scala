@@ -71,8 +71,7 @@ class DoubleTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
       when ("that value is converted to Double")
       val res = PGNullableDoubleConverter stringToDouble s
       then ("it should return a Double value of %s" format s)
-//      res should equal (Double.NaN) // Incorrect test since Double.NaN != Double.NaN
-      assert(res.isNaN)
+      res.isNaN() should equal (Double.NaN.isNaN())
     }
 
     scenario("String to Double Nr. 4"){
