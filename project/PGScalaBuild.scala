@@ -1,9 +1,6 @@
 import sbt._
 import Keys._
 
-import sbtassembly.Plugin._
-import AssemblyKeys._
-
 object BuildSettings {
   import Default._
 
@@ -22,51 +19,52 @@ object BuildSettings {
 
 //  ---------------------------------------------------------------------------
 
-  val bsPGJavaUtil = javaSettings ++ Seq(
-    name    := "pgjava-util"
-  , version := "0.2.7"
-  , initialCommands := "import hr.element.pgscala.util._"
-  )
-
-  val bsPGJavaConverters = javaSettings ++ Seq(
-    name    := "pgjava-converters"
-  , version := "0.3.0"
-  , initialCommands := "import hr.element.pgscala.converters._"
-  )
-
-  val bsPGScalaConverters = scalaSettings ++ Seq(
-    name    := "pgscala-converters"
-  , version := "0.3.0"
-  , initialCommands := "import hr.element.pgscala.converters._"
-  , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)( _ :: _ :: Nil)
-  )
-/*
-  val bsPGScala = scalaSettings ++ Seq(
-    name    := "pgscala"
-  , version := "0.7.4-3"
-  )
-
-  val bsPGScalaPool = scalaSettings ++ Seq(
-    name    := "pgscala-pool"
-  , version := "0.1.7-3"
-  )
-*/
   val bsPGConverterBuilder = scalaSettings ++ Seq(
     name    := "pgscala-builder"
   , version := "0.0.0"
   , buildTask
   )
+
+  val bsPGJavaUtil = javaSettings ++ Seq(
+    name    := "pgjava-util"
+  , version := "0.2.7-6-pjc"
+  , initialCommands := "import hr.element.pgscala.util._"
+  )
+
+  val bsPGJavaConverters = javaSettings ++ Seq(
+    name    := "pgjava-converters"
+  , version := "0.3.0-6-pjc"
+  , initialCommands := "import hr.element.pgscala.converters._"
+  )
+
+  val bsPGScalaConverters = scalaSettings ++ Seq(
+    name    := "pgscala-converters"
+  , version := "0.3.0-6-pjc"
+  , initialCommands := "import hr.element.pgscala.converters._"
+  , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)( _ :: _ :: Nil)
+  )
+
+  val bsPGScala = scalaSettings ++ Seq(
+    name    := "pgscala"
+  , version := "0.7.4-6-pjc"
+  )
+/*
+  val bsPGScalaPool = scalaSettings ++ Seq(
+    name    := "pgscala-pool"
+  , version := "0.1.7-3"
+  )
+*/
 }
 
 //  ---------------------------------------------------------------------------
 
 object Publications {
-  val pgjavaUtil        = "hr.element.pgscala" %  "pgjava-util"        % "0.2.7"
-  val pgjavaConverters  = "hr.element.pgscala" %  "pgjava-converters"  % "0.3.0"
-/*  val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters" % "0.3.0"
-  val pgscala           = "hr.element.pgscala" %% "pgscala"            % "0.7.4-2"
+  val pgjavaUtil        = "hr.element.pgscala" %  "pgjava-util"        % "0.2.7-6-pjc"
+  val pgjavaConverters  = "hr.element.pgscala" %  "pgjava-converters"  % "0.3.0-6-pjc"
+  val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters" % "0.3.0-6-pjc"
+/*
+  val pgscala           = "hr.element.pgscala" %% "pgscala"            % "0.7.4-6-pjc"
   val pgpool            = "hr.element.pgscala" %% "pgscala-pool"       % "0.1.7-2"
-  val pgbuilder         = "hr.element.pgscala" %% "pgbuilder"          % "0.0.0"
 */
 }
 
@@ -86,16 +84,9 @@ object Dependencies {
 
   val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
 
-  val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.3.0"
+  val scalaIo = "com.github.scala-incubator.io" % "scala-io-file_2.9.1" % "0.3.0"
 
-  val configrity = (scalaVersion: String) => {
-    val sV = scalaVersion match {
-      case "2.9.0" => "2.9.0-1"
-      case x => x
-    }
-
-    "org.streum" % ("configrity_" + sV) % "0.9.0" % "test"
-  }
+  val configrity = "org.streum" % "configrity-core_2.9.1" % "0.10.0"
 
   val scalaTest = "org.scalatest" %% "scalatest" % "1.7.1" % "test"
 }
@@ -124,24 +115,22 @@ object ProjectDeps {
 
   val depsPGScalaConverters = libDeps(
     jodaTime
+  , pgjavaConverters
   , pgjavaUtil % "test"
   , postgres % "test"
   , configrity
   , scalaTest
   )
-/*
+
   val depsPGScala = libDeps(
     pgjavaUtil
   , pgscalaConverters
-
   , iorc
   , postgres
-
-    //test
   , configrity
   , scalaTest
   )
-
+/*
   val depsPGScalaPool = libDeps(
     pgscala
   , c3p0
@@ -178,14 +167,14 @@ object PGScalaBuild extends Build {
     "pgscala-converters",
     file("pgscala-converters"),
     settings = bsPGScalaConverters :+ depsPGScalaConverters
-  ) dependsOn(pgjavaConverters /*, pgjavaUtil % "test" */)
-/*
+  )// dependsOn(pgjavaConverters, pgjavaUtil % "test")
+
   lazy val pgscala = Project(
     "pgscala",
     file("pgscala"),
     settings = bsPGScala :+ depsPGScala
   )// dependsOn(pgjavaUtil, pgscalaConverters)
-
+/*
   lazy val pgscalaPool = Project(
     "pgscala-pool",
     file("pgscala-pool"),
@@ -241,21 +230,21 @@ object Default {
     Defaults.defaultSettings ++
     Resolvers.settings ++
     Publishing.settings ++ Seq(
-      organization := "hr.element.pgscala",
-      crossScalaVersions := Seq("2.9.1", "2.9.0-1", "2.9.0"),
-      scalaVersion <<= (crossScalaVersions) { versions => versions.head },
-      scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise"), // , "-Yrepl-sync"
-      unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)( _ :: Nil),
-      unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )( _ :: Nil)
+      organization := "hr.element.pgscala"
+    , crossScalaVersions := Seq("2.9.1", "2.9.0-1", "2.9.0")
+    , scalaVersion <<= (crossScalaVersions) { versions => versions.head }
+    , scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise") // , "-Yrepl-sync"
+    , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)( _ :: Nil)
+    , unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )( _ :: Nil)
     )
 
   val javaSettings =
     scalaSettings ++ Seq(
-      autoScalaLibrary := false,
-      crossPaths := false,
-      javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5"),
-      unmanagedSourceDirectories in Compile <<= (javaSource in Compile)( _ :: Nil),
-      unmanagedSourceDirectories in Test    <<= (scalaSource in Test  )( _ :: Nil)
+      autoScalaLibrary := false
+    , crossPaths := false
+    , javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5")
+    , unmanagedSourceDirectories in Compile <<= (javaSource in Compile)( _ :: Nil)
+    , unmanagedSourceDirectories in Test    <<= (scalaSource in Test  )( _ :: Nil)
     )
 }
 
