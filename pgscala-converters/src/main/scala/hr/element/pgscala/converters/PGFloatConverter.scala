@@ -1,5 +1,7 @@
 package hr.element.pgscala.converters
 
+/** Do not edit - generated in PGBuilder / FloatConverterBuilder.scala */
+
 object PGFloatConverter extends PGTypeConverter[Float] {
   val PGType = PGNullableFloatConverter.pgType
 

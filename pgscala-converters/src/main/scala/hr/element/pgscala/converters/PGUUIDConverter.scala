@@ -2,6 +2,8 @@ package hr.element.pgscala.converters
 
 import java.util.UUID
 
+/** Do not edit - generated in PGBuilder / UUIDConverterBuilder.scala */
+
 object PGUUIDConverter extends PGTypeConverter[UUID] {
   val PGType = PGNullableUUIDConverter.pgType
 

@@ -1,5 +1,7 @@
 package hr.element.pgscala.converters
 
+/** Do not edit - generated in PGBuilder / { builder } */
+
 object PGOption{ fileName }Converter extends PGTypeConverter[Option[{ javaType }]] {
   val PGType = "{ pgType }"
 
@@ -18,4 +20,4 @@ object PGOption{ fileName }Converter extends PGTypeConverter[Option[{ javaType }
     else {
       None
     }
-} 
+}

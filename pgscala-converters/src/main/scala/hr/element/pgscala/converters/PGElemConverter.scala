@@ -2,6 +2,8 @@ package hr.element.pgscala.converters
 
 import scala.xml.Elem
 
+/** Do not edit - generated in PGBuilder / ElemConverterBuilder.scala */
+
 object PGElemConverter extends PGTypeConverter[Elem] {
   val PGType = PGNullableElemConverter.pgType
 

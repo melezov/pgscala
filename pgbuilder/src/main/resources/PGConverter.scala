@@ -2,6 +2,8 @@ package hr.element.pgscala.converters
 
 { imports }
 
+/** Do not edit - generated in PGBuilder / { builder } */
+
 object PG{ scalaUpperType }Converter extends PGTypeConverter[{ scalaType }] {
   val PGType = PGNullable{ javaUpperType }Converter.pgType
 

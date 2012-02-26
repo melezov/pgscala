@@ -5,6 +5,8 @@ import org.joda.convert.*;
 import org.joda.time.DateTime;
 import org.joda.time.format.*;
 
+/** Do not edit - generated in PGBuilder / JDateTimeConverterBuilder.scala */
+
 public enum PGNullableDateTimeConverter implements StringConverter<DateTime> {
   INSTANCE;
 

@@ -16,15 +16,16 @@ trait SConverterBuilderLike extends BuilderLike {
   def from: String           // Converter code from String to current type
 
   def filters = Seq(
-    i("imports",        imports)
-  , i("javaClazz",      javaClazz)
-  , i("scalaClazz",     scalaClazz)
-  , i("scalaType",      scalaType)
+    i("imports",        imports       )
+  , i("javaClazz",      javaClazz     )
+  , i("scalaClazz",     scalaClazz    )
+  , i("scalaType",      scalaType     )
   , i("scalaUpperType", scalaUpperType)
-  , i("javaUpperType",  javaUpperType)
-  , i("scalaVar",       scalaVar)
-  , i("to",             to)
-  , i("from",           from)
+  , i("javaUpperType",  javaUpperType )
+  , i("scalaVar",       scalaVar      )
+  , i("to",             to            )
+  , i("from",           from          )
+  , i("builder",        builder       )
   )
 }
 

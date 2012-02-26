@@ -4,6 +4,8 @@ import org.joda.convert.*;
 
 { imports }
 
+/** Do not edit - generated in PGBuilder / { builder } */
+
 public enum PGNullable{ upperType }Converter implements StringConverter<{ javaType }> {
   INSTANCE;
 

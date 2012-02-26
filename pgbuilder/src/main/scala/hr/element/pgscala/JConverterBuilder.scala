@@ -20,17 +20,18 @@ trait JConverterBuilderLike extends BuilderLike {
   def isScala: Boolean      // Should the source be build in java or scala project
 
   def filters = Seq(
-    i("imports",    imports)
-  , i("pgType",     pgType)
-  , i("clazz",      clazz)
-  , i("javaType",   javaType)
+    i("imports",    imports   )
+  , i("pgType",     pgType    )
+  , i("clazz",      clazz     )
+  , i("javaType",   javaType  )
   , i("jasminType", jasminType)
-  , i("upperType",  upperType)
-  , i("lowerType",  lowerType)
-  , i("javaVar",    javaVar)
-  , i("body",       body)
-  , i("to",         to)
-  , i("from",       from)
+  , i("upperType",  upperType )
+  , i("lowerType",  lowerType )
+  , i("javaVar",    javaVar   )
+  , i("body",       body      )
+  , i("to",         to        )
+  , i("from",       from      )
+  , i("builder",    builder   )
   )
 }
 
@@ -127,10 +128,10 @@ object JConverterBuilder extends PGBuilderPaths {
 
       val templateBody =
         (if (c eq converters.head) {
-          lines.take(2)
+          lines.take(4)
         }
         else {
-          lines.drop(2)
+          lines.drop(4)
         }).mkString("\n")
 
       sB ++= c.inject(templateBody) += '\n'

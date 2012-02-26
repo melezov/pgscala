@@ -1,5 +1,7 @@
 package hr.element.pgscala.converters
 
+/** Do not edit - generated in PGBuilder / IntConverterBuilder.scala */
+
 object PGIntConverter extends PGTypeConverter[Int] {
   val PGType = PGNullableIntegerConverter.pgType
 

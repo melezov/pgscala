@@ -2,6 +2,9 @@ package hr.element.pgscala
 package builder
 
 trait BuilderLike {
+  def builder =
+    getClass.getSimpleName.init + ".scala"
+
   def filters: Seq[String => String]
 
   def inject(body: String) = (

@@ -4,6 +4,8 @@ import org.joda.convert.*;
 
 import java.math.BigDecimal;
 
+/** Do not edit - generated in PGBuilder / JBigDecimalConverterBuilder.scala */
+
 public enum PGNullableBigDecimalConverter implements StringConverter<BigDecimal> {
   INSTANCE;
 

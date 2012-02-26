@@ -2,6 +2,8 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
+/** Do not edit - generated in PGBuilder / JStringConverterBuilder.scala */
+
 public enum PGNullableStringConverter implements StringConverter<String> {
   INSTANCE;
 

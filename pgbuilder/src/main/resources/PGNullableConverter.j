@@ -1,6 +1,8 @@
 .class public hr.element.pgscala.converters.PGNullableConverter
 .super java/lang/Object
 
+; Do not edit - generated in PGBuilder / JConverterBuilder.scala
+
 .method public static fromPGString(Ljava/lang/String;){ jasminType }
   .limit locals 1
   .limit stack 2
