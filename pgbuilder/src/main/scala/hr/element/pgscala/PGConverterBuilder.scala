@@ -112,6 +112,7 @@ object PGConverterBuilder extends PGBuilderPaths {
       val path = Path("pgscala-converters") /
         "src" / "main" / "scala" /
         "hr" / "element" / "pgscala" / "converters" /
+        "core" /
         ("PG%sConverter.scala" format c.scalaUpperType)
 
       println("Generated: " + path.toAbsolute.path)
@@ -119,7 +120,7 @@ object PGConverterBuilder extends PGBuilderPaths {
     }
   }
 
-  def buildOptionScalaConverters() {
+  def buildScalaOptionConverters() {
     val template =
       Resource.fromClasspath("PGOptionConverter.scala")
         .slurpString(UTF8)
@@ -134,5 +135,42 @@ object PGConverterBuilder extends PGBuilderPaths {
       println("Generated: " + path.toAbsolute.path)
       path.write(c.inject(template))(UTF8)
     }
+  }
+
+  def buildScalaConverterImplicits() {
+    val template =
+      Resource.fromClasspath("converters.scala")
+        .slurpString(UTF8)
+
+    val path = Path("pgscala-converters") /
+      "src" / "main" / "scala" /
+      "hr" / "element" / "pgscala" / "converters" /
+      "converters.scala"
+
+    val padding =
+      converters.map(_.scalaUpperType.length).max
+
+    val sCI =
+      converters.map{c =>
+        "  implicit val impalePG%sConverter %s= PG%1$sConverter" format(
+          c.scalaUpperType,
+          " " * (padding - c.scalaUpperType.length)
+        )
+      } mkString "\n"
+
+    val sOCI =
+      converters.map{c =>
+        "  implicit val impalePGOption%sConverter %s= PGOption%1$sConverter" format(
+          c.scalaUpperType,
+          " " * (padding - c.scalaUpperType.length)
+        )
+      } mkString "\n"
+
+    val body = template
+      .replace("{ scalaConverterImplicits }", sCI)
+      .replace("{ scalaOptionConverterImplicits }", sOCI)
+
+    println("Generated: " + path.toAbsolute.path)
+    path.write(body)(UTF8)
   }
 }

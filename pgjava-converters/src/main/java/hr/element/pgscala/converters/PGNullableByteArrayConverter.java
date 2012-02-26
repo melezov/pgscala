@@ -21,7 +21,7 @@ public enum PGNullableByteArrayConverter implements StringConverter<byte[]> {
 
   @ToString
   public static String byteArrayToString(final byte[] bA) {
-    if (null == bA) return null; 
+    if (null == bA) return null;
 
     final int len = bA.length;
     if (len == 0) {
@@ -46,7 +46,7 @@ public enum PGNullableByteArrayConverter implements StringConverter<byte[]> {
 
   @FromString
   public static byte[] stringToByteArray(final String bA) {
-    if (null == bA) return null; 
+    if (null == bA) return null;
 
     final int len = bA.length();
     if ((len == 0) || (len == 2)) {

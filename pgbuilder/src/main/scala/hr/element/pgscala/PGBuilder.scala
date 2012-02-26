@@ -5,5 +5,6 @@ object PGBuilder extends App {
   PGNullableConverterBuilder.buildJavaNullableConverters()
   PGNullableConverterBuilder.buildJasminProxy()
   PGConverterBuilder.buildScalaConverters()
-  PGConverterBuilder.buildOptionScalaConverters()
+  PGConverterBuilder.buildScalaOptionConverters()
+  PGConverterBuilder.buildScalaConverterImplicits()
 }

@@ -11,7 +11,7 @@ trait PGBuilderPaths {
     }
 
   protected def getRoot(lang: Language) =
-    Path(getProject(lang)) /  "src" / "main" / lang.name
+    Path(getProject(lang)) /  "src" / "main" / lang.dir
 
   def getPath(lang: Language) =
     getRoot(lang) / "hr" / "element" / "pgscala" / "converters"

@@ -6,20 +6,20 @@ import AssemblyKeys._
 
 object BuildSettings {
   import Default._
-  
+
   val build = TaskKey[Unit]("build", "Runs PGBuilder, creating java & scala PostgreSQL type converters")
   val buildTask = build <<= (baseDirectory, scalaVersion, runner) map { (bD, sV, r) =>
-    runTask(Compile, "hr.element.pgscala.builder.PGBuihlder", "") 
-     
-    val src = bD / ".."  / "pgscala-converters" / 
+    runTask(Compile, "hr.element.pgscala.builder.PGBuihlder", "")
+
+    val src = bD / ".."  / "pgscala-converters" /
       "src" / "main" / "jasmin" / "hr" / "element" / "pgscala" / "converters" / "PGNullableConverter.j"
-      
-    val dst = bD / ".."  / "pgscala-converters" / 
+
+    val dst = bD / ".."  / "pgscala-converters" /
       "target" / ("scala-%s" format sV) / "classes"
 
-    jasmin.Main.main(Array(src.absolutePath, "-d", dst.absolutePath))    
+    jasmin.Main.main(Array(src.absolutePath, "-d", dst.absolutePath))
   }
- 
+
 //  ---------------------------------------------------------------------------
 
   val bsPGJavaUtil = javaSettings ++ Seq(

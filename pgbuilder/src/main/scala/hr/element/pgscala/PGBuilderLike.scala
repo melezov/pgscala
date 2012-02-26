@@ -9,8 +9,8 @@ trait PGBuilderLike {
 
   def inject(body: String) = (
     (filters :\ body)( _(_) )  // (-_(-_-)_-) The hood is watching
-      split("\n{3,}")
-      mkString "\n\n"
+      replaceAll(" +\n", "\n")
+      replaceAll("\n{3,}", "\n\n")
   )
 
   def i(key: String, value: String) =

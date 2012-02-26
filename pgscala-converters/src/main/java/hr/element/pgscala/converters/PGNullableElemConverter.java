@@ -20,7 +20,7 @@ public enum PGNullableElemConverter implements StringConverter<Elem> {
 
   @FromString
   public static Elem stringToElem(final String e) {
-    return null == e ? null : 
+    return null == e ? null :
       (Elem) ConstructingParser
         .fromSource(Source.fromString(e), true)
         .document().docElem();
