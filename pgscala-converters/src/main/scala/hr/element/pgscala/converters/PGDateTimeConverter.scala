@@ -2,9 +2,9 @@ package hr.element.pgscala.converters
 
 import org.joda.time.DateTime;
 
-/** Do not edit - generated in PGBuilder / DateTimeConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGDateTimeConverterBuilder.scala */
 
-object PGDateTimeConverter extends PGTypeConverter[DateTime] {
+object PGDateTimeConverter extends PGConverter[DateTime] {
   val PGType = PGNullableDateTimeConverter.pgType
 
   def toPGString(dT: DateTime) =

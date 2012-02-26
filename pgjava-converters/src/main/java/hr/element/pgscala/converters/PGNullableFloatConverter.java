@@ -2,7 +2,7 @@ package hr.element.pgscala.converters;
 
 import org.joda.convert.*;
 
-/** Do not edit - generated in PGBuilder / JFloatConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGNullableFloatConverterBuilder.scala */
 
 public enum PGNullableFloatConverter implements StringConverter<Float> {
   INSTANCE;

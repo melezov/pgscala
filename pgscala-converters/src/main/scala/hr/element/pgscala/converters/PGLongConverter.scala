@@ -1,8 +1,8 @@
 package hr.element.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / LongConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGLongConverterBuilder.scala */
 
-object PGLongConverter extends PGTypeConverter[Long] {
+object PGLongConverter extends PGConverter[Long] {
   val PGType = PGNullableLongConverter.pgType
 
   def toPGString(l: Long) =

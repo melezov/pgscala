@@ -1,8 +1,8 @@
 package hr.element.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / IntConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGIntConverterBuilder.scala */
 
-object PGIntConverter extends PGTypeConverter[Int] {
+object PGIntConverter extends PGConverter[Int] {
   val PGType = PGNullableIntegerConverter.pgType
 
   def toPGString(i: Int) =

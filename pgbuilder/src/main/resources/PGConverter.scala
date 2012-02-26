@@ -4,7 +4,7 @@ package hr.element.pgscala.converters
 
 /** Do not edit - generated in PGBuilder / { builder } */
 
-object PG{ scalaUpperType }Converter extends PGTypeConverter[{ scalaType }] {
+object PG{ scalaUpperType }Converter extends PGConverter[{ scalaType }] {
   val PGType = PGNullable{ javaUpperType }Converter.pgType
 
   def toPGString({ scalaVar }: { scalaType }){ to }

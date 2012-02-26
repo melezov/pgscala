@@ -1,23 +1,25 @@
 package hr.element.pgscala.converters
 
+{ imports }
+
 /** Do not edit - generated in PGBuilder / { builder } */
 
-object PGOption{ fileName }Converter extends PGTypeConverter[Option[{ javaType }]] {
-  val PGType = "{ pgType }"
+object PGOption{ scalaUpperType }Converter extends PGConverter[Option[{ scalaType }]] {
+  val PGType = PG{ scalaUpperType }Converter.PGType
 
-  def toPGString(value: Option[Short]): String =
-    value match {
-      case Some(s) =>
-        PGShortConverter.toPGString(s)
-      case _ =>
+  def toPGString({ optionScalaVar }: Option[{ scalaType }]): String =
+    { optionScalaVar } match {
+      case None =>
         null
+      case Some({ scalaVar }) =>
+        PG{ scalaUpperType }Converter.toPGString({ scalaVar })
     }
 
-  def fromPGString(value: String): Option[Short] =
-    if(value != null && value.nonEmpty) {
-      Some(PGShortConverter.fromPGString(value))
-    }
-    else {
-      None
+  def fromPGString({ scalaVar }: String): Option[{ scalaType }] =
+    { scalaVar } match {
+      case null | "" =>
+        None
+      case { optionScalaVar } =>
+        Some(PG{ scalaUpperType }Converter.fromPGString({ optionScalaVar }))
     }
 }

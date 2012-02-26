@@ -1,8 +1,8 @@
 package hr.element.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / BigDecimalConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGBigDecimalConverterBuilder.scala */
 
-object PGBigDecimalConverter extends PGTypeConverter[BigDecimal] {
+object PGBigDecimalConverter extends PGConverter[BigDecimal] {
   val PGType = PGNullableBigDecimalConverter.pgType
 
   def toPGString(bD: BigDecimal) =

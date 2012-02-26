@@ -1,6 +1,6 @@
 package hr.element.pgscala
 
-object PGBuilder{
+object PGConverterBuilder{
   case class Column(
       name: String,
       pos: Int,
@@ -10,7 +10,7 @@ object PGBuilder{
   )
 }
 
-trait PGBuilder{db: PGScala =>
+trait PGConverterBuilder{db: PGScala =>
 
   protected val ignoredSchemas = Array("pg_catalog", "pg_toast", "information_schema")
 
@@ -52,7 +52,7 @@ trait PGBuilder{db: PGScala =>
       ORDER BY 2;
 """,
     table.table.entity.name, table.schema.entity.name) {rs=>
-      PGBuilder.Column(
+      PGConverterBuilder.Column(
         rs.getStr('name),
         rs.getInt('pos),
         rs.getStr('format),

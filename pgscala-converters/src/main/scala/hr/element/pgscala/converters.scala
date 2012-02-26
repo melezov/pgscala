@@ -1,6 +1,6 @@
 package hr.element.pgscala
 package object converters {
- trait PGTypeConverter[T] {
+  trait PGConverter[T] {
     val PGType: String
 
     def toPGString (t: T): String

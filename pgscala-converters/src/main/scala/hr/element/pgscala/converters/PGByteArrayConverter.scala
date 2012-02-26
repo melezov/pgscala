@@ -1,8 +1,8 @@
 package hr.element.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / ByteArrayConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGByteArrayConverterBuilder.scala */
 
-object PGByteArrayConverter extends PGTypeConverter[Array[Byte]] {
+object PGByteArrayConverter extends PGConverter[Array[Byte]] {
   val PGType = PGNullableByteArrayConverter.pgType
 
   def toPGString(bA: Array[Byte]) =

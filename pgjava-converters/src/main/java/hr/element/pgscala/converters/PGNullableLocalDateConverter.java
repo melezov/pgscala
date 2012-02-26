@@ -4,7 +4,7 @@ import org.joda.convert.*;
 
 import org.joda.time.LocalDate;
 
-/** Do not edit - generated in PGBuilder / JLocalDateConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGNullableLocalDateConverterBuilder.scala */
 
 public enum PGNullableLocalDateConverter implements StringConverter<LocalDate> {
   INSTANCE;

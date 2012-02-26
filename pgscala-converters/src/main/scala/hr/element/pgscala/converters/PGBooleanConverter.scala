@@ -1,8 +1,8 @@
 package hr.element.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / BooleanConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGBooleanConverterBuilder.scala */
 
-object PGBooleanConverter extends PGTypeConverter[Boolean] {
+object PGBooleanConverter extends PGConverter[Boolean] {
   val PGType = PGNullableBooleanConverter.pgType
 
   def toPGString(b: Boolean) =

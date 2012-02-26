@@ -2,7 +2,8 @@ package hr.element.pgscala
 package builder
 
 object PGBuilder extends App {
-  JConverterBuilder.buildJavaNullableConverters()
-  JConverterBuilder.buildJasminProxy()
-  SConverterBuilder.buildScalaConverters()
+  PGNullableConverterBuilder.buildJavaNullableConverters()
+  PGNullableConverterBuilder.buildJasminProxy()
+  PGConverterBuilder.buildScalaConverters()
+  PGConverterBuilder.buildOptionScalaConverters()
 }

@@ -1,8 +1,8 @@
 package hr.element.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / DoubleConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGDoubleConverterBuilder.scala */
 
-object PGDoubleConverter extends PGTypeConverter[Double] {
+object PGDoubleConverter extends PGConverter[Double] {
   val PGType = PGNullableDoubleConverter.pgType
 
   def toPGString(d: Double) =

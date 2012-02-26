@@ -2,9 +2,9 @@ package hr.element.pgscala.converters
 
 import scala.xml.Elem
 
-/** Do not edit - generated in PGBuilder / ElemConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGElemConverterBuilder.scala */
 
-object PGElemConverter extends PGTypeConverter[Elem] {
+object PGElemConverter extends PGConverter[Elem] {
   val PGType = PGNullableElemConverter.pgType
 
   def toPGString(e: Elem) =

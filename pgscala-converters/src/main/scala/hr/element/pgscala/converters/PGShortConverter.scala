@@ -1,8 +1,8 @@
 package hr.element.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / ShortConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGShortConverterBuilder.scala */
 
-object PGShortConverter extends PGTypeConverter[Short] {
+object PGShortConverter extends PGConverter[Short] {
   val PGType = PGNullableShortConverter.pgType
 
   def toPGString(s: Short) =

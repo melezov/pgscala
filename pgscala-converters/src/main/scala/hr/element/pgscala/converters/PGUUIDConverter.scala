@@ -2,9 +2,9 @@ package hr.element.pgscala.converters
 
 import java.util.UUID
 
-/** Do not edit - generated in PGBuilder / UUIDConverterBuilder.scala */
+/** Do not edit - generated in PGBuilder / PGUUIDConverterBuilder.scala */
 
-object PGUUIDConverter extends PGTypeConverter[UUID] {
+object PGUUIDConverter extends PGConverter[UUID] {
   val PGType = PGNullableUUIDConverter.pgType
 
   def toPGString(uuid: UUID) =

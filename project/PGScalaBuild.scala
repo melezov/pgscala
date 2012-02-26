@@ -15,7 +15,7 @@ object BuildSettings {
       "src" / "main" / "jasmin" / "hr" / "element" / "pgscala" / "converters" / "PGNullableConverter.j"
       
     val dst = bD / ".."  / "pgscala-converters" / 
-      "target" / ("scala-%s" format sV) / "classes" / "hr" / "element" / "pgscala" / "converters"
+      "target" / ("scala-%s" format sV) / "classes"
 
     jasmin.Main.main(Array(src.absolutePath, "-d", dst.absolutePath))    
   }
@@ -51,7 +51,7 @@ object BuildSettings {
   , version := "0.1.7-3"
   )
 */
-  val bsPGBuilder = scalaSettings ++ Seq(
+  val bsPGConverterBuilder = scalaSettings ++ Seq(
     name    := "pgscala-builder"
   , version := "0.0.0"
   , buildTask
@@ -151,7 +151,7 @@ object ProjectDeps {
   , scalaTest
   )
 */
-  val depsPGBuilder = libDeps(
+  val depsPGConverterBuilder = libDeps(
     scalaIo
   )
 }
@@ -195,7 +195,7 @@ object PGScalaBuild extends Build {
   lazy val pgBuilder = Project(
     "pgbuilder",
     file("pgbuilder"),
-    settings = bsPGBuilder :+ depsPGBuilder
+    settings = bsPGConverterBuilder :+ depsPGConverterBuilder
   )
 }
 
