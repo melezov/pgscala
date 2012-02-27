@@ -10,7 +10,7 @@ import org.joda.time.format.*;
 public enum PGNullableDateTimeConverter implements StringConverter<DateTime> {
   INSTANCE;
 
-  public static final String pgType = "timestamptz";
+  public static final String pgType = "timestamp with time zone";
 
   private static final DateTimeFormatter dateTimeFormat =
     DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSZZ");

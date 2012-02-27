@@ -9,7 +9,7 @@ import java.util.UUID;
 public enum PGNullableUUIDConverter implements StringConverter<UUID> {
   INSTANCE;
 
-  public static final String pgType = "text";
+  public static final String pgType = "uuid";
 
   @ToString
   public static String uuidToString(final UUID uuid) {

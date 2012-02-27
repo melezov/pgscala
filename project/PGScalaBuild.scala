@@ -244,7 +244,6 @@ object Default {
     , crossPaths := false
     , javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5")
     , unmanagedSourceDirectories in Compile <<= (javaSource in Compile)( _ :: Nil)
-    , unmanagedSourceDirectories in Test    <<= (scalaSource in Test  )( _ :: Nil)
     )
 }
 
