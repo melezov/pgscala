@@ -1,6 +1,7 @@
 package org.pgscala
+package object converters extends Implicits
 
-package object converters {
+trait Implicits {
   import converters._
 
   implicit val impalePGStringConverter     = PGStringConverter

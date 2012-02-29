@@ -11,7 +11,7 @@ object BuildSettings {
   , version := "0.3.0-SNAPSHOT"
   , initialCommands := "import org.pgscala.util._"
   )
-  
+
 //  ===========================================================================
 
   val proxy = TaskKey[Unit]("proxy", "Compiles jasmin proxy methods (return type overloading for Scala)")
@@ -33,20 +33,19 @@ object BuildSettings {
 
   //  ---------------------------------------------------------------------------
 
-/*
   val bsConvertersJava = javaSettings ++ Seq(
     name    := "pgscala-converters-java"
-  , version := "0.1.0-SNAPSHOT"
+  , version := "0.2.0-SNAPSHOT"
   , initialCommands := "import org.pgscala.converters._"
   )
 
-  val bsPGScalaConverters = scalaSettings ++ Seq(
-    name    := "pgscala-converters"
-  , version := "0.3.0-6-pjc"
+  val bsConvertersScala = scalaSettings ++ Seq(
+    name    := "pgscala-converters-scala"
+  , version := "0.2.0-SNAPSHOT"
   , initialCommands := "import org.pgscala.converters._"
   , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)( _ :: _ :: Nil)
   )
-
+/*
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
   , version := "0.7.4-6-pjc"
@@ -62,10 +61,10 @@ object BuildSettings {
 //  ---------------------------------------------------------------------------
 
 object Publications {
-  val pgscalaUtil       = "org.pgscala" %  "pgscala-util"        % "0.3.0-SNAPSHOT"
+  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.0-SNAPSHOT"
+  val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.0-SNAPSHOT"
+  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.0-SNAPSHOT"
 /*
-  val pgjavaConverters  = "org.pgscala" %  "pgjava-converters"  % "0.3.0-6-pjc"
-  val pgscalaConverters = "org.pgscala" %% "pgscala-converters" % "0.3.0-6-pjc"
   val pgscala           = "org.pgscala" %% "pgscala"            % "0.7.4-6-pjc"
   val pgpool            = "org.pgscala" %% "pgscala-pool"       % "0.1.7-2"
 */
@@ -75,12 +74,12 @@ object Publications {
 
 object Dependencies {
   import Publications._
-/*
+
   val jodaTime = Seq(
     "org.joda" % "joda-convert" % "1.2",
     "joda-time" % "joda-time" % "2.1"
   )
-*/
+
   val scalaIo = "com.github.scala-incubator.io" % "scala-io-file_2.9.1" % "0.3.0"
 
 /*
@@ -93,7 +92,7 @@ object Dependencies {
   val configrity = "org.streum" % "configrity-core_2.9.1" % "0.10.0"
 
   val scalaTest = "org.scalatest" %% "scalatest" % "1.7.1" % "test"
-*/  
+*/
 }
 
 //  ---------------------------------------------------------------------------
@@ -110,20 +109,14 @@ object ProjectDeps {
     scalaIo
   )
 
+  val depsConvertersJava = libDeps(
+    jodaTime
+  )
+
+  val depsConvertersScala = libDeps(
+    pgscalaConvertersJava
+  )
 /*
-  val depsPGJavaConverters = libDeps(
-    jodaTime
-  )
-
-  val depsPGScalaConverters = libDeps(
-    jodaTime
-  , pgjavaConverters
-  , pgjavaUtil % "test"
-  , postgres % "test"
-  , configrity
-  , scalaTest
-  )
-
   val depsPGScala = libDeps(
     pgjavaUtil
   , pgscalaConverters
@@ -162,19 +155,18 @@ object PGScalaBuild extends Build {
     settings = bsBuilder :+ depsBuilder
   )
 
-/*
   lazy val pgjavaConverters = Project(
-    "pgjava-converters",
-    file("pgjava-converters"),
-    settings = bsPGJavaConverters :+ depsPGJavaConverters
+    "converters-java",
+    file("converters-java"),
+    settings = bsConvertersJava :+ depsConvertersJava
   )// dependsOn(pgjavaUtil % "test")
 
   lazy val pgscalaConverters = Project(
-    "pgscala-converters",
-    file("pgscala-converters"),
-    settings = bsPGScalaConverters :+ depsPGScalaConverters
+    "converters-scala",
+    file("converters-scala"),
+    settings = bsConvertersScala :+ depsConvertersScala
   )// dependsOn(pgjavaConverters, pgjavaUtil % "test")
-
+/*
   lazy val pgscala = Project(
     "pgscala",
     file("pgscala"),
@@ -186,7 +178,7 @@ object PGScalaBuild extends Build {
     file("pgscala-pool"),
     settings = bsPGScalaPool :+ depsPGScalaPool
   )// dependsOn(pgscala)
-*/  
+*/
 }
 
 //  ---------------------------------------------------------------------------

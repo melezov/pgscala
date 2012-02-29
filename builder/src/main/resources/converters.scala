@@ -1,5 +1,5 @@
 package org.pgscala
-package object converters extends Implicits 
+package object converters extends Implicits
 
 trait Implicits {
   import converters._

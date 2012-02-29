@@ -1,6 +1,6 @@
 package org.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / PGShortConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGShortConverterBuilder.scala */
 
 object PGOptionShortConverter extends PGConverter[Option[Short]] {
   val PGType = PGShortConverter.PGType

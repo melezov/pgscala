@@ -2,7 +2,7 @@ package org.pgscala.converters
 
 import org.joda.time.DateTime;
 
-/** Do not edit - generated in PGBuilder / PGDateTimeConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGDateTimeConverterBuilder.scala */
 
 object PGOptionDateTimeConverter extends PGConverter[Option[DateTime]] {
   val PGType = PGDateTimeConverter.PGType

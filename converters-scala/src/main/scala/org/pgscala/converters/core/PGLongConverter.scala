@@ -1,6 +1,6 @@
 package org.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / PGLongConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGLongConverterBuilder.scala */
 
 object PGLongConverter extends PGConverter[Long] {
   val PGType = PGNullableLongConverter.pgType

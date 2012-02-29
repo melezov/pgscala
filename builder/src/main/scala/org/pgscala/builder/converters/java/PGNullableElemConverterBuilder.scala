@@ -18,5 +18,5 @@ import scala.xml.parsing.ConstructingParser;"""
         .fromSource(Source.fromString(e), true)
         .document().docElem()"""
 
-  override val isScala = true
+  override val language = Scala
 }

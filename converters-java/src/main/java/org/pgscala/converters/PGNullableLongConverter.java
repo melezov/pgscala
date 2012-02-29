@@ -2,7 +2,7 @@ package org.pgscala.converters;
 
 import org.joda.convert.*;
 
-/** Do not edit - generated in PGBuilder / PGNullableLongConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGNullableLongConverterBuilder.scala */
 
 public enum PGNullableLongConverter implements StringConverter<Long> {
   INSTANCE;

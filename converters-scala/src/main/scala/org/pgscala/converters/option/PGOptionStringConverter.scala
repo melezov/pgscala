@@ -1,6 +1,6 @@
 package org.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / PGStringConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGStringConverterBuilder.scala */
 
 object PGOptionStringConverter extends PGConverter[Option[String]] {
   val PGType = PGStringConverter.PGType

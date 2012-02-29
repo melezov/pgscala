@@ -2,7 +2,7 @@ package org.pgscala
 package builder
 package converters
 
-trait PGNullableConverterBuilderLike extends PGBuilderLike {
+trait PGNullableConverterBuilderLike extends PGConverterHelper {
   def imports: String       // Java imports
   def pgType: String        // PostgreSQL type
 
@@ -18,9 +18,9 @@ trait PGNullableConverterBuilderLike extends PGBuilderLike {
   def to: String            // Converter code from current type to String
   def from: String          // Converter code from String to current type
 
-  def isScala: Boolean      // Should the source be build in java or scala project
+  def language: Language    // Should the source be build in java or scala project
 
-  def filters = Seq(
+  protected def filters = Seq(
     i("imports",    imports   )
   , i("pgType",     pgType    )
   , i("clazz",      clazz     )
@@ -62,7 +62,7 @@ trait PGNullableConverterBuilder extends PGNullableConverterBuilderLike {
   def isUp =
     upperType.toUpperCase == upperType
 
-  def isScala = false
+  override def language = Java: Language
 }
 
 trait PGPredefNullableConverterBuilder extends PGNullableConverterBuilder {
@@ -73,7 +73,7 @@ import scalax.file._
 import scalax.io._
 import Codec.UTF8
 
-object PGNullableConverterBuilder extends PGBuilderPaths {
+object PGNullableConverterBuilder extends PGConverterBuilderPaths {
   val converters = Seq(
    PGNullableStringConverterBuilder
 
@@ -103,12 +103,7 @@ object PGNullableConverterBuilder extends PGBuilderPaths {
         .slurpString(UTF8)
 
     for (c <- converters) {
-      val rootProject =
-        if (c.isScala) "pgscala-converters" else "pgjava-converters"
-
-      val path = Path(rootProject) /
-        "src" / "main" / "java" /
-        "org" / "pgscala" / "converters" /
+      val path = getPath(c.language, Java) /
         ("PGNullable%sConverter.java" format c.upperType)
 
       println("Generated: " + path.toAbsolute.path)
@@ -138,10 +133,8 @@ object PGNullableConverterBuilder extends PGBuilderPaths {
       sB ++= c.inject(templateBody) += '\n'
     }
 
-    val path = Path("pgscala-converters") /
-      "src" / "main" / "jasmin" /
-      "org" / "pgscala" / "converters" /
-      "PGNullableConverter.j"
+    val path = getPath(Scala, Jasmin) /
+        "PGNullableConverter.j"
 
     println("Generated: " + path.toAbsolute.path)
     path.write(sB.toString)(UTF8)

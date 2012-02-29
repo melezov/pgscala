@@ -2,7 +2,7 @@ package org.pgscala.converters
 
 import scala.xml.Elem
 
-/** Do not edit - generated in PGBuilder / PGElemConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGElemConverterBuilder.scala */
 
 object PGOptionElemConverter extends PGConverter[Option[Elem]] {
   val PGType = PGElemConverter.PGType

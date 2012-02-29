@@ -11,9 +11,12 @@ trait PGConverterBuilderPaths {
       case _    => "converters-scala"
     }
 
-  protected def getRoot(lang: Language) =
-    Path(getProject(lang)) /  "src" / "main" / lang.dir
+  protected def getRoot(project: Language, dir: Language) =
+    Path(getProject(project)) /  "src" / "main" / dir.dir
 
-  def getPath(lang: Language) =
-    getRoot(lang) / "org" / "pgscala" / "converters"
+  def getPath(project: Language) =
+    getRoot(project, project) / "org" / "pgscala" / "converters"
+
+  def getPath(project: Language, dir: Language) =
+    getRoot(project, dir) / "org" / "pgscala" / "converters"
 }

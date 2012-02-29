@@ -5,12 +5,12 @@ import org.joda.convert.*;
 import org.joda.time.DateTime;
 import org.joda.time.format.*;
 
-/** Do not edit - generated in PGBuilder / PGNullableDateTimeConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGNullableDateTimeConverterBuilder.scala */
 
 public enum PGNullableDateTimeConverter implements StringConverter<DateTime> {
   INSTANCE;
 
-  public static final String pgType = "timestamp with time zone";
+  public static final String pgType = "timestamptz";
 
   private static final DateTimeFormatter dateTimeFormat =
     DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSZZ");

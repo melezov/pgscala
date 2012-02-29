@@ -2,7 +2,7 @@ package org.pgscala.converters;
 
 import org.joda.convert.*;
 
-/** Do not edit - generated in PGBuilder / PGNullableBooleanConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGNullableBooleanConverterBuilder.scala */
 
 public enum PGNullableBooleanConverter implements StringConverter<Boolean> {
   INSTANCE;

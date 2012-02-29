@@ -4,7 +4,7 @@ import org.joda.convert.*;
 
 import java.util.UUID;
 
-/** Do not edit - generated in PGBuilder / PGNullableUUIDConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGNullableUUIDConverterBuilder.scala */
 
 public enum PGNullableUUIDConverter implements StringConverter<UUID> {
   INSTANCE;

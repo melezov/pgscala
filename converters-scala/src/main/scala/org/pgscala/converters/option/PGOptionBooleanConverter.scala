@@ -1,6 +1,6 @@
 package org.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / PGBooleanConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGBooleanConverterBuilder.scala */
 
 object PGOptionBooleanConverter extends PGConverter[Option[Boolean]] {
   val PGType = PGBooleanConverter.PGType

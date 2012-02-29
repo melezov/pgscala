@@ -5,7 +5,7 @@ package converters
 object PGNullableUUIDConverterBuilder extends PGNullableConverterBuilder {
   override val imports = "import java.util.UUID;"
 
-  val pgType = "text"
+  val pgType = "uuid"
 
   val clazz = "java.util.UUID"
 

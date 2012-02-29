@@ -2,7 +2,7 @@ package org.pgscala.converters;
 
 import org.joda.convert.*;
 
-/** Do not edit - generated in PGBuilder / PGNullableByteArrayConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGNullableByteArrayConverterBuilder.scala */
 
 public enum PGNullableByteArrayConverter implements StringConverter<byte[]> {
   INSTANCE;

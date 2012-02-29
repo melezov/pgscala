@@ -1,6 +1,6 @@
 package org.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / PGFloatConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGFloatConverterBuilder.scala */
 
 object PGOptionFloatConverter extends PGConverter[Option[Float]] {
   val PGType = PGFloatConverter.PGType

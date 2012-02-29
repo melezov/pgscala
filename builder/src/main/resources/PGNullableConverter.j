@@ -7,7 +7,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullable{ upperType }Converter.stringTo{ upperType }(Ljava/lang/String;){ jasminType }
+  invokestatic org/pgscala/converters/PGNullable{ upperType }Converter.stringTo{ upperType }(Ljava/lang/String;){ jasminType }
   areturn
 .end method
 
@@ -15,6 +15,6 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullable{ upperType }Converter.{ lowerType }ToString({ jasminType })Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullable{ upperType }Converter.{ lowerType }ToString({ jasminType })Ljava/lang/String;
   areturn
 .end method

@@ -2,24 +2,7 @@ package org.pgscala
 package builder
 package converters
 
-trait PGConverterBuilderLike extends PGBuilderLike {
-  protected def builder =
-    getClass.getSimpleName.init + ".scala"
-
-  protected def inject(body: String) = (
-    (filters :\ body)( _(_) )  // (-_(-_-)_-) The hood is watching
-      replaceAll(" +\n", "\n")
-      replaceAll("\n{3,}", "\n\n")
-  )
-
-  protected def i(key: String, value: String) =
-    (_: String).replace("{ "+ key +" }", value)
-
-  protected def l(word: String) =
-    word.head.toLower + word.tail 
-
-  //  ---------------------------------------------------------------------------
-  
+trait PGConverterBuilderLike extends PGConverterHelper {
   def imports: String        // Scala imports
 
   def scalaClazz: String     // Fully qualified scala class
@@ -97,7 +80,7 @@ import scalax.file._
 import scalax.io._
 import Codec.UTF8
 
-object PGConverterBuilder extends PGBuilderPaths {
+object PGConverterBuilder extends PGConverterBuilderPaths {
   val converters = Seq(
     PGStringConverterBuilder
 
@@ -127,10 +110,7 @@ object PGConverterBuilder extends PGBuilderPaths {
         .slurpString(UTF8)
 
     for (c <- converters) {
-      val path = Path("pgscala-converters") /
-        "src" / "main" / "scala" /
-        "org" / "pgscala" / "converters" /
-        "core" /
+      val path = getPath(Scala) / "core" /
         ("PG%sConverter.scala" format c.scalaUpperType)
 
       println("Generated: " + path.toAbsolute.path)
@@ -144,10 +124,7 @@ object PGConverterBuilder extends PGBuilderPaths {
         .slurpString(UTF8)
 
     for (c <- converters) {
-      val path = Path("pgscala-converters") /
-        "src" / "main" / "scala" /
-        "org" / "pgscala" / "converters" /
-        "option" /
+      val path = getPath(Scala) / "option" /
         ("PGOption%sConverter.scala" format c.scalaUpperType)
 
       println("Generated: " + path.toAbsolute.path)
@@ -160,9 +137,7 @@ object PGConverterBuilder extends PGBuilderPaths {
       Resource.fromClasspath("converters.scala")
         .slurpString(UTF8)
 
-    val path = Path("pgscala-converters") /
-      "src" / "main" / "scala" /
-      "org" / "pgscala" / "converters" /
+    val path = getPath(Scala) /
       "converters.scala"
 
     val padding =

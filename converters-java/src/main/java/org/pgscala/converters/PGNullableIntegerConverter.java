@@ -2,7 +2,7 @@ package org.pgscala.converters;
 
 import org.joda.convert.*;
 
-/** Do not edit - generated in PGBuilder / PGNullableIntegerConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGNullableIntegerConverterBuilder.scala */
 
 public enum PGNullableIntegerConverter implements StringConverter<Integer> {
   INSTANCE;

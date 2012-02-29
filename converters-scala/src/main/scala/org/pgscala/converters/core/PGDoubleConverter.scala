@@ -1,6 +1,6 @@
 package org.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / PGDoubleConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGDoubleConverterBuilder.scala */
 
 object PGDoubleConverter extends PGConverter[Double] {
   val PGType = PGNullableDoubleConverter.pgType

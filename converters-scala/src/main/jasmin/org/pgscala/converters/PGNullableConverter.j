@@ -1,13 +1,13 @@
-.class public hr.element.pgscala.converters.PGNullableConverter
+.class public org.pgscala.converters.PGNullableConverter
 .super java/lang/Object
 
-; Do not edit - generated in PGBuilder / JConverterBuilder.scala
+; Do not edit - generated in Builder / JConverterBuilder.scala
 
 .method public static fromPGString(Ljava/lang/String;)Ljava/lang/Boolean;
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableBooleanConverter.stringToBoolean(Ljava/lang/String;)Ljava/lang/Boolean;
+  invokestatic org/pgscala/converters/PGNullableBooleanConverter.stringToBoolean(Ljava/lang/String;)Ljava/lang/Boolean;
   areturn
 .end method
 
@@ -15,7 +15,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableBooleanConverter.booleanToString(Ljava/lang/Boolean;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableBooleanConverter.booleanToString(Ljava/lang/Boolean;)Ljava/lang/String;
   areturn
 .end method
 
@@ -23,7 +23,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableShortConverter.stringToShort(Ljava/lang/String;)Ljava/lang/Short;
+  invokestatic org/pgscala/converters/PGNullableShortConverter.stringToShort(Ljava/lang/String;)Ljava/lang/Short;
   areturn
 .end method
 
@@ -31,7 +31,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableShortConverter.shortToString(Ljava/lang/Short;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableShortConverter.shortToString(Ljava/lang/Short;)Ljava/lang/String;
   areturn
 .end method
 
@@ -39,7 +39,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableIntegerConverter.stringToInteger(Ljava/lang/String;)Ljava/lang/Integer;
+  invokestatic org/pgscala/converters/PGNullableIntegerConverter.stringToInteger(Ljava/lang/String;)Ljava/lang/Integer;
   areturn
 .end method
 
@@ -47,7 +47,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableIntegerConverter.integerToString(Ljava/lang/Integer;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableIntegerConverter.integerToString(Ljava/lang/Integer;)Ljava/lang/String;
   areturn
 .end method
 
@@ -55,7 +55,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableLongConverter.stringToLong(Ljava/lang/String;)Ljava/lang/Long;
+  invokestatic org/pgscala/converters/PGNullableLongConverter.stringToLong(Ljava/lang/String;)Ljava/lang/Long;
   areturn
 .end method
 
@@ -63,7 +63,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableLongConverter.longToString(Ljava/lang/Long;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableLongConverter.longToString(Ljava/lang/Long;)Ljava/lang/String;
   areturn
 .end method
 
@@ -71,7 +71,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableFloatConverter.stringToFloat(Ljava/lang/String;)Ljava/lang/Float;
+  invokestatic org/pgscala/converters/PGNullableFloatConverter.stringToFloat(Ljava/lang/String;)Ljava/lang/Float;
   areturn
 .end method
 
@@ -79,7 +79,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableFloatConverter.floatToString(Ljava/lang/Float;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableFloatConverter.floatToString(Ljava/lang/Float;)Ljava/lang/String;
   areturn
 .end method
 
@@ -87,7 +87,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableDoubleConverter.stringToDouble(Ljava/lang/String;)Ljava/lang/Double;
+  invokestatic org/pgscala/converters/PGNullableDoubleConverter.stringToDouble(Ljava/lang/String;)Ljava/lang/Double;
   areturn
 .end method
 
@@ -95,7 +95,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableDoubleConverter.doubleToString(Ljava/lang/Double;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableDoubleConverter.doubleToString(Ljava/lang/Double;)Ljava/lang/String;
   areturn
 .end method
 
@@ -103,7 +103,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableBigDecimalConverter.stringToBigDecimal(Ljava/lang/String;)Ljava/math/BigDecimal;
+  invokestatic org/pgscala/converters/PGNullableBigDecimalConverter.stringToBigDecimal(Ljava/lang/String;)Ljava/math/BigDecimal;
   areturn
 .end method
 
@@ -111,7 +111,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableBigDecimalConverter.bigDecimalToString(Ljava/math/BigDecimal;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableBigDecimalConverter.bigDecimalToString(Ljava/math/BigDecimal;)Ljava/lang/String;
   areturn
 .end method
 
@@ -119,7 +119,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableBigIntegerConverter.stringToBigInteger(Ljava/lang/String;)Ljava/math/BigInteger;
+  invokestatic org/pgscala/converters/PGNullableBigIntegerConverter.stringToBigInteger(Ljava/lang/String;)Ljava/math/BigInteger;
   areturn
 .end method
 
@@ -127,7 +127,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableBigIntegerConverter.bigIntegerToString(Ljava/math/BigInteger;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableBigIntegerConverter.bigIntegerToString(Ljava/math/BigInteger;)Ljava/lang/String;
   areturn
 .end method
 
@@ -135,7 +135,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableLocalDateConverter.stringToLocalDate(Ljava/lang/String;)Lorg/joda/time/LocalDate;
+  invokestatic org/pgscala/converters/PGNullableLocalDateConverter.stringToLocalDate(Ljava/lang/String;)Lorg/joda/time/LocalDate;
   areturn
 .end method
 
@@ -143,7 +143,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableLocalDateConverter.localDateToString(Lorg/joda/time/LocalDate;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableLocalDateConverter.localDateToString(Lorg/joda/time/LocalDate;)Ljava/lang/String;
   areturn
 .end method
 
@@ -151,7 +151,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableDateTimeConverter.stringToDateTime(Ljava/lang/String;)Lorg/joda/time/DateTime;
+  invokestatic org/pgscala/converters/PGNullableDateTimeConverter.stringToDateTime(Ljava/lang/String;)Lorg/joda/time/DateTime;
   areturn
 .end method
 
@@ -159,7 +159,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableDateTimeConverter.dateTimeToString(Lorg/joda/time/DateTime;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableDateTimeConverter.dateTimeToString(Lorg/joda/time/DateTime;)Ljava/lang/String;
   areturn
 .end method
 
@@ -167,7 +167,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableByteArrayConverter.stringToByteArray(Ljava/lang/String;)[B
+  invokestatic org/pgscala/converters/PGNullableByteArrayConverter.stringToByteArray(Ljava/lang/String;)[B
   areturn
 .end method
 
@@ -175,7 +175,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableByteArrayConverter.byteArrayToString([B)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableByteArrayConverter.byteArrayToString([B)Ljava/lang/String;
   areturn
 .end method
 
@@ -183,7 +183,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableUUIDConverter.stringToUUID(Ljava/lang/String;)Ljava/util/UUID;
+  invokestatic org/pgscala/converters/PGNullableUUIDConverter.stringToUUID(Ljava/lang/String;)Ljava/util/UUID;
   areturn
 .end method
 
@@ -191,7 +191,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableUUIDConverter.uuidToString(Ljava/util/UUID;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableUUIDConverter.uuidToString(Ljava/util/UUID;)Ljava/lang/String;
   areturn
 .end method
 
@@ -199,7 +199,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableElemConverter.stringToElem(Ljava/lang/String;)Lscala/xml/Elem;
+  invokestatic org/pgscala/converters/PGNullableElemConverter.stringToElem(Ljava/lang/String;)Lscala/xml/Elem;
   areturn
 .end method
 
@@ -207,6 +207,6 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic hr/element/pgscala/converters/PGNullableElemConverter.elemToString(Lscala/xml/Elem;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableElemConverter.elemToString(Lscala/xml/Elem;)Ljava/lang/String;
   areturn
 .end method

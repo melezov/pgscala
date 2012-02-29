@@ -4,7 +4,7 @@ import org.joda.convert.*;
 
 import java.math.BigInteger;
 
-/** Do not edit - generated in PGBuilder / PGNullableBigIntegerConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGNullableBigIntegerConverterBuilder.scala */
 
 public enum PGNullableBigIntegerConverter implements StringConverter<BigInteger> {
   INSTANCE;

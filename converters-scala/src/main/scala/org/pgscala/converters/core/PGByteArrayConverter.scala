@@ -1,6 +1,6 @@
 package org.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / PGByteArrayConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGByteArrayConverterBuilder.scala */
 
 object PGByteArrayConverter extends PGConverter[Array[Byte]] {
   val PGType = PGNullableByteArrayConverter.pgType

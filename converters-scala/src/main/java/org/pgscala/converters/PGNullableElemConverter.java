@@ -6,7 +6,7 @@ import scala.io.Source;
 import scala.xml.Elem;
 import scala.xml.parsing.ConstructingParser;
 
-/** Do not edit - generated in PGBuilder / PGNullableElemConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGNullableElemConverterBuilder.scala */
 
 public enum PGNullableElemConverter implements StringConverter<Elem> {
   INSTANCE;

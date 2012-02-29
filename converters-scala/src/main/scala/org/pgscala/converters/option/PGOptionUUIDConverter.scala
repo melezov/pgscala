@@ -2,7 +2,7 @@ package org.pgscala.converters
 
 import java.util.UUID
 
-/** Do not edit - generated in PGBuilder / PGUUIDConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGUUIDConverterBuilder.scala */
 
 object PGOptionUUIDConverter extends PGConverter[Option[UUID]] {
   val PGType = PGUUIDConverter.PGType

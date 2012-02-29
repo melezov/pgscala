@@ -1,6 +1,6 @@
 package org.pgscala.converters
 
-/** Do not edit - generated in PGBuilder / PGBigDecimalConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGBigDecimalConverterBuilder.scala */
 
 object PGBigDecimalConverter extends PGConverter[BigDecimal] {
   val PGType = PGNullableBigDecimalConverter.pgType

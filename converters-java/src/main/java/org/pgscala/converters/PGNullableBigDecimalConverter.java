@@ -4,7 +4,7 @@ import org.joda.convert.*;
 
 import java.math.BigDecimal;
 
-/** Do not edit - generated in PGBuilder / PGNullableBigDecimalConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGNullableBigDecimalConverterBuilder.scala */
 
 public enum PGNullableBigDecimalConverter implements StringConverter<BigDecimal> {
   INSTANCE;

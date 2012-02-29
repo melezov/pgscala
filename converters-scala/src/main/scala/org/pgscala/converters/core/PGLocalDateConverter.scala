@@ -2,7 +2,7 @@ package org.pgscala.converters
 
 import org.joda.time.LocalDate;
 
-/** Do not edit - generated in PGBuilder / PGLocalDateConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGLocalDateConverterBuilder.scala */
 
 object PGLocalDateConverter extends PGConverter[LocalDate] {
   val PGType = PGNullableLocalDateConverter.pgType
