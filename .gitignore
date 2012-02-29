@@ -1,9 +1,8 @@
 .cache
 .classpath
 .project
-.scala_dependencies
 .settings
 target
 .target
 
-project/strap/sbt-launch-*.jar
+sbt-launch-*.jar
