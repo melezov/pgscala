@@ -62,7 +62,7 @@ object BuildSettings {
 //  ---------------------------------------------------------------------------
 
 object Publications {
-  val pgscalaUtil       = "org.pgscala" %  "pgscala-util"        % "0.1.0-SNAPSHOT"
+  val pgscalaUtil       = "org.pgscala" %  "pgscala-util"        % "0.3.0-SNAPSHOT"
 /*
   val pgjavaConverters  = "org.pgscala" %  "pgjava-converters"  % "0.3.0-6-pjc"
   val pgscalaConverters = "org.pgscala" %% "pgscala-converters" % "0.3.0-6-pjc"
