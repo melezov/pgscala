@@ -12,6 +12,12 @@ object BuildSettings {
   , initialCommands := "import org.pgscala.util._"
   )
 
+  val bsIORC = scalaSettings ++ Seq(
+    name    := "pgscala-iorc"
+  , version := "0.1.0-SNAPSHOT"
+  , initialCommands := "import org.pgscala.iorc._"
+  )
+
 //  ===========================================================================
 
   val proxy = TaskKey[Unit]("proxy", "Compiles jasmin proxy methods (return type overloading for Scala)")
@@ -45,15 +51,15 @@ object BuildSettings {
   , initialCommands := "import org.pgscala.converters._"
   , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)( _ :: _ :: Nil)
   )
-/*
+
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.4-6-pjc"
+  , version := "0.7.5-SNAPSHOT"
   )
-
-  val bsPGScalaPool = scalaSettings ++ Seq(
+/*
+  val bsPool = scalaSettings ++ Seq(
     name    := "pgscala-pool"
-  , version := "0.1.7-3"
+  , version := "0.2.0-SNAPSHOT"
   )
 */
 }
@@ -64,9 +70,10 @@ object Publications {
   val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.0-SNAPSHOT"
   val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.0-SNAPSHOT"
   val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.0-SNAPSHOT"
+  val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.0-SNAPSHOT"
 /*
-  val pgscala           = "org.pgscala" %% "pgscala"            % "0.7.4-6-pjc"
-  val pgpool            = "org.pgscala" %% "pgscala-pool"       % "0.1.7-2"
+  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.5-SNAPSHOT"
+  val pgpool                 = "org.pgscala" %% "pgscala-pool"             % "0.2.0-SNAPSHOT"
 */
 }
 
@@ -82,17 +89,13 @@ object Dependencies {
 
   val scalaIo = "com.github.scala-incubator.io" % "scala-io-file_2.9.1" % "0.3.0"
 
-/*
-  val iorc = "org.etb" %% "iorc" % "0.0.21"
-
   val postgres = "postgresql" % "postgresql" % "9.1-901.jdbc4"
-
+/*
   val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
 
   val configrity = "org.streum" % "configrity-core_2.9.1" % "0.10.0"
-
-  val scalaTest = "org.scalatest" %% "scalatest" % "1.7.1" % "test"
 */
+  val scalaTest = "org.scalatest" %% "scalatest" % "1.7.1" % "test"
 }
 
 //  ---------------------------------------------------------------------------
@@ -103,7 +106,13 @@ object ProjectDeps {
   import Dependencies._
   import Publications._
 
-  val depsUtil = libDeps()
+  val depsUtil = libDeps(
+    scalaTest
+  )
+
+  val depsIORC = libDeps(
+    scalaTest
+  )
 
   val depsBuilder = libDeps(
     scalaIo
@@ -111,27 +120,25 @@ object ProjectDeps {
 
   val depsConvertersJava = libDeps(
     jodaTime
+  , scalaTest
   )
 
   val depsConvertersScala = libDeps(
     pgscalaConvertersJava
-  )
-/*
-  val depsPGScala = libDeps(
-    pgjavaUtil
-  , pgscalaConverters
-  , iorc
-  , postgres
-  , configrity
   , scalaTest
   )
 
-  val depsPGScalaPool = libDeps(
-    pgscala
-  , c3p0
-
-    //test
-  , configrity
+  val depsPGScala = libDeps(
+    postgres
+  , pgjavaUtil
+  , pgscalaConvertersScala
+  , pgscalaIORC
+  , scalaTest
+  )
+/*
+  val depsPool = libDeps(
+    c3p0
+  , pgscala
   , scalaTest
   )
 */
@@ -149,6 +156,12 @@ object PGScalaBuild extends Build {
     settings = bsUtil :+ depsUtil
   )
 
+  lazy val iorc = Project(
+    "iorc",
+    file("iorc"),
+    settings = bsIORC :+ depsIORC
+  )
+
   lazy val builder = Project(
     "builder",
     file("builder"),
@@ -159,25 +172,25 @@ object PGScalaBuild extends Build {
     "converters-java",
     file("converters-java"),
     settings = bsConvertersJava :+ depsConvertersJava
-  )// dependsOn(pgjavaUtil % "test")
+  )
 
   lazy val pgscalaConverters = Project(
     "converters-scala",
     file("converters-scala"),
     settings = bsConvertersScala :+ depsConvertersScala
-  )// dependsOn(pgjavaConverters, pgjavaUtil % "test")
-/*
+  )
+
   lazy val pgscala = Project(
     "pgscala",
     file("pgscala"),
     settings = bsPGScala :+ depsPGScala
-  )// dependsOn(pgjavaUtil, pgscalaConverters)
-
+  )
+/*
   lazy val pgscalaPool = Project(
-    "pgscala-pool",
-    file("pgscala-pool"),
-    settings = bsPGScalaPool :+ depsPGScalaPool
-  )// dependsOn(pgscala)
+    "pool",
+    file("pool"),
+    settings = bsPool :+ depsPool
+  )
 */
 }
 
