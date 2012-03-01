@@ -1,3 +1,4 @@
+/*
 package org.pgscala
 
 import converters._
@@ -56,3 +57,4 @@ class PGScalaResultSet(rS: java.sql.ResultSet) extends Iterator[PGScalaResultSet
   def get[T](column: String, number: Int)(implicit c: PGConverter[T]): T =
     get(columns(column)(number - 1))
 }
+*/

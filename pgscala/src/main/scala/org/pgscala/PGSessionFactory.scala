@@ -1,4 +1,4 @@
-package org.pgscala
+/*package org.pgscala
 
 import javax.sql.DataSource
 
@@ -24,3 +24,4 @@ trait PGSessionFactory {
     }
   }
 }
+*/

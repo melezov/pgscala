@@ -1,4 +1,4 @@
-package org.pgscala
+/*package org.pgscala
 
 import util._
 import converters._
@@ -73,3 +73,4 @@ class PGScalaViaLiterals(con: java.sql.Connection) {
     }
   }
 }
+*/

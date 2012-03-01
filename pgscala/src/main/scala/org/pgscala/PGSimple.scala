@@ -1,4 +1,4 @@
-package org.pgscala
+/*package org.pgscala
 
 import javax.sql.DataSource
 import org.postgresql.ds.PGSimpleDataSource
@@ -15,3 +15,4 @@ class PGSimple(creds: PGCredentials) extends PGSimpleDataSource
   setUser(creds.user)
   setPassword(creds.pass)
 }
+*/

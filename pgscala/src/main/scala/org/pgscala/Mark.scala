@@ -18,8 +18,12 @@ object Mark {
     }
 
   @tailrec
-  def find(query: String, ch: Char, soFar: List[(Int, Int)]): List[(Int, Int)] = {
-    query.indexOf(ch) match {
+  def find(
+          query: String
+        , ch: Char
+        , soFar: List[(Int, Int)] //List.empty[(Int,Int)]
+        , delta: Int = 0  ): List[(Int, Int)] = {
+    query.indexOf(ch, delta) match {
       case -1 =>
         soFar
 
@@ -28,12 +32,11 @@ object Mark {
         val digit = tail.takeWhile(_.isDigit)
 
         if (digit.isEmpty) {
-          find(tail, ch, soFar)
+          find(query, ch, soFar, index + 1)
         }
         else {
-          val rest = tail.substring(digit.length)
           val nowFar = (digit.toInt -> index) :: soFar
-          find(rest, ch, nowFar)
+          find(query, ch, nowFar, index + digit.length)
         }
     }
   }
