@@ -55,6 +55,7 @@ object BuildSettings {
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
   , version := "0.7.5-SNAPSHOT"
+  , initialCommands := "import org.pgscala._"
   )
 /*
   val bsPool = scalaSettings ++ Seq(
@@ -130,9 +131,9 @@ object ProjectDeps {
 
   val depsPGScala = libDeps(
     postgres
-  , pgjavaUtil
-  , pgscalaConvertersScala
+  , pgscalaUtil
   , pgscalaIORC
+  , pgscalaConvertersScala
   , scalaTest
   )
 /*

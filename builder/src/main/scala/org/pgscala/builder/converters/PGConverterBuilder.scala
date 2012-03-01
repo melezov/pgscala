@@ -134,18 +134,18 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
 
   def buildScalaConverterImplicits() {
     val template =
-      Resource.fromClasspath("converters.scala")
+      Resource.fromClasspath("Implicits.scala")
         .slurpString(UTF8)
 
     val path = getPath(Scala) /
-      "converters.scala"
+      "Implicits.scala"
 
     val padding =
       converters.map(_.scalaUpperType.length).max
 
     val sCI =
       converters.map{c =>
-        "  implicit val impalePG%sConverter %s= PG%1$sConverter" format(
+        "  implicit val implicitPG%sConverter %s= PG%1$sConverter" format(
           c.scalaUpperType,
           " " * (padding - c.scalaUpperType.length)
         )
@@ -153,7 +153,7 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
 
     val sOCI =
       converters.map{c =>
-        "  implicit val impalePGOption%sConverter %s= PGOption%1$sConverter" format(
+        "  implicit val implicitPGOption%sConverter %s= PGOption%1$sConverter" format(
           c.scalaUpperType,
           " " * (padding - c.scalaUpperType.length)
         )

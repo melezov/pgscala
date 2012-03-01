@@ -1,78 +1,40 @@
 package org.pgscala
 
+import scala.annotation.tailrec
+
 object Mark {
-  type Indices = Map[Int, Seq[Int]]
+  type Indices = Map[Int, Set[Int]]
 
-  def apply(query: String, n: Int): (Indices, Indices) = {
-    val range = (1 to n)
-    val number = "\\d*".r
+  def apply(query: String): (Indices, Indices) =
+    (mark(query, '$'), mark(query, '@'))
 
-    def getNumberAfter(i: Int) =
-      (number.findFirstIn(query.drop(i + 1))).get.toInt
+  def mark(query: String, ch: Char): Indices =
+    find(query, ch, Nil) match {
+      case Nil =>
+        Map.empty
 
-    def find(wha: Char)(
-      res: Seq[(Int, Int)] = Seq.empty[(Int, Int)]
-    , last: Int = 0)
-    : Seq[(Int, Int)] =
-      query.indexOf(wha, last) match {
-        case -1 => res
-        case x => find(wha)((x, getNumberAfter(x)) +: res, x + 1)
-        }
-
-      ((find('$')()).groupBy(_._2).mapValues(_.map(_._1))
-    , (find('@')().groupBy(_._2).mapValues(_.map(_._1))))
+      case x =>
+        x groupBy(_._1) mapValues(_.map(_._2) toSet)
     }
+
+  @tailrec
+  def find(query: String, ch: Char, soFar: List[(Int, Int)]): List[(Int, Int)] = {
+    query.indexOf(ch) match {
+      case -1 =>
+        soFar
+
+      case index =>
+        val tail = query.substring(index + 1)
+        val digit = tail.takeWhile(_.isDigit)
+
+        if (digit.isEmpty) {
+          find(tail, ch, soFar)
+        }
+        else {
+          val rest = tail.substring(digit.length)
+          val nowFar = (digit.toInt -> index) :: soFar
+          find(rest, ch, nowFar)
+        }
+    }
+  }
 }
-
-      //.sortWith((x, y) => x._1 > y._1)
-//
-//    loc.foldLeft(Map.empty[Int, Seq[Int]], Map.empty[Int, Seq[Int]]){
-//      (acc, el) => (number.findFirstIn(query.drop(el._1)) match {
-//        case Some(x) =>
-//          val int = x.toInt
-//            el._2 match {
-//              case '$' => (acc._1 + (int -> el._1), acc._2)
-//              case '@' => (acc._1, acc._2 + (int -> el._1))
-//            }
-//        case None => System.error("You Shall Not Pass!")
-//      }
-//
-//
-//        acc
-//    }
-//
-//    val locIt = loc.iterator
-//    (1 to n).foldRight((
-//      Map.empty[Int, Seq[Int]], Map.empty[Int, Seq[Int]])) {
-//      (el, acc) =>
-//        if (locIt.hasNext) {
-//
-//          val next = locIt.next()
-//
-//          next._2 match {
-//            case '$' => (acc._1 + (el -> next._1), acc._2)
-//            case '@' => (acc._1, acc._2 + (el -> next._1))
-//          }
-//        } else
-//          acc
-//    }
-//  }
-//}
-
-
-//                                                         zipWithIndex version
-//(Map.empty[Int,Int] , Map.empty[Int,Int])
-//    val zip = query.zipWithIndex
-//    val loc = zip.filter(x => (x._1 == '$')||(x._1 == '@')).reverse.iterator
-//
-//    range.foldLeft((
-//          Map.empty[Int,Int]
-//        , Map.empty[Int,Int]
-//        , loc)) {
-//      (acc, el) =>
-//        val next = acc._3.next()
-//        next._1 match {
-//          case '$' => (acc._1 ++ (el -> next._2), acc._2, loc)
-//          case '@' => (acc._1 , acc._2 ++ (el -> next._2), loc)
-//        }
-//    }
