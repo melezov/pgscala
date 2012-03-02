@@ -1,4 +1,4 @@
-/*package org.pgscala
+package org.pgscala
 
 import util._
 import converters._
@@ -8,16 +8,16 @@ import java.sql.{ Statement, ResultSet}
 object PGScala {
 }
 
-trait PGScala {
+/*
   def arr[T, P1](query: String, p1: P1)(f: PGScalaResultSet => T)(implicit c1: PGConverter[P1]): IndexedSeq[T]
   def arr[T, P1, P2, P3, P4, P5]
       (query: String, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5)
       (f: PGScalaResultSet => T)
       (implicit c1: PGConverter[P1], c2: PGConverter[P2], c3: PGConverter[P3],
                 c4: PGConverter[P4], c5: PGConverter[P5]): IndexedSeq[T]
-}
+*/
 
-class PGScalaViaPreparedStatements(con: java.sql.Connection) {
+class PGScala(con: java.sql.Connection) {
   def arr[T, P1](query: String, p1: P1)(f: PGScalaResultSet => T)(implicit c1: PGConverter[P1]): IndexedSeq[T] = {
 
     val body = query
@@ -47,6 +47,7 @@ class PGScalaViaPreparedStatements(con: java.sql.Connection) {
     }
   }
 }
+/*
 
 class PGScalaViaLiterals(con: java.sql.Connection) {
   def arr[T, P1](query: String, p1: P1)(f: PGScalaResultSet => T)(implicit pc1: PGConverter[P1]): IndexedSeq[T] = {

@@ -1,4 +1,4 @@
-/*package org.pgscala
+package org.pgscala
 
 case class PGCredentials(
     host: String
@@ -6,4 +6,4 @@ case class PGCredentials(
   , dbName: String
   , user: String
   , pass: String
-)*/
+)
