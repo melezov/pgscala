@@ -53,7 +53,7 @@ class DoubleTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
       when ("that value is converted to Double")
       val res = PGNullableDoubleConverter stringToDouble s
       then ("it should return a Double value of %s" format s)
-      res should equal (Double.PositiveInfinity)
+      res.toString should equal (s)
     }
 
     scenario("String to Double Nr. 2"){
@@ -62,7 +62,7 @@ class DoubleTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
       when ("that value is converted to Double")
       val res = PGNullableDoubleConverter stringToDouble s
       then ("it should return a Double value of %s" format s)
-      res should equal (Double.NegativeInfinity)
+      res.toString should equal (s)
     }
 
     scenario("String to Double Nr. 3"){
