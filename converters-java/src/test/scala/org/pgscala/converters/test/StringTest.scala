@@ -1,12 +1,10 @@
-package hr.element.pgscala
+package org.pgscala
 package converters
 package test
 
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.matchers.ShouldMatchers
-
-
 
 class StringTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
   feature("About to test an String converter"){

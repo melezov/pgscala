@@ -1,4 +1,4 @@
-package hr.element.pgscala
+package org.pgscala
 package converters
 package test
 
@@ -44,7 +44,5 @@ class UUIDTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
       then ("It should return a UUID value %s" format res)
       res.toString should equal(t)
     }
-
   }
-
 }

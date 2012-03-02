@@ -1,4 +1,4 @@
-package hr.element.pgscala
+package org.pgscala
 package converters
 package test
 

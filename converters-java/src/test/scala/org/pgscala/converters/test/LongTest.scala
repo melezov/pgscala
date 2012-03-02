@@ -1,4 +1,4 @@
-package hr.element.pgscala
+package org.pgscala
 package converters
 package test
 
@@ -6,8 +6,6 @@ import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.matchers.ShouldMatchers
 import scala.util.Random
-
-
 
 class LongTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
   feature("About to test an Long converter"){
@@ -84,6 +82,5 @@ class LongTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
       then ("It should return an Long value %s" format n)
       res.toString should equal(n)
     }
-
   }
 }

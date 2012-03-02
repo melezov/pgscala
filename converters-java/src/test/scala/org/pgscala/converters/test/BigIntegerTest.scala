@@ -66,7 +66,5 @@ class BigIntegerTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
       then ("It should return a BigInteger value %s" format n)
       res should equal(BigInteger.valueOf(Long.MinValue - 1))
     }
-
-
   }
 }

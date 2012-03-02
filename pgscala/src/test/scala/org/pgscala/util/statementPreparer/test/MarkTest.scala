@@ -1,4 +1,4 @@
-package hr.element.pgscala.util.statementPreparer
+package org.pgscala
 package test
 
 import org.scalatest.{ FeatureSpec, GivenWhenThen }

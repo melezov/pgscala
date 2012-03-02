@@ -89,7 +89,5 @@ class BigDecimalTest extends FeatureSpec with GivenWhenThen with ShouldMatchers 
       then("it should return a BigDecimal value %s" format res)
       res should equal (bd)
     }
-
   }
-
 }

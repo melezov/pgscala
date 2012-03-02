@@ -1,4 +1,4 @@
-package hr.element.pgscala
+package org.pgscala
 package converters
 package test
 
@@ -6,8 +6,6 @@ import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.matchers.ShouldMatchers
 import scala.util.Random
-
-
 
 class ShortTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
   feature("About to test an Short converter"){
@@ -66,8 +64,5 @@ class ShortTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
       then ("It should return an Short value %s" format n)
       res.toString should equal(n)
     }
-
-
   }
-
 }

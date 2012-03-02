@@ -45,6 +45,5 @@ class BooleanTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
       then ("""It should return a boolean value false""")
       res should equal(false)
     }
-
   }
 }
