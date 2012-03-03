@@ -20,7 +20,7 @@ object PGScala {
 class PGScala(con: java.sql.Connection) {
   import Parametrifier._
 
-  def arr[T, P1](query: String, params: IndexedSeq[ParamText[_]])(f: PGScalaResultSet => T): IndexedSeq[T] = {
+  private def arr[T](query: String, params: IndexedSeq[ParamText[_]])(f: PGScalaResultSet => T): IndexedSeq[T] = {
     val p = Parametrifier(query, params)
 
     if (p.preparedParams.isEmpty) {
@@ -60,4 +60,12 @@ class PGScala(con: java.sql.Connection) {
       }
     }
   }
+
+  type PGArr[T] = Function1[PGScalaResultSet => T, IndexedSeq[T]]
+
+  def arr[T](query: String): PGArr[T] =
+    arr(query, IndexedSeq.empty)
+
+  def arr[T, P1](query: String, p1: P1)(implicit c1: PGConverter[P1]): PGArr[T] =
+    arr(query, IndexedSeq(ParamText(p1, c1)))
 }
