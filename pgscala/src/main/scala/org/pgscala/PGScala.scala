@@ -18,60 +18,46 @@ object PGScala {
 */
 
 class PGScala(con: java.sql.Connection) {
-  def arr[T, P1](query: String, p1: P1)(f: PGScalaResultSet => T)(implicit c1: PGConverter[P1]): IndexedSeq[T] = {
+  import Parametrifier._
 
-    val body = query
-      .replaceFirst("\\$1", "?::" + c1.PGType)
-      .replaceAll("\\$1", "\\$1::" + c1.PGType)
+  def arr[T, P1](query: String, params: IndexedSeq[ParamText[_]])(f: PGScalaResultSet => T): IndexedSeq[T] = {
+    val p = Parametrifier(query, params)
 
-    val pS = con prepareStatement(body)
-
-    println(body)
-
-    try {
-      val sp1 =
-
-      pS.setString(1, c1 toPGString p1)
-
-      val rS = pS.executeQuery()
-
+    if (p.preparedParams.isEmpty) {
+      val st = con.createStatement()
       try {
-        new PGScalaResultSet(rS) map f toIndexedSeq
+        val rS = st.executeQuery(p.preparedQuery)
+        try {
+          new PGScalaResultSet(rS) map f toIndexedSeq
+        }
+        finally {
+          rS.close()
+        }
       }
       finally {
-        rS.close()
+        st.close()
       }
     }
-    finally {
-      pS.close();
+    else {
+      val pS = con prepareStatement(p.preparedQuery)
+      try {
+        var index = 1
+        for (p <- p.preparedParams) {
+          pS.setString(index, p)
+          index += 1
+        }
+
+        val rS = pS.executeQuery()
+        try {
+          new PGScalaResultSet(rS) map f toIndexedSeq
+        }
+        finally {
+          rS.close()
+        }
+      }
+      finally {
+        pS.close()
+      }
     }
   }
 }
-/*
-
-class PGScalaViaLiterals(con: java.sql.Connection) {
-  def arr[T, P1](query: String, p1: P1)(f: PGScalaResultSet => T)(implicit pc1: PGConverter[P1]): IndexedSeq[T] = {
-    val s = con createStatement()
-
-    try {
-      val sp1 = PGLiteral.quote(pc1.toPGString(p1)) + "::" + pc1.PGType
-
-      val body = query.replace("$1", sp1)
-
-      println(body)
-
-      val rS = s.executeQuery(body)
-
-      try {
-        new PGScalaResultSet(rS) map f toIndexedSeq
-      }
-      finally {
-        rS.close()
-      }
-    }
-    finally {
-      s.close();
-    }
-  }
-}
-*/

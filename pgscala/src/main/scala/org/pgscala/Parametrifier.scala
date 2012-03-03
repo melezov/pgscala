@@ -1,36 +1,44 @@
 package org.pgscala
 
 import scala.annotation.tailrec
-
 import Parametrifier._
 
+import util.PGLiteral
+import converters.PGConverter
+
 object Parametrifier {
-  case class ParamText(text: String, pgType: String) {
-    def toJDBCParam = "?::%s".format(pgType)
-    def toParam(num: Int) = "$%d::%s".format(num, pgType)
-    def toLiteral = "%s::%s".format(util.PGLiteral.quote(text), pgType)
+  case class ParamText[T](value: T, pc: PGConverter[T]) {
+    def toJDBCParam = "?::%s".format(pc.PGType)
+    def toParam(num: Int) = "$%d::%s".format(num, pc.PGType)
+    def toLiteral = "%s::%s".format(PGLiteral.quote(toString), pc.PGType)
+
+    override def toString() = pc.toPGString(value)
   }
 
-  case class ParamMark(ch: Char, number: Int, index: Int, width: Int)
-  case class ParamReplacement(param: ParamMark, body: Array[Char])
+  case class ParamMark(literal: Boolean, number: Int, index: Int, width: Int)
+  case class ParamReplacement(param: ParamMark, body: Array[Char]) {
+    override def toString = "%s:[%s]".format(param, new String(body))
+  }
 
-  def apply(query: String, params: IndexedSeq[ParamText]): Parametrifier = {
+  def apply(query: String, params: IndexedSeq[ParamText[_]]): Parametrifier = {
     new Parametrifier(query.toCharArray, params)
   }
 }
 
-class Parametrifier private(query: Array[Char], params: IndexedSeq[ParamText]) {
+class Parametrifier private(query: Array[Char], params: IndexedSeq[ParamText[_]]) {
 
   val marks = markParams(0, Nil)
 
   @tailrec
   private def markParams(index: Int, soFar: List[ParamMark]): List[ParamMark] =
     if (index > query.length - 1) {
-      soFar
+      soFar.reverse
     }
     else {
-      val ch = query(index); ch match {
+      val ch = query(index);
+      ch match {
         case '$' | '@' if index + 1 < query.length =>
+          val literal = ch == '@'
           query(index + 1) match {
 
             case n1 if n1 >= '1' && n1 <= '9' =>
@@ -41,14 +49,14 @@ class Parametrifier private(query: Array[Char], params: IndexedSeq[ParamText]) {
                   case n2 if n2 >= '0' && n2 <= '9' =>
                     val numX = query.view.drop(index + 1).takeWhile(_.isDigit).mkString
                     val delta = numX.length + 1
-                    markParams(index + delta, ParamMark(ch, numX.toInt, index, delta) :: soFar)
+                    markParams(index + delta, ParamMark(literal, numX.toInt, index, delta) :: soFar)
 
                   case _ =>
-                    markParams(index + 2, ParamMark(ch, num1, index, 2) :: soFar)
+                    markParams(index + 2, ParamMark(literal, num1, index, 2) :: soFar)
                 }
               }
               else {
-                markParams(index + 2, ParamMark(ch, num1, index, 2) :: soFar)
+                markParams(index + 2, ParamMark(literal, num1, index, 2) :: soFar)
               }
 
             case _ =>
@@ -59,21 +67,38 @@ class Parametrifier private(query: Array[Char], params: IndexedSeq[ParamText]) {
           markParams(index + 1, soFar)
       }
   }
-/*
-  def flowMaker(replace: Map[Int, String]
-              , indices: Indices) =>
-        indices.map{
-          indice =>
-            val replacingLength = 1 + indice._1.toString.length
-            indice._2.map(index =>
-              Replacement(index, replacingLength, replace(indice._1).toCharArray))
-           }.flatten.toList
 
-    val flow = (flowMaker(replace1, indices1) ::: flowMaker(replace2, indices2))
-        .sortWith((x, y) => x.index < y.index)
-    makeStringFromMatchList(baseString, flow)
+  val (replacements, preparedParams) = createReplacements()
+
+  private def createReplacements(): (Seq[ParamReplacement], IndexedSeq[String]) = {
+    val usedParams = Array.fill(params.length)(-1)
+
+    val reps =
+      marks.map{ m =>
+        val p = params(m.number - 1)
+
+        if (m.literal) {
+          ParamReplacement(m, p.toLiteral.toCharArray)
+        }
+        else if (-1 != usedParams(m.number - 1)) {
+          ParamReplacement(m, p.toParam(m.number).toCharArray)
+        }
+        else {
+          usedParams(m.number - 1) = m.index
+          ParamReplacement(m, p.toJDBCParam.toCharArray)
+        }
+      }
+
+    val pParams = usedParams
+      .zipWithIndex
+      .filter(-1!=)
+      .sortBy(_._1)
+      .map(p => params(p._2).toString)
+
+    reps -> pParams
   }
-*/
+
+  val preparedQuery = replaceMarks(replacements)
 
   private def replaceMarks(flow: Seq[ParamReplacement]) = {
     val buff = new Array[Char](
