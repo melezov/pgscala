@@ -91,7 +91,7 @@ class Parametrifier private(query: Array[Char], params: IndexedSeq[ParamText[_]]
 
     val pParams = usedParams
       .zipWithIndex
-      .filter(-1!=)
+      .filter(-1!=_._1)
       .sortBy(_._1)
       .map(p => params(p._2).toString)
 
