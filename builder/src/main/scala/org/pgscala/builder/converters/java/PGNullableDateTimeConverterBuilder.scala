@@ -12,7 +12,7 @@ import org.joda.time.format.*;"""
 
   override val body =
 """  private static final DateTimeFormatter dateTimeFormat =
-    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSZZ");
+    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSSZZ");
 """
 
   val to = "dateTimeFormat.print(dT)"

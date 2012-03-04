@@ -47,6 +47,8 @@ class PGScalaResultSet(rS: java.sql.ResultSet) extends Iterator[PGScalaResultSet
       .mapValues(_.map(_._2))
   }
 
+  //  --------------------------------------------------------------------------
+
   def get[T](index: Int)(implicit c: PGConverter[T]): T =
     c fromPGString (rS getString index)
 
@@ -55,4 +57,28 @@ class PGScalaResultSet(rS: java.sql.ResultSet) extends Iterator[PGScalaResultSet
 
   def get[T](column: String, number: Int)(implicit c: PGConverter[T]): T =
     get(columns(column)(number - 1))(c)
+
+  //  --------------------------------------------------------------------------
+
+  /* Helper methods: get[Option[Long]](...) === opt[Long](...) */
+
+  def opt[T](index: Int)(implicit c: PGConverter[Option[T]]): Option[T] =
+    c fromPGString (rS getString index)
+
+  def opt[T](column: String)(implicit c: PGConverter[Option[T]]): Option[T] =
+    c fromPGString (rS getString column)
+
+  def opt[T](column: String, number: Int)(implicit c: PGConverter[Option[T]]): Option[T] =
+    opt(columns(column)(number - 1))(c)
+
+  //  --------------------------------------------------------------------------
+
+  def arr[T](index: Int)(implicit c: PGConverter[T]): IndexedSeq[T] =
+    (new PGTraversableConverter[T]).fromPGString(rS getString index)
+
+  def arr[T](column: String)(implicit c: PGConverter[T]): IndexedSeq[T] =
+    (new PGTraversableConverter[T]).fromPGString(rS getString column)
+
+  def arr[T](column: String, number: Int)(implicit c: PGConverter[T]): IndexedSeq[T] =
+    arr(columns(column)(number - 1))(c)
 }

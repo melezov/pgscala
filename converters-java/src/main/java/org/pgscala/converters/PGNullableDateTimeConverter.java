@@ -13,7 +13,7 @@ public enum PGNullableDateTimeConverter implements StringConverter<DateTime> {
   public static final String pgType = "timestamptz";
 
   private static final DateTimeFormatter dateTimeFormat =
-    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSZZ");
+    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSSZZ");
 
   @ToString
   public static String dateTimeToString(final DateTime dT) {

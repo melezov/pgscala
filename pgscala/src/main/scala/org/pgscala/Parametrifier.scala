@@ -10,9 +10,9 @@ object Parametrifier {
   case class ParamText[T](value: T, pc: PGConverter[T]) {
     def toJDBCParam = "?::%s".format(pc.PGType)
     def toParam(num: Int) = "$%d::%s".format(num, pc.PGType)
-    def toLiteral = "%s::%s".format(PGLiteral.quote(toString), pc.PGType)
+    lazy val toLiteral = "%s::%s".format(PGLiteral.quote(toString), pc.PGType)
 
-    override def toString() = pc.toPGString(value)
+    override lazy val toString = pc.toPGString(value)
   }
 
   case class ParamMark(literal: Boolean, number: Int, index: Int, width: Int)
