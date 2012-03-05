@@ -3,7 +3,9 @@ package org.pgscala
 import util._
 import converters._
 
-import java.sql.{ Statement, ResultSet}
+import java.sql.{ Statement, ResultSet }
+
+import org.slf4j.{ Logger, LoggerFactory }
 
 class PGScala(con: java.sql.Connection) {
   import Parametrifier.ParamText

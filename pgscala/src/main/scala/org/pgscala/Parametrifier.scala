@@ -1,10 +1,10 @@
 package org.pgscala
 
 import scala.annotation.tailrec
-import Parametrifier._
-
 import util.PGLiteral
 import converters.PGConverter
+
+import org.slf4j.LoggerFactory
 
 object Parametrifier {
   case class ParamText[T](value: T, pc: PGConverter[T]) {
@@ -20,13 +20,28 @@ object Parametrifier {
     override def toString = "%s:[%s]".format(param, new String(body))
   }
 
+  private val logger =
+    LoggerFactory.getLogger(classOf[Parametrifier])
+
   def apply(query: String, params: IndexedSeq[ParamText[_]]): Parametrifier = {
+    if (logger.isTraceEnabled) {
+      logger.trace("""
+Query:
+  -> <{}>
+Params:
+  -> <{}>""",
+        query.trim,
+        params mkString """>
+  -> <""")
+    }
+
     new Parametrifier(query.toCharArray, params)
   }
 }
 
-class Parametrifier private(query: Array[Char], params: IndexedSeq[ParamText[_]]) {
+import Parametrifier._
 
+class Parametrifier private(query: Array[Char], params: IndexedSeq[ParamText[_]]) {
   val marks = markParams(0, Nil)
 
   @tailrec
@@ -99,6 +114,17 @@ class Parametrifier private(query: Array[Char], params: IndexedSeq[ParamText[_]]
   }
 
   val preparedQuery = replaceMarks(replacements)
+
+  if (logger.isDebugEnabled) {
+      logger.debug("""
+Prepared query:
+  -> <{}>
+Prepared params:
+  -> <{}>""",
+        preparedQuery.trim,
+        preparedParams mkString """>
+  -> <""")
+    }
 
   private def replaceMarks(flow: Seq[ParamReplacement]) = {
     val buff = new Array[Char](

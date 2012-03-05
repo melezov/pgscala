@@ -91,6 +91,10 @@ object Dependencies {
   val scalaIo = "com.github.scala-incubator.io" % "scala-io-file_2.9.1" % "0.3.0"
 
   val postgres = "postgresql" % "postgresql" % "9.1-901.jdbc4"
+
+  val slf4j = "org.slf4j" % "slf4j-api" % "1.6.4"
+
+  val logback = "ch.qos.logback" % "logback-classic" % "1.0.0"
 /*
   val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
 
@@ -131,10 +135,12 @@ object ProjectDeps {
 
   val depsPGScala = libDeps(
     postgres
+  , slf4j
   , pgscalaUtil
   , pgscalaIORC
   , pgscalaConvertersScala
   , scalaTest
+  , logback % "test"
   )
 /*
   val depsPool = libDeps(
