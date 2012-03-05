@@ -14,16 +14,6 @@ class PGPool(creds: PGCredentials) extends PGSessionFactory {
     cpds.setUser(creds.user)
     cpds.setPassword(creds.pass)
 
-    cpds.setMinPoolSize(8)
-    cpds.setMaxPoolSize(64)
-
-    cpds.setAcquireIncrement(8)
-    cpds.setAcquireRetryAttempts(120)
-    cpds.setAcquireRetryDelay(250) // ms
-
-    cpds.setMaxStatements(128)
-    cpds.setMaxStatementsPerConnection(8)
-
     cpds
   }
 }
