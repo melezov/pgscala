@@ -10,6 +10,10 @@ public final class PGLiteral {
    */
 
   public static final String quote(final String literal) {
+    if (null == literal) {
+      return "NULL";
+    }
+
     final int len = literal.length();
     if (len == 0) {
       return "''";

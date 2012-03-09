@@ -8,7 +8,7 @@ object BuildSettings {
 
   val bsUtil = javaSettings ++ Seq(
     name    := "pgscala-util"
-  , version := "0.3.0-M2"
+  , version := "0.3.0-M3"
   , initialCommands := "import org.pgscala.util._"
   )
 
@@ -54,24 +54,24 @@ object BuildSettings {
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.5-M2"
+  , version := "0.7.5-M3"
   , initialCommands := "import org.pgscala._"
   )
 
   val bsPool = scalaSettings ++ Seq(
     name    := "pgscala-pool"
-  , version := "0.2.0-M2"
+  , version := "0.2.0-M3"
   )
 }
 
 //  ---------------------------------------------------------------------------
 
 object Publications {
-  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.0-M2"
+  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.0-M3"
   val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.0-M2"
   val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.0-M2"
   val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.0-M2"
-  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.5-M2"
+  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.5-M3"
 }
 
 //  ---------------------------------------------------------------------------
