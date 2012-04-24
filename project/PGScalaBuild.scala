@@ -8,13 +8,13 @@ object BuildSettings {
 
   val bsUtil = javaSettings ++ Seq(
     name    := "pgscala-util"
-  , version := "0.3.0-M3"
+  , version := "0.3.0-T1"
   , initialCommands := "import org.pgscala.util._"
   )
 
   val bsIORC = scalaSettings ++ Seq(
     name    := "pgscala-iorc"
-  , version := "0.1.0-M2"
+  , version := "0.1.0-T1"
   , initialCommands := "import org.pgscala.iorc._"
   )
 
@@ -41,37 +41,37 @@ object BuildSettings {
 
   val bsConvertersJava = javaSettings ++ Seq(
     name    := "pgscala-converters-java"
-  , version := "0.2.0-M2"
+  , version := "0.2.0-T1"
   , initialCommands := "import org.pgscala.converters._"
   )
 
   val bsConvertersScala = scalaSettings ++ Seq(
     name    := "pgscala-converters-scala"
-  , version := "0.2.0-M2"
+  , version := "0.2.0-T1"
   , initialCommands := "import org.pgscala.converters._"
   , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)( _ :: _ :: Nil)
   )
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.5-M3"
+  , version := "0.7.5-T1"
   , initialCommands := "import org.pgscala._"
   )
 
   val bsPool = scalaSettings ++ Seq(
     name    := "pgscala-pool"
-  , version := "0.2.0-M3"
+  , version := "0.2.0-T1"
   )
 }
 
 //  ---------------------------------------------------------------------------
 
 object Publications {
-  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.0-M3"
-  val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.0-M2"
-  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.0-M2"
-  val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.0-M2"
-  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.5-M3"
+  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.0-T1"
+  val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.0-T1"
+  val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.0-T1"
+  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.0-T1"
+  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.5-T1"
 }
 
 //  ---------------------------------------------------------------------------
@@ -107,7 +107,8 @@ object ProjectDeps {
   import Publications._
 
   val depsUtil = libDeps(
-    scalaTest
+    slf4j
+  , scalaTest
   )
 
   val depsIORC = libDeps(

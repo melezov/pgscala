@@ -3,6 +3,9 @@ package org.pgscala.util;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public final class PGArray {
 
   /**
@@ -84,7 +87,15 @@ public final class PGArray {
 
   // =============================================================================
 
-  public static final String[] unpack(final String array) throws ParseException {
+  private static final Logger logger =
+      LoggerFactory.getLogger(PGRecord.class);
+
+  public static final String[] unpack(final String array)
+      throws ParseException {
+
+    if (logger.isTraceEnabled()) {
+      logger.trace("Unpacking array: {}", array);
+    }
 
     final int lastIndex = array.length() - 1;
     if (lastIndex < 1)
