@@ -42,7 +42,7 @@ Params:
 import Parametrifier._
 
 class Parametrifier private(query: Array[Char], params: IndexedSeq[ParamText[_]]) {
-  val marks = markParams(0, Nil)
+  val marks = if (params.isEmpty) Nil else markParams(0, Nil)
 
   @tailrec
   private def markParams(index: Int, soFar: List[ParamMark]): List[ParamMark] =
