@@ -15,6 +15,9 @@ public enum PGNullableDateTimeConverter implements StringConverter<DateTime> {
   private static final DateTimeFormatter dateTimeFormat =
     DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSSZZ");
 
+  private static final DateTimeFormatter dateTimeSecondFormat =
+    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ssZZ");
+
   @ToString
   public static String dateTimeToString(final DateTime dT) {
     return null == dT ? null : dateTimeFormat.print(dT);
@@ -22,7 +25,13 @@ public enum PGNullableDateTimeConverter implements StringConverter<DateTime> {
 
   @FromString
   public static DateTime stringToDateTime(final String dT) {
-    return null == dT ? null : dateTimeFormat.parseDateTime(dT);
+    if (null == dT) return null;
+    try {
+      return dateTimeFormat.parseDateTime(dT);
+    }
+    catch(final IllegalArgumentException e) {
+      return dateTimeSecondFormat.parseDateTime(dT);
+    }
   }
 
 // -----------------------------------------------------------------------------
