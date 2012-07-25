@@ -13,9 +13,9 @@ import org.joda.time.format.*;"""
   override val body =
 """  private static final DateTimeFormatter dateTimeFormat =
     DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSSZZ");
-    
+
   private static final DateTimeFormatter dateTimeSecondFormat =
-    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ssZZ");    
+    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ssZZ");
 """
 
   val to = "dateTimeFormat.print(dT)"
@@ -31,6 +31,6 @@ import org.joda.time.format.*;"""
     val code = super.inject(body)
     code
       .replaceFirst("return null == dT \\? null : try", """if (null == dT) return null;
-    try""").replaceFirst("\\};", "}") 
-  }   
+    try""").replaceFirst("\\};", "}")
+  }
 }

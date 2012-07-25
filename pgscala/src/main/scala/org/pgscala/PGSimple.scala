@@ -7,7 +7,7 @@ class PGSimple(creds: PGCredentials) extends PGSimpleDataSource
                                      with PGSessionFactory {
   val ds = this
 
-  def getParentLogger = sys error "Unsupported parent logger"
+  override def getParentLogger = sys error "Unsupported parent logger"
 
   setServerName(creds.host)
   setPortNumber(creds.port)
@@ -15,4 +15,3 @@ class PGSimple(creds: PGCredentials) extends PGSimpleDataSource
   setUser(creds.user)
   setPassword(creds.pass)
 }
-
