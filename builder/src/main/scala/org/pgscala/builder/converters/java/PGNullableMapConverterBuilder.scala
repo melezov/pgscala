@@ -1,8 +1,9 @@
-package org.pgscala.converters;
+package org.pgscala
+package builder
+package converters
 
-import org.joda.convert.*;
-
-import org.joda.convert.FromString;
+object PGNullableMapConverterBuilder extends PGNullableConverterBuilder {
+  override val imports = """import org.joda.convert.FromString;
 import org.joda.convert.StringConverter;
 import org.joda.convert.ToString;
 
@@ -10,18 +11,17 @@ import scala.collection.mutable.Map;
 import scala.collection.mutable.HashMap;
 
 import scala.collection.Iterator;
-import scala.Tuple2;
+import scala.Tuple2;"""
 
-/** Do not edit - generated in Builder / PGNullableMapConverterBuilder.scala */
+  val pgType = "hstore"
 
-public enum PGNullableMapConverter implements StringConverter<Map<String, String>> {
-  INSTANCE;
+  override val upperType = "Map"
 
-  public static final String pgType = "hstore";
+  val clazz = "scala.collection.mutable.Map<String, String>"
 
-  @ToString
-  public static String mapToString(final Map<String, String> m) {
-    if (null == m) return null;
+  override val jasminType = "Lscala.collection.mutable.Map<Ljava/lang/String;Ljava/lang/String;>;"
+
+  val to = """
 
     final StringBuilder sB = new StringBuilder();
 
@@ -44,12 +44,9 @@ public enum PGNullableMapConverter implements StringConverter<Map<String, String
         : sB.append("\", \"")).append(k).append("\"=>\"").append(v);
     }
 
-    return sB.append('"').toString();
-  }
+    return sB.append('"').toString()"""
 
-  @FromString
-  public static Map<String, String> stringToMap(final String m) {
-    if (null == m) return null;
+  val from = """
 
     final String[] pairs = m.substring(1, m.length() - 1).split("\", \"");
     final HashMap<String, String> map = new HashMap<String, String>();
@@ -67,16 +64,14 @@ public enum PGNullableMapConverter implements StringConverter<Map<String, String
       );
     }
 
-    return map;
-  }
+    return map"""
 
-// -----------------------------------------------------------------------------
+  override val language = Scala
 
-  public String convertToString(final Map<String, String> m) {
-    return mapToString(m);
-  }
+  override def inject(body: String) =
+    super.inject(body)
+      .replace(
+        "return null == m ? null :",
+        "if (null == m) return null;")
 
-  public Map<String, String> convertFromString(final Class<? extends Map<String, String>> clazz, final String m) {
-    return stringToMap(m);
-  }
 }

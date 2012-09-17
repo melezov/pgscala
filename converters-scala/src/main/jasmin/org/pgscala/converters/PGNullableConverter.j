@@ -210,3 +210,19 @@
   invokestatic org/pgscala/converters/PGNullableElemConverter.elemToString(Lscala/xml/Elem;)Ljava/lang/String;
   areturn
 .end method
+
+.method public static fromPGString(Ljava/lang/String;)Lscala.collection.mutable.Map<Ljava/lang/String;Ljava/lang/String;>;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableMapConverter.stringToMap(Ljava/lang/String;)Lscala.collection.mutable.Map<Ljava/lang/String;Ljava/lang/String;>;
+  areturn
+.end method
+
+.method public static toPGString(Lscala.collection.mutable.Map<Ljava/lang/String;Ljava/lang/String;>;)Ljava/lang/String;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableMapConverter.mapToString(Lscala.collection.mutable.Map<Ljava/lang/String;Ljava/lang/String;>;)Ljava/lang/String;
+  areturn
+.end method

@@ -3,36 +3,36 @@ package builder
 package converters
 
 trait PGNullableConverterBuilderLike extends PGConverterHelper {
-  def imports: String       // Java imports
-  def pgType: String        // PostgreSQL type
+  def imports: String           // Java imports
+  def pgType: String            // PostgreSQL type
 
-  def clazz: String         // Fully qualified java class
-  def javaType: String      // Class name, used with imports
-  def jasminType: String    // JVM name (Ljava/lang/String;)
+  def clazz: String             // Fully qualified java class
+  def javaType: String          // Class name, used with imports
+  def jasminType: String        // JVM name (Ljava/lang/String;)
 
-  def upperType: String     // Descriptive class name
-  def lowerType: String     // Same as above, but first char lowercase
-  def javaVar: String       // Abbreviation of the class name for a variable
+  def upperType: String         // Descriptive class name
+  def lowerType: String         // Same as above, but first char lowercase
+  def javaVar: String           // Abbreviation of the class name for a variable
 
-  def body: String          // Additional functionality not contained elsewhere
-  def to: String            // Converter code from current type to String
-  def from: String          // Converter code from String to current type
+  def body: String              // Additional functionality not contained elsewhere
+  def to: String                // Converter code from current type to String
+  def from: String              // Converter code from String to current type
 
-  def language: Language    // Should the source be build in java or scala project
+  def language: Language        // Should the source be build in java or scala project
 
   protected def filters = Seq(
-    i("imports",    imports   )
-  , i("pgType",     pgType    )
-  , i("clazz",      clazz     )
-  , i("javaType",   javaType  )
-  , i("jasminType", jasminType)
-  , i("upperType",  upperType )
-  , i("lowerType",  lowerType )
-  , i("javaVar",    javaVar   )
-  , i("body",       body      )
-  , i("to",         to        )
-  , i("from",       from      )
-  , i("builder",    builder   )
+    i("imports"          , imports          )
+  , i("pgType"           , pgType           )
+  , i("clazz"            , clazz            )
+  , i("javaType"         , javaType         )
+  , i("jasminType"       , jasminType       )
+  , i("upperType"        , upperType        )
+  , i("lowerType"        , lowerType        )
+  , i("javaVar"          , javaVar          )
+  , i("body"             , body             )
+  , i("to"               , to               )
+  , i("from"             , from             )
+  , i("builder"          , builder          )
   )
 }
 
@@ -95,6 +95,7 @@ object PGNullableConverterBuilder extends PGConverterBuilderPaths {
   ,PGNullableUUIDConverterBuilder
 
   ,PGNullableElemConverterBuilder
+  ,PGNullableMapConverterBuilder
   )
 
   def buildJavaNullableConverters() {

@@ -49,7 +49,7 @@ object BuildSettings {
     name    := "pgscala-converters-scala"
   , version := "0.2.2"
   , initialCommands := "import org.pgscala.converters._"
-  , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)( _ :: _ :: Nil)
+  , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)(_ :: _ :: Nil)
   )
 
   val bsPGScala = scalaSettings ++ Seq(
@@ -77,7 +77,7 @@ trait Publications {
 //  ---------------------------------------------------------------------------
 
 object Dependencies extends Publications {
-  val jodaTime = Seq(    "org.joda" % "joda-convert" % "1.2",
+  val jodaTime = Seq(   "org.joda" % "joda-convert" % "1.2",
     "joda-time" % "joda-time" % "2.1"
   )
 
@@ -239,8 +239,8 @@ object Default {
     , crossScalaVersions := Seq("2.9.2", "2.9.1-1", "2.9.1", "2.9.0-1", "2.9.0")
     , scalaVersion <<= (crossScalaVersions) { versions => versions.head }
     , scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise")
-    , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)( _ :: Nil)
-    , unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )( _ :: Nil)
+    , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)(_ :: Nil)
+    , unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )(_ :: Nil)
     )
 
   val javaSettings =
@@ -248,7 +248,7 @@ object Default {
       autoScalaLibrary := false
     , crossPaths := false
     , javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5")
-    , unmanagedSourceDirectories in Compile <<= (javaSource in Compile)( _ :: Nil)
+    , unmanagedSourceDirectories in Compile <<= (javaSource in Compile)(_ :: Nil)
     )
 }
 

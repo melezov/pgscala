@@ -15,6 +15,7 @@ trait Implicits {
   implicit val implicitPGByteArrayConverter  = PGByteArrayConverter
   implicit val implicitPGUUIDConverter       = PGUUIDConverter
   implicit val implicitPGElemConverter       = PGElemConverter
+  implicit val implicitPGMapConverter        = PGMapConverter
 
   implicit val implicitPGOptionStringConverter     = PGOptionStringConverter
   implicit val implicitPGOptionBooleanConverter    = PGOptionBooleanConverter
@@ -30,4 +31,5 @@ trait Implicits {
   implicit val implicitPGOptionByteArrayConverter  = PGOptionByteArrayConverter
   implicit val implicitPGOptionUUIDConverter       = PGOptionUUIDConverter
   implicit val implicitPGOptionElemConverter       = PGOptionElemConverter
+  implicit val implicitPGOptionMapConverter        = PGOptionMapConverter
 }

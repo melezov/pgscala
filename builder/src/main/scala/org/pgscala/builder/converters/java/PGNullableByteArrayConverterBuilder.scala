@@ -65,11 +65,10 @@ object PGNullableByteArrayConverterBuilder extends PGPredefNullableConverterBuil
 
     return buffer"""
 
-  override def inject(body: String) = {
+  override def inject(body: String) =
     super.inject(body)
       .replace(
         "return null == bA ? null :",
         "if (null == bA) return null;"
       )
-  }
 }
