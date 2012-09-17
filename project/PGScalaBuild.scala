@@ -77,10 +77,7 @@ object Publications {
 //  ---------------------------------------------------------------------------
 
 object Dependencies {
-  import Publications._
-
-  val jodaTime = Seq(
-    "org.joda" % "joda-convert" % "1.2",
+  val jodaTime = Seq(    "org.joda" % "joda-convert" % "1.2",
     "joda-time" % "joda-time" % "2.1"
   )
 
@@ -95,7 +92,7 @@ object Dependencies {
 
   val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
 
-  val scalaTest = "org.scalatest" %% "scalatest" % "2.0.M2" % "test"
+  val scalaTest = "org.scalatest" %% "scalatest" % "2.0.M4" % "test"
 }
 
 //  ---------------------------------------------------------------------------
@@ -104,7 +101,6 @@ import Implicits._
 
 object ProjectDeps {
   import Dependencies._
-  import Publications._
 
   val depsUtil = libDeps(
     slf4j
@@ -213,7 +209,7 @@ object Resolvers {
   val settings = Seq(
     resolvers := Seq(ElementNexus, ElementReleases, ElementSnapshots),
     externalResolvers <<= resolvers map { rs =>
-      Resolver.withDefaultResolvers(rs, mavenCentral = false, scalaTools = false)
+      Resolver.withDefaultResolvers(rs, mavenCentral = false)
     }
   )
 }
