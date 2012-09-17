@@ -66,7 +66,7 @@ object BuildSettings {
 
 //  ---------------------------------------------------------------------------
 
-object Publications {
+trait Publications {
   val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.2"
   val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.2"
   val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.2"
@@ -76,7 +76,7 @@ object Publications {
 
 //  ---------------------------------------------------------------------------
 
-object Dependencies {
+object Dependencies extends Publications {
   val jodaTime = Seq(    "org.joda" % "joda-convert" % "1.2",
     "joda-time" % "joda-time" % "2.1"
   )
@@ -208,8 +208,8 @@ object Resolvers {
 
   val settings = Seq(
     resolvers := Seq(ElementNexus, ElementReleases, ElementSnapshots),
-    externalResolvers <<= resolvers map { rs =>
-      Resolver.withDefaultResolvers(rs, mavenCentral = false)
+    externalResolvers <<= resolvers map { rS =>
+      Resolver.withDefaultResolvers(rS, mavenCentral = false)
     }
   )
 }
