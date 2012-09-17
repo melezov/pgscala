@@ -3,7 +3,7 @@ package org.pgscala.converters
 trait PGConverter[T] {
   val PGType: String
 
-  def toPGString (t: T): String
+  def toPGString(t: T): String
   def fromPGString (value: String): T
 }
 
