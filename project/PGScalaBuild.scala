@@ -73,7 +73,7 @@ trait Publications {
   val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.5"
   val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.5"
   val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.10"
-*/  
+*/
 }
 
 //  ---------------------------------------------------------------------------

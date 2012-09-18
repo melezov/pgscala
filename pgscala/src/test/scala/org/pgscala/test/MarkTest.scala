@@ -1,4 +1,5 @@
-/*package  org.pgscala
+/*
+package org.pgscala
 package test
 
 import org.scalatest.{ FeatureSpec, GivenWhenThen }

@@ -2,7 +2,6 @@ package org.pgscala.iorc
 package test
 
 import org.scalatest._
-import matchers._
 
 import scala.collection.immutable.{ BitSet, TreeSet, TreeMap, IntMap, ListSet, ListMap}
 

@@ -19,17 +19,17 @@ trait PGConverterBuilderLike extends PGConverterHelper {
   def from: String           // Converter code from String to current type
 
   protected def filters = Seq(
-    i("imports",        imports       )
-  , i("javaClazz",      javaClazz     )
-  , i("scalaClazz",     scalaClazz    )
-  , i("scalaType",      scalaType     )
-  , i("scalaUpperType", scalaUpperType)
-  , i("javaUpperType",  javaUpperType )
-  , i("scalaVar",       scalaVar      )
-  , i("optionScalaVar", optionScalaVar)
-  , i("to",             to            )
-  , i("from",           from          )
-  , i("builder",        builder       )
+    i("imports"            , imports            )
+  , i("javaClazz"          , javaClazz          )
+  , i("scalaClazz"         , scalaClazz         )
+  , i("scalaType"          , scalaType          )
+  , i("scalaUpperType"     , scalaUpperType     )
+  , i("javaUpperType"      , javaUpperType      )
+  , i("scalaVar"           , scalaVar           )
+  , i("optionScalaVar"     , optionScalaVar     )
+  , i("to"                 , to                 )
+  , i("from"               , from               )
+  , i("builder"            , builder            )
   )
 }
 

@@ -21,19 +21,24 @@ trait PGNullableConverterBuilderLike extends PGConverterHelper {
   def language: Language        // Should the source be build in java or scala project
 
   protected def filters = Seq(
-    i("imports"          , imports          )
-  , i("pgType"           , pgType           )
-  , i("clazz"            , clazz            )
-  , i("javaType"         , javaType         )
-  , i("jasminType"       , jasminType       )
-  , i("upperType"        , upperType        )
-  , i("lowerType"        , lowerType        )
-  , i("javaVar"          , javaVar          )
-  , i("body"             , body             )
-  , i("to"               , to               )
-  , i("from"             , from             )
-  , i("builder"          , builder          )
+    i("imports"            , imports            )
+  , i("pgType"             , pgType             )
+  , i("clazz"              , clazz              )
+  , i("javaType"           , javaType           )
+  , i("jasminType"         , jasminType         )
+  , i("upperType"          , upperType          )
+  , i("lowerType"          , lowerType          )
+  , i("javaVar"            , javaVar            )
+  , i("body"               , body               )
+  , i("to"                 , to                 )
+  , i("from"               , from               )
+  , i("builder"            , builder            )
+  , i("jasminToSignature"  , jasminToSignature  )
+  , i("jasminFromSignature", jasminFromSignature)
   )
+
+  def jasminToSignature: String
+  def jasminFromSignature: String
 }
 
 trait PGNullableConverterBuilder extends PGNullableConverterBuilderLike {
@@ -63,6 +68,9 @@ trait PGNullableConverterBuilder extends PGNullableConverterBuilderLike {
     upperType.toUpperCase == upperType
 
   override def language = Java: Language
+
+  override def jasminToSignature = ""
+  override def jasminFromSignature = ""
 }
 
 trait PGPredefNullableConverterBuilder extends PGNullableConverterBuilder {

@@ -19,7 +19,15 @@ import scala.Tuple2;"""
 
   val clazz = "scala.collection.mutable.Map<String, String>"
 
-  override val jasminType = "Lscala.collection.mutable.Map<Ljava/lang/String;Ljava/lang/String;>;"
+  override val jasminType = "Lscala.collection.mutable.Map;"
+
+  private val signature = "Lscala.collection.mutable.Map<Ljava/lang/String;Ljava/lang/String;>;"
+
+  override val jasminToSignature = """
+  .signature "(%s)Ljava/lang/String;"""" format signature
+
+  override val jasminFromSignature = """
+  .signature "(Ljava/lang/String;)%s"""" format signature
 
   val to = """
 

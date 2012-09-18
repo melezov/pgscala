@@ -1,4 +1,5 @@
-/*package org.pgscala
+/*
+package org.pgscala
 package test
 
 import Mark.Indices
@@ -58,7 +59,7 @@ ORDER BY r.id;",isid, bank, desc;
     info("result : \n" + getResult(testMap))
     info(formatedQuery.mkString)
   }
-/*
+
   scenario("Mark Stress Test 1") {
     val testQuery =
       """
@@ -78,6 +79,5 @@ $1$2$1$1$1$1$1$2$1$1$1$1$1$1$2$1$1$1$1$1$1$1$1$2$1$1$1$1$1$2$1$1$1$1$1$1
     info("result : \n" + getResult(testMap))
     info(formatedQuery.mkString)
   }
-*/
 }
 */
