@@ -41,39 +41,37 @@ object BuildSettings {
 
   val bsConvertersJava = javaSettings ++ Seq(
     name    := "pgscala-converters-java"
-  , version := "0.2.5"
+  , version := "0.2.7"
   , initialCommands := "import org.pgscala.converters._"
   )
 
   val bsConvertersScala = scalaSettings ++ Seq(
     name    := "pgscala-converters-scala"
-  , version := "0.2.5"
+  , version := "0.2.7"
   , initialCommands := "import org.pgscala.converters._"
   , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)(_ :: _ :: Nil)
   )
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.10"
+  , version := "0.7.12"
   , initialCommands := "import org.pgscala._"
   )
 
   val bsPool = scalaSettings ++ Seq(
     name    := "pgscala-pool"
-  , version := "0.2.5"
+  , version := "0.2.7"
   )
 }
 
 //  ---------------------------------------------------------------------------
 
 trait Publications {
-/*
   val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.2"
   val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.2"
-  val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.5"
-  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.5"
-  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.10"
-*/
+  val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.7"
+  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.7"
+  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.12"
 }
 
 //  ---------------------------------------------------------------------------
@@ -124,16 +122,16 @@ object ProjectDeps {
   )
 
   val depsConvertersScala = libDeps(
-  //  pgscalaConvertersJava
-    scalaTest
+    pgscalaConvertersJava
+  , scalaTest
   )
 
   val depsPGScala = libDeps(
     postgres
   , slf4j
-//  , pgscalaUtil
-//  , pgscalaIORC
-//  , pgscalaConvertersScala
+  , pgscalaUtil
+  , pgscalaIORC
+  , pgscalaConvertersScala
   , scalaTest
   , logback % "test"
   )
@@ -141,7 +139,7 @@ object ProjectDeps {
   val depsPool = libDeps(
     c3p0
   , log4jOverSlf4j
-//  , pgscala
+  , pgscala
   , scalaTest
   , logback % "test"
   )
@@ -181,19 +179,19 @@ object PGScalaBuild extends Build {
     "converters-scala",
     file("converters-scala"),
     settings = bsConvertersScala :+ depsConvertersScala
-  ) dependsOn(pgjavaConverters)
+  ) // dependsOn(pgjavaConverters)
 
   lazy val pgscala = Project(
     "pgscala",
     file("pgscala"),
     settings = bsPGScala :+ depsPGScala
-  ) dependsOn(util, iorc, pgscalaConverters)
+  ) // dependsOn(util, iorc, pgscalaConverters)
 
   lazy val pgscalaPool = Project(
     "pool",
     file("pool"),
     settings = bsPool :+ depsPool
-  ) dependsOn(pgscala)
+  ) // dependsOn(pgscala)
 }
 
 //  ---------------------------------------------------------------------------
