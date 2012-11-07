@@ -223,9 +223,9 @@ object Publishing {
   val settings = Seq(
     publishTo <<= (version) { version => Some(
       if (version.endsWith("SNAPSHOT")) ElementSnapshots else ElementReleases
-    )},
-    credentials += Credentials(Path.userHome / ".publish" / "element.credentials"),
-    publishArtifact in (Compile, packageDoc) := false
+    )}
+  , credentials += Credentials(Path.userHome / ".config" / "pgscala" / "nexus.config")
+  , publishArtifact in (Compile, packageDoc) := false
   )
 }
 
