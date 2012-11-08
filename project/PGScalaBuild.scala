@@ -82,7 +82,7 @@ object Dependencies extends Publications {
   , "joda-time" % "joda-time" % "2.1"
   )
 
-  val postgres = "postgresql" % "postgresql" % "9.2-1001.jdbc4" 
+  val postgres = "postgresql" % "postgresql" % "9.2-1001.jdbc4"
 
   val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
 
@@ -230,8 +230,16 @@ object Publishing {
 //  ---------------------------------------------------------------------------
 
 object Default {
+  //Eclipse plugin
+  import com.typesafe.sbteclipse.plugin.EclipsePlugin._
+
+  //Dependency report plugin
+  import com.micronautics.dependencyReport.DependencyReport._
+
   val scalaSettings =
     Defaults.defaultSettings ++
+    eclipseSettings ++
+    dependencyReportSettings ++
     Resolvers.settings ++
     Publishing.settings ++ Seq(
       organization := "org.pgscala"
