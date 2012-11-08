@@ -55,7 +55,7 @@ public enum PGNullableMapConverter implements StringConverter<Map<String, String
     final HashMap<String, String> map = new HashMap<String, String>();
 
     for(final String pair : pairs) {
-      final String[] kv = pair.split("\"=>\"");
+      final String[] kv = pair.split("\"=>\"", -1);
 
       if (kv.length != 2) {
         throw new IllegalArgumentException("Illegal pair: " + pair);
