@@ -8,13 +8,13 @@ object BuildSettings {
 
   val bsUtil = javaSettings ++ Seq(
     name    := "pgscala-util"
-  , version := "0.3.3"
+  , version := "0.3.4"
   , initialCommands := "import org.pgscala.util._"
   )
 
   val bsIORC = scalaSettings ++ Seq(
     name    := "pgscala-iorc"
-  , version := "0.1.2"
+  , version := "0.1.3"
   , initialCommands := "import org.pgscala.iorc._"
   )
 
@@ -47,31 +47,31 @@ object BuildSettings {
 
   val bsConvertersScala = scalaSettings ++ Seq(
     name    := "pgscala-converters-scala"
-  , version := "0.2.8"
+  , version := "0.2.10"
   , initialCommands := "import org.pgscala.converters._"
   , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)(_ :: _ :: Nil)
   )
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.13"
+  , version := "0.7.14"
   , initialCommands := "import org.pgscala._"
   )
 
   val bsPool = scalaSettings ++ Seq(
     name    := "pgscala-pool"
-  , version := "0.2.8"
+  , version := "0.2.10"
   )
 }
 
 //  ---------------------------------------------------------------------------
 
 trait Publications {
-  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.3"
-  val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.2"
+  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.4"
+  val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.3"
   val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.7"
-  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.8"
-  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.13"
+  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.10"
+  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.14"
 }
 
 //  ---------------------------------------------------------------------------
