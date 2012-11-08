@@ -108,7 +108,7 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
   def buildScalaConverters() {
     val template =
       Resource.fromClasspath("PGConverter.scala")
-        .slurpString(UTF8)
+        .string(UTF8)
 
     for (c <- converters) {
       val path = getPath(Scala) / "core" /
@@ -122,7 +122,7 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
   def buildScalaOptionConverters() {
     val template =
       Resource.fromClasspath("PGOptionConverter.scala")
-        .slurpString(UTF8)
+        .string(UTF8)
 
     for (c <- converters) {
       val path = getPath(Scala) / "option" /
@@ -136,7 +136,7 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
   def buildScalaConverterImplicits() {
     val template =
       Resource.fromClasspath("Implicits.scala")
-        .slurpString(UTF8)
+        .string(UTF8)
 
     val path = getPath(Scala) /
       "Implicits.scala"

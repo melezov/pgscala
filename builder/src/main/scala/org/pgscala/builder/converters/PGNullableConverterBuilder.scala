@@ -109,7 +109,7 @@ object PGNullableConverterBuilder extends PGConverterBuilderPaths {
   def buildJavaNullableConverters() {
     val nullableTemplate =
       Resource.fromClasspath("PGNullableConverter.java")
-        .slurpString(UTF8)
+        .string(UTF8)
 
     for (c <- converters) {
       val path = getPath(c.language, Java) /
@@ -123,7 +123,7 @@ object PGNullableConverterBuilder extends PGConverterBuilderPaths {
   def buildJasminProxy() {
     val nullableTemplate =
       Resource.fromClasspath("PGNullableConverter.j")
-        .slurpString(UTF8)
+        .string(UTF8)
 
     val sB = new StringBuilder
 

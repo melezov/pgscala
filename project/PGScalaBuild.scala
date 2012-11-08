@@ -8,7 +8,7 @@ object BuildSettings {
 
   val bsUtil = javaSettings ++ Seq(
     name    := "pgscala-util"
-  , version := "0.3.2"
+  , version := "0.3.3"
   , initialCommands := "import org.pgscala.util._"
   )
 
@@ -47,31 +47,31 @@ object BuildSettings {
 
   val bsConvertersScala = scalaSettings ++ Seq(
     name    := "pgscala-converters-scala"
-  , version := "0.2.7"
+  , version := "0.2.8"
   , initialCommands := "import org.pgscala.converters._"
   , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)(_ :: _ :: Nil)
   )
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.12"
+  , version := "0.7.13"
   , initialCommands := "import org.pgscala._"
   )
 
   val bsPool = scalaSettings ++ Seq(
     name    := "pgscala-pool"
-  , version := "0.2.7"
+  , version := "0.2.8"
   )
 }
 
 //  ---------------------------------------------------------------------------
 
 trait Publications {
-  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.2"
+  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.3"
   val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.2"
   val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.7"
-  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.7"
-  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.12"
+  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.8"
+  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.13"
 }
 
 //  ---------------------------------------------------------------------------
@@ -82,17 +82,15 @@ object Dependencies extends Publications {
   , "joda-time" % "joda-time" % "2.1"
   )
 
-  val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.0"
-
-  val postgres = "postgresql" % "postgresql" % "9.1-902.jdbc4"
-
-  val slf4j = "org.slf4j" % "slf4j-api" % "1.6.6"
-  val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.6.6"
-
-  val logback = "ch.qos.logback" % "logback-classic" % "1.0.6"
+  val postgres = "postgresql" % "postgresql" % "9.2-1001.jdbc4" 
 
   val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
 
+  val slf4j = "org.slf4j" % "slf4j-api" % "1.7.2"
+  val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.2"
+  val logback = "ch.qos.logback" % "logback-classic" % "1.0.7"
+
+  val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.1-seq"
   val scalaTest = "org.scalatest" %% "scalatest" % "2.0.M4" % "test"
 }
 
@@ -152,45 +150,45 @@ object PGScalaBuild extends Build {
   import ProjectDeps._
 
   lazy val util = Project(
-    "util",
-    file("util"),
-    settings = bsUtil :+ depsUtil
+    "util"
+  , file("util")
+  , settings = bsUtil :+ depsUtil
   )
 
   lazy val iorc = Project(
-    "iorc",
-    file("iorc"),
-    settings = bsIORC :+ depsIORC
+    "iorc"
+  , file("iorc")
+  , settings = bsIORC :+ depsIORC
   )
 
   lazy val builder = Project(
-    "builder",
-    file("builder"),
-    settings = bsBuilder :+ depsBuilder
+    "builder"
+  , file("builder")
+  , settings = bsBuilder :+ depsBuilder
   )
 
   lazy val pgjavaConverters = Project(
-    "converters-java",
-    file("converters-java"),
-    settings = bsConvertersJava :+ depsConvertersJava
+    "converters-java"
+  , file("converters-java")
+  , settings = bsConvertersJava :+ depsConvertersJava
   )
 
   lazy val pgscalaConverters = Project(
-    "converters-scala",
-    file("converters-scala"),
-    settings = bsConvertersScala :+ depsConvertersScala
+    "converters-scala"
+  , file("converters-scala")
+  , settings = bsConvertersScala :+ depsConvertersScala
   ) // dependsOn(pgjavaConverters)
 
   lazy val pgscala = Project(
-    "pgscala",
-    file("pgscala"),
-    settings = bsPGScala :+ depsPGScala
+    "pgscala"
+  , file("pgscala")
+  , settings = bsPGScala :+ depsPGScala
   ) // dependsOn(util, iorc, pgscalaConverters)
 
   lazy val pgscalaPool = Project(
-    "pool",
-    file("pool"),
-    settings = bsPool :+ depsPool
+    "pool"
+  , file("pool")
+  , settings = bsPool :+ depsPool
   ) // dependsOn(pgscala)
 }
 
@@ -208,9 +206,9 @@ object Resolvers {
   import Repositories._
 
   val settings = Seq(
-    resolvers := Seq(ElementNexus, ElementReleases, ElementSnapshots),
-    externalResolvers <<= resolvers map { rS =>
-      Resolver.withDefaultResolvers(rS, mavenCentral = false)
+    resolvers := Seq(ElementNexus, ElementReleases, ElementSnapshots)
+  , externalResolvers <<= resolvers map { r =>
+      Resolver.withDefaultResolvers(r, mavenCentral = false)
     }
   )
 }
@@ -248,7 +246,7 @@ object Default {
     scalaSettings ++ Seq(
       autoScalaLibrary := false
     , crossPaths := false
-    , javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.5", "-target", "1.5")
+    , javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.6", "-target", "1.6")
     , unmanagedSourceDirectories in Compile <<= (javaSource in Compile)(_ :: Nil)
     )
 }

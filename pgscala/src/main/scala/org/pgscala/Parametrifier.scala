@@ -27,12 +27,12 @@ object Parametrifier {
     if (logger.isTraceEnabled) {
       logger.trace("""
 Query:
-  -> <{}>
+  -> <%s>
 Params:
-  -> <{}>""",
-        query.trim,
-        params mkString """>
-  -> <""")
+  -> <%s>""" format(
+        query.trim
+      , params mkString """>
+  -> <"""))
     }
 
     new Parametrifier(query.toCharArray, params)
@@ -118,12 +118,12 @@ class Parametrifier private(query: Array[Char], params: IndexedSeq[ParamText[_]]
   if (logger.isDebugEnabled) {
       logger.debug("""
 Prepared query:
-  -> <{}>
+  -> <%s>
 Prepared params:
-  -> <{}>""",
-        preparedQuery.trim,
-        preparedParams mkString """>
-  -> <""")
+  -> <%s>""" format(
+        preparedQuery.trim
+      , preparedParams mkString """>
+  -> <"""))
     }
 
   private def replaceMarks(flow: Seq[ParamReplacement]) = {
