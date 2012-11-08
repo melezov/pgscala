@@ -51,7 +51,7 @@ public enum PGNullableMapConverter implements StringConverter<Map<String, String
   public static Map<String, String> stringToMap(final String m) {
     if (null == m) return null;
 
-    final String[] pairs = m.substring(1, m.length() - 1).split("\", \"");
+    final String[] pairs = m.substring(1, m.length() - 1).split("\", \"", -1);
     final HashMap<String, String> map = new HashMap<String, String>();
 
     for(final String pair : pairs) {
