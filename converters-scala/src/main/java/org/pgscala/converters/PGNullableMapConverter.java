@@ -22,6 +22,7 @@ public enum PGNullableMapConverter implements StringConverter<Map<String, String
   @ToString
   public static String mapToString(final Map<String, String> m) {
     if (null == m) return null;
+    if (m.isEmpty()) return "";
 
     final StringBuilder sB = new StringBuilder();
 

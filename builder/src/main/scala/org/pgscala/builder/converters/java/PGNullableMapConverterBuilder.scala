@@ -30,6 +30,7 @@ import scala.Tuple2;"""
   .signature "(Ljava/lang/String;)%s"""" format signature
 
   val to = """
+    if (m.isEmpty()) return "";
 
     final StringBuilder sB = new StringBuilder();
 
