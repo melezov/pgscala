@@ -195,9 +195,9 @@ object PGScalaBuild extends Build {
 //  ---------------------------------------------------------------------------
 
 object Repositories {
-  val ElementNexus     = "Element Nexus"     at "http://maven.element.hr/nexus/content/groups/public/"
-  val ElementReleases  = "Element Releases"  at "http://maven.element.hr/nexus/content/repositories/releases/"
-  val ElementSnapshots = "Element Snapshots" at "http://maven.element.hr/nexus/content/repositories/snapshots/"
+  val ElementNexus     = "Element Nexus"     at "http://repo.element.hr/nexus/content/groups/public/"
+  val ElementReleases  = "Element Releases"  at "http://repo.element.hr/nexus/content/repositories/releases/"
+  val ElementSnapshots = "Element Snapshots" at "http://repo.element.hr/nexus/content/repositories/snapshots/"
 }
 
 //  ---------------------------------------------------------------------------
