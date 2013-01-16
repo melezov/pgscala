@@ -57,9 +57,10 @@ import scala.Tuple2;"""
 
   val from = """
 
-    final String[] pairs = m.substring(1, m.length() - 1).split("\", \"", -1);
     final HashMap<String, String> map = new HashMap<String, String>();
+    if (m.isEmpty()) return map;
 
+    final String[] pairs = m.substring(1, m.length() - 1).split("\", \"", -1);
     for(final String pair : pairs) {
       final String[] kv = pair.split("\"=>\"", -1);
 

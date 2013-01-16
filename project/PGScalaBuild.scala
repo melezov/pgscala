@@ -8,13 +8,13 @@ object BuildSettings {
 
   val bsUtil = javaSettings ++ Seq(
     name    := "pgscala-util"
-  , version := "0.3.4"
+  , version := "0.3.5"
   , initialCommands := "import org.pgscala.util._"
   )
 
   val bsIORC = scalaSettings ++ Seq(
     name    := "pgscala-iorc"
-  , version := "0.1.3"
+  , version := "0.1.4"
   , initialCommands := "import org.pgscala.iorc._"
   )
 
@@ -41,104 +41,101 @@ object BuildSettings {
 
   val bsConvertersJava = javaSettings ++ Seq(
     name    := "pgscala-converters-java"
-  , version := "0.2.7"
+  , version := "0.2.8"
   , initialCommands := "import org.pgscala.converters._"
   )
 
   val bsConvertersScala = scalaSettings ++ Seq(
     name    := "pgscala-converters-scala"
-  , version := "0.2.11"
+  , version := "0.2.12"
   , initialCommands := "import org.pgscala.converters._"
   , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)(_ :: _ :: Nil)
   )
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.15"
+  , version := "0.7.16"
   , initialCommands := "import org.pgscala._"
   )
 
   val bsPool = scalaSettings ++ Seq(
     name    := "pgscala-pool"
-  , version := "0.2.11"
+  , version := "0.2.12"
   )
 }
 
 //  ---------------------------------------------------------------------------
 
 trait Publications {
-  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.4"
-  val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.3"
-  val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.7"
-  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.11"
-  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.15"
+  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.5"
+  val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.4"
+  val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.8"
+  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.12"
+  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.16"
 }
 
 //  ---------------------------------------------------------------------------
 
-object Dependencies extends Publications {
-  val jodaTime = Seq(
-    "org.joda" % "joda-convert" % "1.2"
-  , "joda-time" % "joda-time" % "2.1"
-  )
+trait Dependencies extends Publications {
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.1"
+  lazy val jodaConvert = "org.joda" % "joda-convert" % "1.2"
 
-  val postgres = "postgresql" % "postgresql" % "9.2-1001.jdbc4"
+  lazy val postgres = "postgresql" % "postgresql" % "9.2-1002.jdbc4"
 
-  val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
+  lazy val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
 
-  val slf4j = "org.slf4j" % "slf4j-api" % "1.7.2"
-  val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.2"
-  val logback = "ch.qos.logback" % "logback-classic" % "1.0.7"
+  lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.2"
+  lazy val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.2"
 
-  val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.1-seq"
-  val scalaTest = "org.scalatest" %% "scalatest" % "2.0.M4" % "test"
+  lazy val logback = "ch.qos.logback" % "logback-classic" % "1.0.9"
+  lazy val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.1-seq"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "2.0.M5b"
 }
 
 //  ---------------------------------------------------------------------------
 
-import Implicits._
+object ProjectDeps extends Dependencies {
+  import Default._
 
-object ProjectDeps {
-  import Dependencies._
-
-  val depsUtil = libDeps(
+  lazy val depsUtil = Deps(
     slf4j
-  , scalaTest
+  , scalaTest % "test"
   )
 
-  val depsIORC = libDeps(
-    scalaTest
+  lazy val depsIORC = Deps(
+    scalaTest % "test"
   )
 
-  val depsBuilder = libDeps(
+  lazy val depsBuilder = Deps(
     scalaIo
   )
 
-  val depsConvertersJava = libDeps(
+  lazy val depsConvertersJava = Deps(
     jodaTime
-  , scalaTest
+  , jodaConvert
+  , scalaTest % "test"
   )
 
-  val depsConvertersScala = libDeps(
+  lazy val depsConvertersScala = Deps(
     pgscalaConvertersJava
-  , scalaTest
+  , scalaTest % "test"
   )
 
-  val depsPGScala = libDeps(
+  lazy val depsPGScala = Deps(
     postgres
   , slf4j
   , pgscalaUtil
   , pgscalaIORC
   , pgscalaConvertersScala
-  , scalaTest
+  , scalaTest % "test"
   , logback % "test"
   )
 
-  val depsPool = libDeps(
+  lazy val depsPool = Deps(
     c3p0
   , log4jOverSlf4j
   , pgscala
-  , scalaTest
+  , scalaTest % "test"
   , logback % "test"
   )
 }
@@ -205,7 +202,7 @@ object Repositories {
 object Resolvers {
   import Repositories._
 
-  val settings = Seq(
+  lazy val settings = Seq(
     resolvers := Seq(ElementNexus, ElementReleases, ElementSnapshots)
   , externalResolvers <<= resolvers map { r =>
       Resolver.withDefaultResolvers(r, mavenCentral = false)
@@ -218,7 +215,7 @@ object Resolvers {
 object Publishing {
   import Repositories._
 
-  val settings = Seq(
+  lazy val settings = Seq(
     publishTo <<= (version) { version => Some(
       if (version.endsWith("SNAPSHOT")) ElementSnapshots else ElementReleases
     )}
@@ -236,34 +233,61 @@ object Default {
   //Dependency report plugin
   import com.micronautics.dependencyReport.DependencyReport._
 
-  val scalaSettings =
+  val scala2_10 = Seq(
+    "-feature"
+  , "-language:postfixOps"
+  , "-language:implicitConversions"
+  , "-language:existentials"
+  )
+
+  val scala2_9_1 = Seq(
+    "-Yrepl-sync"
+  )
+
+  lazy val scalaSettings =
     Defaults.defaultSettings ++
     eclipseSettings ++
     dependencyReportSettings ++
     Resolvers.settings ++
     Publishing.settings ++ Seq(
       organization := "org.pgscala"
-    , crossScalaVersions := Seq("2.9.2", "2.9.1-1", "2.9.1", "2.9.0-1", "2.9.0")
-    , scalaVersion <<= (crossScalaVersions) { versions => versions.head }
-    , scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "UTF-8", "-optimise")
+
+    , crossScalaVersions := Seq("2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.2", "2.9.3-RC1")
+    , scalaVersion := "2.9.2"
+
+    , javaHome := sys.env.get("JDK16_HOME").map(file(_))
+    , javacOptions := Seq(
+        "-deprecation"
+      , "-encoding", "UTF-8"
+      , "-Xlint:unchecked"
+      , "-source", "1.6"
+      , "-target", "1.6"
+      )
+
+    , scalacOptions <<= scalaVersion map ( sV => Seq(
+          "-unchecked"
+        , "-deprecation"
+        , "-optimise"
+        , "-encoding", "UTF8"
+        , "-Xmax-classfile-name", "72"
+        ) ++ (sV match {
+          case x if (x startsWith "2.10.")                => scala2_9_1 ++ scala2_10
+          case x if (x startsWith "2.9.") && x >= "2.9.1" => scala2_9_1
+          case _ => Nil
+        } )
+      )
+
     , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)(_ :: Nil)
     , unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )(_ :: Nil)
     )
 
-  val javaSettings =
+  lazy val javaSettings =
     scalaSettings ++ Seq(
       autoScalaLibrary := false
     , crossPaths := false
     , javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.6", "-target", "1.6")
     , unmanagedSourceDirectories in Compile <<= (javaSource in Compile)(_ :: Nil)
     )
-}
 
-//  ---------------------------------------------------------------------------
-
-object Implicits {
-  implicit def depToSeq(m: ModuleID) = Seq(m)
-
-  def libDeps(deps: (Seq[ModuleID])*) =
-    libraryDependencies ++= deps.flatten
+  def Deps(libs: ModuleID*) = libraryDependencies ++= libs
 }
