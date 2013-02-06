@@ -96,7 +96,7 @@ class IndexedSeqSet[A] private (
     }
   }
 
-  override def toSeq: Seq[A] = _seq
+  override def toSeq: IndexedSeq[A] = _seq
   override def toIndexedSeq[B >: A]: IndexedSeq[B] = _seq
   override def toSet[B >: A]: Set[B] = _set.asInstanceOf[Set[B]]
 
