@@ -14,7 +14,7 @@ object BuildSettings {
 
   val bsIORC = scalaSettings ++ Seq(
     name    := "pgscala-iorc"
-  , version := "0.1.4"
+  , version := "0.1.5"
   , initialCommands := "import org.pgscala.iorc._"
   )
 
@@ -230,8 +230,32 @@ object Default {
   //Eclipse plugin
   import com.typesafe.sbteclipse.plugin.EclipsePlugin._
 
-  //Dependency report plugin
-  import com.micronautics.dependencyReport.DependencyReport._
+  //Dependency graph plugin
+  import net.virtualvoid.sbt.graph.Plugin._
+
+  val scala2_8 = Seq(
+    "-unchecked"
+  , "-deprecation"
+  , "-optimise"
+  , "-encoding", "UTF-8"
+  , "-explaintypes"
+  , "-Xcheckinit"
+  , "-Xfatal-warnings"
+  , "-Yclosure-elim"
+  , "-Ydead-code"
+  , "-Yinline"
+  )
+
+  val scala2_9 = Seq(
+    "-Xmax-classfile-name", "72"
+  )
+
+  val scala2_9_1 = Seq(
+    "-Yrepl-sync"
+  , "-Xlint"
+  , "-Xverify"
+  , "-Ywarn-all"
+  )
 
   val scala2_10 = Seq(
     "-feature"
@@ -240,20 +264,27 @@ object Default {
   , "-language:existentials"
   )
 
-  val scala2_9_1 = Seq(
-    "-Yrepl-sync"
-  )
-
   lazy val scalaSettings =
     Defaults.defaultSettings ++
     eclipseSettings ++
-    dependencyReportSettings ++
+    graphSettings ++
     Resolvers.settings ++
     Publishing.settings ++ Seq(
       organization := "org.pgscala"
 
-    , crossScalaVersions := Seq("2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.2", "2.9.3-RC1")
-    , scalaVersion := "2.9.2"
+    , scalaVersion <<= crossScalaVersions(_.head)
+    , crossScalaVersions := Seq(
+        "2.9.2"
+      , "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1" //, "2.9.3-RC1"
+      , "2.10.0"
+      )
+    , scalacOptions <<= scalaVersion map ( sV => scala2_8 ++ (sV match {
+          case x if (x startsWith "2.10.")                => scala2_9 ++ scala2_9_1 ++ scala2_10
+          case x if (x startsWith "2.9.") && x >= "2.9.1" => scala2_9 ++ scala2_9_1
+          case x if (x startsWith "2.9.")                 => scala2_9
+          case _ => Nil
+        } )
+      )
 
     , javaHome := sys.env.get("JDK16_HOME").map(file(_))
     , javacOptions := Seq(
@@ -264,19 +295,6 @@ object Default {
       , "-target", "1.6"
       )
 
-    , scalacOptions <<= scalaVersion map ( sV => Seq(
-          "-unchecked"
-        , "-deprecation"
-        , "-optimise"
-        , "-encoding", "UTF8"
-        , "-Xmax-classfile-name", "72"
-        ) ++ (sV match {
-          case x if (x startsWith "2.10.")                => scala2_9_1 ++ scala2_10
-          case x if (x startsWith "2.9.") && x >= "2.9.1" => scala2_9_1
-          case _ => Nil
-        } )
-      )
-
     , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)(_ :: Nil)
     , unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )(_ :: Nil)
     )
@@ -285,7 +303,6 @@ object Default {
     scalaSettings ++ Seq(
       autoScalaLibrary := false
     , crossPaths := false
-    , javacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-source", "1.6", "-target", "1.6")
     , unmanagedSourceDirectories in Compile <<= (javaSource in Compile)(_ :: Nil)
     )
 

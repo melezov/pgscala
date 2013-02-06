@@ -20,11 +20,11 @@ libraryDependencies += "net.sf.jasmin" % "jasmin" % "2.4"
 // | See also: Scala IDE downloads (http://download.scala-ide.org/)                      |
 // +-------------------------------------------------------------------------------------+
 
-addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.1.0")
+addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.1.1")
 
 // +-------------------------------------------------------------------------------------+
-// | Dependency report plugin (hhttps://github.com/mslinn/dependencyReport)              |
-// | Lists all jars in a nicely formatted way for easy inspection.                       |
+// | Dependency graph SBT plugin (https://github.com/jrudolph/sbt-dependency-graph)      |
+// | Lists all library dependencies in a nicely formatted way for easy inspection.       |
 // +-------------------------------------------------------------------------------------+
 
-addSbtPlugin("com.micronautics" % "dependencyreport" % "0.1.1", "0.12.1")
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.7.0")

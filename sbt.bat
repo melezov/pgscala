@@ -3,7 +3,7 @@ setlocal
 pushd
 cd "%~dp0"
 
-set JVM_PARAMS=-Xss2m -Xmx2g -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -XX:ReservedCodeCacheSize=512m
+set JVM_PARAMS=-Xss2m -Xms2g -Xmx2g -XX:+TieredCompilation -XX:ReservedCodeCacheSize=256m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled -XX:+UseNUMA -XX:+UseParallelGC -Dscalac.patmat.analysisBudget=off
 
 set LIFT_RUN_MODE=-Drun.mode=development
 set TRY_JREBEL=true
@@ -57,7 +57,7 @@ if %TRY_JREBEL%.==true. (
   if exist "%JREBEL_HOME%\jrebel.jar" set JVM_PARAMS=%JVM_PARAMS% -noverify -javaagent:"%JREBEL_HOME%\jrebel.jar" %JREBEL_PLUGINS%
 )
 
-set GRUJ_PATH=project\strap\gruj_vs_sbt-launch-0.12.1.jar
+set GRUJ_PATH=project\strap\gruj_vs_sbt-launch-0.12.2.jar
 set RUN_CMD=java %JVM_PARAMS% -jar %GRUJ_PATH% %LOG_LEVEL% %SBT_PARAMS%
 
 :RUN_LOOP
