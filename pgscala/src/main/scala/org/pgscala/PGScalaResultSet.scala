@@ -49,6 +49,9 @@ class PGScalaResultSet(rS: java.sql.ResultSet) extends Iterator[PGScalaResultSet
 
   //  --------------------------------------------------------------------------
 
+  def one[T](implicit c: PGConverter[T]): T =
+    c fromPGString (rS getString 1)
+
   def get[T](index: Int)(implicit c: PGConverter[T]): T =
     c fromPGString (rS getString index)
 

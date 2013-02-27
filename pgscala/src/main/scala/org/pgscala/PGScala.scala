@@ -174,9 +174,9 @@ class PGScala(con: java.sql.Connection) {
 
   /* Helper method for queries returning a scalar value */
   def get[T](query: String, params: ParamText[_]*)(implicit c: PGConverter[T]): T =
-    row(query, params: _*){_.get[T](1)}.get
+    row(query, params: _*){_.one[T]}.get
 
   /* Helper method for aggregating simple values */
   def getArr[T](query: String, params: ParamText[_]*)(implicit c: PGConverter[T]): IndexedSeq[T] =
-    arr(query, params: _*){_.get[T](1)}
+    arr(query, params: _*){_.one[T]}
 }

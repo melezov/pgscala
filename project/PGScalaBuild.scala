@@ -8,20 +8,24 @@ object BuildSettings {
 
   val bsUtil = javaSettings ++ Seq(
     name    := "pgscala-util"
-  , version := "0.3.5"
+  , version := "0.3.6"
   , initialCommands := "import org.pgscala.util._"
   )
 
+  val iorcVersion = "0.1.7"
+
   val bsIORC = scalaSettings ++ Seq(
     name    := "pgscala-iorc"
-  , version := "0.1.5"
+  , version := iorcVersion
   , initialCommands := "import org.pgscala.iorc._"
   , crossScalaVersions := Seq(
       "2.9.2"
-    , "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1" //, "2.9.3-RC1"
-    //, "2.10.0"
+    , "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.3-RC2"
+    //, "2.10.1-RC1"
     )
   )
+
+  lazy val iorcPublished = "org.pgscala" %% "pgscala-iorc" % iorcVersion
 
 //  ===========================================================================
 
@@ -46,42 +50,32 @@ object BuildSettings {
 
   val bsConvertersJava = javaSettings ++ Seq(
     name    := "pgscala-converters-java"
-  , version := "0.2.8"
+  , version := "0.2.9"
   , initialCommands := "import org.pgscala.converters._"
   )
 
   val bsConvertersScala = scalaSettings ++ Seq(
     name    := "pgscala-converters-scala"
-  , version := "0.2.13"
+  , version := "0.2.15"
   , initialCommands := "import org.pgscala.converters._"
   , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)(_ :: _ :: Nil)
   )
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.17"
+  , version := "0.7.21"
   , initialCommands := "import org.pgscala._"
   )
 
   val bsPool = scalaSettings ++ Seq(
     name    := "pgscala-pool"
-  , version := "0.2.13"
+  , version := "0.2.15"
   )
 }
 
 //  ---------------------------------------------------------------------------
 
-trait Publications {
-  val pgscalaUtil            = "org.pgscala" %  "pgscala-util"             % "0.3.5"
-  val pgscalaIORC            = "org.pgscala" %% "pgscala-iorc"             % "0.1.5"
-  val pgscalaConvertersJava  = "org.pgscala" %  "pgscala-converters-java"  % "0.2.8"
-  val pgscalaConvertersScala = "org.pgscala" %% "pgscala-converters-scala" % "0.2.13"
-  val pgscala                = "org.pgscala" %% "pgscala"                  % "0.7.17"
-}
-
-//  ---------------------------------------------------------------------------
-
-trait Dependencies extends Publications {
+object Dependencies {
   lazy val jodaTime = "joda-time" % "joda-time" % "2.1"
   lazy val jodaConvert = "org.joda" % "joda-convert" % "1.2"
 
@@ -93,105 +87,87 @@ trait Dependencies extends Publications {
   lazy val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.2"
 
   lazy val logback = "ch.qos.logback" % "logback-classic" % "1.0.9"
-  lazy val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.1-seq"
+  lazy val scalaIo = (sV: String) =>
+    "com.github.scala-incubator.io" % "scala-io-file_".+(sV match {
+      case "2.9.2" => "2.9.2"
+      case x => "2.9.1"
+    }) % "0.4.1-seq"
+
   lazy val scalaTest = "org.scalatest" %% "scalatest" % "2.0.M5b"
-}
-
-//  ---------------------------------------------------------------------------
-
-object ProjectDeps extends Dependencies {
-  import Default._
-
-  lazy val depsUtil = Deps(
-    slf4j
-  , scalaTest % "test"
-  )
-
-  lazy val depsIORC = Deps(
-    scalaTest % "test"
-  )
-
-  lazy val depsBuilder = Deps(
-    scalaIo
-  )
-
-  lazy val depsConvertersJava = Deps(
-    jodaTime
-  , jodaConvert
-  , scalaTest % "test"
-  )
-
-  lazy val depsConvertersScala = Deps(
-    pgscalaConvertersJava
-  , scalaTest % "test"
-  )
-
-  lazy val depsPGScala = Deps(
-    postgres
-  , slf4j
-  , pgscalaUtil
-  , pgscalaIORC
-  , pgscalaConvertersScala
-  , scalaTest % "test"
-  , logback % "test"
-  )
-
-  lazy val depsPool = Deps(
-    c3p0
-  , log4jOverSlf4j
-  , pgscala
-  , scalaTest % "test"
-  , logback % "test"
-  )
 }
 
 //  ###########################################################################
 
 object PGScalaBuild extends Build {
   import BuildSettings._
-  import ProjectDeps._
+  import Default._
+  import Dependencies._
 
   lazy val util = Project(
     "util"
   , file("util")
-  , settings = bsUtil :+ depsUtil
+  , settings = bsUtil :+ deps(
+      slf4j
+    , scalaTest % "test"
+    )
   )
 
   lazy val iorc = Project(
     "iorc"
   , file("iorc")
-  , settings = bsIORC :+ depsIORC
+  , settings = bsIORC :+ deps(
+      scalaTest % "test"
+    )
   )
 
   lazy val builder = Project(
     "builder"
   , file("builder")
-  , settings = bsBuilder :+ depsBuilder
+  , settings = bsBuilder :+ deps(
+      scalaIo
+    )
   )
 
   lazy val pgjavaConverters = Project(
     "converters-java"
   , file("converters-java")
-  , settings = bsConvertersJava :+ depsConvertersJava
+  , settings = bsConvertersJava :+ deps(
+      jodaTime
+    , jodaConvert
+    , scalaTest % "test"
+    )
   )
 
   lazy val pgscalaConverters = Project(
     "converters-scala"
   , file("converters-scala")
-  , settings = bsConvertersScala :+ depsConvertersScala
-  ) // dependsOn(pgjavaConverters)
+  , settings = bsConvertersScala :+ deps(
+      scalaTest % "test"
+    )
+  ) dependsOn(pgjavaConverters)
 
   lazy val pgscala = Project(
     "pgscala"
   , file("pgscala")
-  , settings = bsPGScala :+ depsPGScala
-  ) // dependsOn(util, iorc, pgscalaConverters)
+  , settings = bsPGScala :+ deps(
+      postgres
+    , slf4j
+    , scalaTest % "test"
+    , logback % "test"
+    , iorcPublished
+    )
+  ) dependsOn(util, pgscalaConverters)
 
   lazy val pgscalaPool = Project(
     "pool"
   , file("pool")
-  , settings = bsPool :+ depsPool
-  ) // dependsOn(pgscala)
+  , settings = bsPool :+ deps(
+      c3p0
+    , log4jOverSlf4j
+    , scalaTest % "test"
+    , logback % "test"
+    )
+  ) dependsOn(pgscala)
 }
 
 //  ---------------------------------------------------------------------------
@@ -243,7 +219,6 @@ object Default {
   , "-deprecation"
   , "-optimise"
   , "-encoding", "UTF-8"
-  , "-explaintypes"
   , "-Xcheckinit"
   , "-Xfatal-warnings"
   , "-Yclosure-elim"
@@ -280,8 +255,8 @@ object Default {
     , scalaVersion <<= crossScalaVersions(_.head)
     , crossScalaVersions := Seq(
         "2.9.2"
-      , "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1" //, "2.9.3-RC1"
-      , "2.10.0"
+      , "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.3-RC2"
+      , "2.10.1-RC1"
       )
     , scalacOptions <<= scalaVersion map ( sV => scala2_8 ++ (sV match {
           case x if (x startsWith "2.10.")                => scala2_9 ++ scala2_9_1 ++ scala2_10
@@ -311,5 +286,9 @@ object Default {
     , unmanagedSourceDirectories in Compile <<= (javaSource in Compile)(_ :: Nil)
     )
 
-  def Deps(libs: ModuleID*) = libraryDependencies ++= libs
+  def deps(module: String => ModuleID) =
+    libraryDependencies <+= scalaVersion( sV => module(sV) )
+
+  def deps(modules: ModuleID*) =
+    libraryDependencies ++= modules
 }
