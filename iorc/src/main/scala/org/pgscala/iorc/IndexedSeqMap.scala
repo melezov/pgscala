@@ -77,7 +77,7 @@ class IndexedSeqMap[A, +B] private (
   override def keySet: IndexedSeqSet[A] = IndexedSeqSet.empty ++ _seq.map(_._1)
 
   override def toSeq: IndexedSeq[(A, B)] = _seq
-  override def toIndexedSeq[C >: (A, B)]: IndexedSeq[C] = _seq
+  override def toIndexedSeq: IndexedSeq[(A, B)] = _seq
   override def toMap[T, U](implicit ev: (A, B) <:< (T, U)): Map[T, U] = _map.asInstanceOf[Map[T, U]]
 
   def iterator =

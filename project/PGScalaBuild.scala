@@ -19,9 +19,9 @@ object BuildSettings {
   , version := iorcVersion
   , initialCommands := "import org.pgscala.iorc._"
   , crossScalaVersions := Seq(
-      "2.9.2"
-    , "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.3-RC2"
-    //, "2.10.1-RC1"
+    //  "2.9.2"
+    //, "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.3-RC2"
+      "2.10.1-RC1"
     )
   )
 
