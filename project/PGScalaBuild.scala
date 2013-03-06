@@ -16,9 +16,6 @@ object BuildSettings {
     name    := "pgscala-iorc"
   , version := "0.1.7"
   , initialCommands := "import org.pgscala.iorc._"
-  , crossScalaVersions := Seq(
-      "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.2", "2.9.3"
-    )
   )
 
 //  ===========================================================================
@@ -57,13 +54,14 @@ object BuildSettings {
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.22"
+  , version := "0.7.23"
   , initialCommands := "import org.pgscala._"
   )
 
   val bsPool = scalaSettings ++ Seq(
     name    := "pgscala-pool"
-  , version := "0.2.15"
+  , version := "0.2.16"
+  , initialCommands := "import org.pgscala._"
   )
 }
 
@@ -75,8 +73,8 @@ object Dependencies {
 
   lazy val postgres = "postgresql" % "postgresql" % "9.2-1002.jdbc4"
 
-  lazy val c3p0 = "c3p0" % "c3p0" % "0.9.2"
-
+  lazy val c3p0 = "com.mchange" % "c3p0" % "0.9.2"
+  
   lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.2"
   lazy val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.2"
 
