@@ -12,20 +12,14 @@ object BuildSettings {
   , initialCommands := "import org.pgscala.util._"
   )
 
-  val iorcVersion = "0.1.7"
-
   val bsIORC = scalaSettings ++ Seq(
     name    := "pgscala-iorc"
-  , version := iorcVersion
+  , version := "0.1.7"
   , initialCommands := "import org.pgscala.iorc._"
   , crossScalaVersions := Seq(
-      "2.9.2"
-    , "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.3-RC2"
-    //, "2.10.1-RC1"
+      "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.2", "2.9.3"
     )
   )
-
-  lazy val iorcPublished = "org.pgscala" %% "pgscala-iorc" % iorcVersion
 
 //  ===========================================================================
 
@@ -63,7 +57,7 @@ object BuildSettings {
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.21"
+  , version := "0.7.22"
   , initialCommands := "import org.pgscala._"
   )
 
@@ -81,7 +75,7 @@ object Dependencies {
 
   lazy val postgres = "postgresql" % "postgresql" % "9.2-1002.jdbc4"
 
-  lazy val c3p0 = "c3p0" % "c3p0" % "0.9.1.2"
+  lazy val c3p0 = "c3p0" % "c3p0" % "0.9.2"
 
   lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.2"
   lazy val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.2"
@@ -89,7 +83,7 @@ object Dependencies {
   lazy val logback = "ch.qos.logback" % "logback-classic" % "1.0.9"
   lazy val scalaIo = (sV: String) =>
     "com.github.scala-incubator.io" % "scala-io-file_".+(sV match {
-      case "2.9.2" => "2.9.2"
+      case "2.9.2" | "2.9.3" => "2.9.2"
       case x => "2.9.1"
     }) % "0.4.1-seq"
 
@@ -154,9 +148,8 @@ object PGScalaBuild extends Build {
     , slf4j
     , scalaTest % "test"
     , logback % "test"
-    , iorcPublished
     )
-  ) dependsOn(util, pgscalaConverters)
+  ) dependsOn(util, iorc, pgscalaConverters)
 
   lazy val pgscalaPool = Project(
     "pool"
@@ -197,8 +190,8 @@ object Publishing {
   import Repositories._
 
   lazy val settings = Seq(
-    publishTo <<= (version) { version => Some(
-      if (version.endsWith("SNAPSHOT")) ElementSnapshots else ElementReleases
+    publishTo <<= version { version => Some(
+      if (version endsWith "SNAPSHOT") ElementSnapshots else ElementReleases
     )}
   , credentials += Credentials(Path.userHome / ".config" / "pgscala" / "nexus.config")
   , publishArtifact in (Compile, packageDoc) := false
@@ -252,11 +245,9 @@ object Default {
     Publishing.settings ++ Seq(
       organization := "org.pgscala"
 
-    , scalaVersion <<= crossScalaVersions(_.head)
+    , scalaVersion <<= crossScalaVersions(_.last)
     , crossScalaVersions := Seq(
-        "2.9.2"
-      , "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.3-RC2"
-      , "2.10.1-RC1"
+        "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.2", "2.9.3"
       )
     , scalacOptions <<= scalaVersion map ( sV => scala2_8 ++ (sV match {
           case x if (x startsWith "2.10.")                => scala2_9 ++ scala2_9_1 ++ scala2_10
