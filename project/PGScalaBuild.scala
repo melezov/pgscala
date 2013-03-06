@@ -74,7 +74,7 @@ object Dependencies {
   lazy val postgres = "postgresql" % "postgresql" % "9.2-1002.jdbc4"
 
   lazy val c3p0 = "com.mchange" % "c3p0" % "0.9.2"
-  
+
   lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.2"
   lazy val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.2"
 
@@ -82,8 +82,9 @@ object Dependencies {
   lazy val scalaIo = (sV: String) =>
     "com.github.scala-incubator.io" % "scala-io-file_".+(sV match {
       case "2.9.2" | "2.9.3" => "2.9.2"
+      case x if x startsWith "2.10" => "2.10"
       case x => "2.9.1"
-    }) % "0.4.1-seq"
+    }) % "0.4.2"
 
   lazy val scalaTest = "org.scalatest" %% "scalatest" % "2.0.M5b"
 }
