@@ -13,5 +13,5 @@ class PGSimple(creds: PGCredentials) extends PGSimpleDataSource
   setPortNumber(creds.port)
   setDatabaseName(creds.dbName)
   setUser(creds.user)
-  setPassword(creds.pass)
+  setPassword(creds.password)
 }

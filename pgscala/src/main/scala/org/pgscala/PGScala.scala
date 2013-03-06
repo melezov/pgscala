@@ -89,6 +89,13 @@ class PGScala(con: java.sql.Connection) {
   }
 
   /**
+   * Query the database and discard the result.
+   */
+
+  def exec(query: String, params: ParamText[_]*): Unit =
+    qry(query, params: _*){ _ => }
+
+  /**
    * Query one database tuple.
    */
 
