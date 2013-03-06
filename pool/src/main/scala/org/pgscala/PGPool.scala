@@ -12,7 +12,7 @@ class PGPool(creds: PGCredentials) extends PGSessionFactory {
       format(creds.host, creds.port, creds.dbName))
 
     cpds.setUser(creds.user)
-    cpds.setPassword(creds.pass)
+    cpds.setPassword(creds.password)
 
     cpds
   }
