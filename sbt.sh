@@ -4,7 +4,6 @@ cd `dirname $0`
 ## START JVM PARAMS
 JVM_PARAMS="-Xss2m -Xms2g -Xmx2g -XX:+TieredCompilation -XX:ReservedCodeCacheSize=256m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled -XX:+UseNUMA -XX:+UseParallelGC -Dscalac.patmat.analysisBudget=off"
 
-LIFT_RUN_MODE="-Drun.mode=development"
 TRY_JREBEL=true
 LOG_LEVEL=
 NO_PAUSE=false
@@ -18,13 +17,8 @@ do
       LOG_LEVEL="\"set logLevel:=Level.Debug\""
       ;;
     "--prod")
-      echo "Set Lift mode to Production"
-      LIFT_RUN_MODE="-Drun.mode=production"
-      ;;
-    "~lift")
-      echo "Firing up Jetty ..."
-      SBT_PARAMS="$SBT_PARAMS container:start ~compile container:stop"
-      JREBEL_PLUGINS="$JREBEL_PLUGINS -Drebel.lift_plugin=true"
+      echo "Setting production mode"
+      LOG_LEVEL="\"set logLevel:=Level.Info\""
       ;;
     "--no-jrebel")
       echo "Disabling JRebel for faster compilation"
@@ -46,7 +40,6 @@ do
 
 done
 
-JVM_PARAMS="$JVM_PARAMS $LIFT_RUN_MODE"
 if $TRY_JREBEL && [ -n "$JREBEL_HOME" ] && [ -f $JREBEL_HOME/jrebel.jar ]; then
   JVM_PARAMS="$JVM_PARAMS -noverify -javaagent:$JREBEL_HOME/jrebel.jar $JREBEL_PLUGINS"
 fi
