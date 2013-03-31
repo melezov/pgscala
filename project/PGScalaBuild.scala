@@ -255,7 +255,7 @@ object Default {
 
     , scalaVersion <<= crossScalaVersions(_.last)
     , crossScalaVersions := Seq(
-        "2.10.1-RC2"
+        "2.10.1"
       )
     , scalacOptions <<= scalaVersion map ( ScalaOptions(_) )
 
