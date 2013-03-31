@@ -8,13 +8,13 @@ object BuildSettings {
 
   val bsUtil = javaSettings ++ Seq(
     name    := "pgscala-util"
-  , version := "0.3.6"
+  , version := "0.3.6-1"
   , initialCommands := "import org.pgscala.util._"
   )
 
   val bsIORC = scalaSettings ++ Seq(
     name    := "pgscala-iorc"
-  , version := "0.1.7"
+  , version := "0.1.7-1"
   , initialCommands := "import org.pgscala.iorc._"
   )
 
@@ -41,26 +41,26 @@ object BuildSettings {
 
   val bsConvertersJava = javaSettings ++ Seq(
     name    := "pgscala-converters-java"
-  , version := "0.2.9"
+  , version := "0.2.9-1"
   , initialCommands := "import org.pgscala.converters._"
   )
 
   val bsConvertersScala = scalaSettings ++ Seq(
     name    := "pgscala-converters-scala"
-  , version := "0.2.15"
+  , version := "0.2.15-1"
   , initialCommands := "import org.pgscala.converters._"
   , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)(_ :: _ :: Nil)
   )
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.23"
+  , version := "0.7.23-1"
   , initialCommands := "import org.pgscala._"
   )
 
   val bsPool = scalaSettings ++ Seq(
     name    := "pgscala-pool"
-  , version := "0.2.16"
+  , version := "0.2.16-1"
   , initialCommands := "import org.pgscala._"
   )
 }
@@ -68,17 +68,17 @@ object BuildSettings {
 //  ---------------------------------------------------------------------------
 
 object Dependencies {
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.1"
-  lazy val jodaConvert = "org.joda" % "joda-convert" % "1.2"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.2"
+  lazy val jodaConvert = "org.joda" % "joda-convert" % "1.3.1"
 
   lazy val postgres = "postgresql" % "postgresql" % "9.2-1002.jdbc4"
 
-  lazy val c3p0 = "com.mchange" % "c3p0" % "0.9.2"
+  lazy val c3p0 = "com.mchange" % "c3p0" % "0.9.2.1"
 
-  lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.2"
-  lazy val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.2"
+  lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.5"
+  lazy val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.5"
 
-  lazy val logback = "ch.qos.logback" % "logback-classic" % "1.0.9"
+  lazy val logback = "ch.qos.logback" % "logback-classic" % "1.0.11"
   lazy val scalaIo = (sV: String) =>
     "com.github.scala-incubator.io" % "scala-io-file_".+(sV match {
       case "2.9.2" | "2.9.3" => "2.9.2"
@@ -199,13 +199,7 @@ object Publishing {
 
 //  ---------------------------------------------------------------------------
 
-object Default {
-  //Eclipse plugin
-  import com.typesafe.sbteclipse.plugin.EclipsePlugin._
-
-  //Dependency graph plugin
-  import net.virtualvoid.sbt.graph.Plugin._
-
+object ScalaOptions {
   val scala2_8 = Seq(
     "-unchecked"
   , "-deprecation"
@@ -236,6 +230,21 @@ object Default {
   , "-language:existentials"
   )
 
+  def apply(version: String) = scala2_8 ++ (version match {
+    case x if (x startsWith "2.10.")                => scala2_9 ++ scala2_9_1 ++ scala2_10
+    case x if (x startsWith "2.9.") && x >= "2.9.1" => scala2_9 ++ scala2_9_1
+    case x if (x startsWith "2.9.")                 => scala2_9
+    case _ => Nil
+  } )
+}
+
+object Default {
+  //Eclipse plugin
+  import com.typesafe.sbteclipse.plugin.EclipsePlugin._
+
+  //Dependency graph plugin
+  import net.virtualvoid.sbt.graph.Plugin._
+
   lazy val scalaSettings =
     Defaults.defaultSettings ++
     eclipseSettings ++
@@ -248,13 +257,7 @@ object Default {
     , crossScalaVersions := Seq(
         "2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.2", "2.9.3"
       )
-    , scalacOptions <<= scalaVersion map ( sV => scala2_8 ++ (sV match {
-          case x if (x startsWith "2.10.")                => scala2_9 ++ scala2_9_1 ++ scala2_10
-          case x if (x startsWith "2.9.") && x >= "2.9.1" => scala2_9 ++ scala2_9_1
-          case x if (x startsWith "2.9.")                 => scala2_9
-          case _ => Nil
-        } )
-      )
+    , scalacOptions <<= scalaVersion map ( ScalaOptions(_) )
 
     , javaHome := sys.env.get("JDK16_HOME").map(file(_))
     , javacOptions := Seq(
