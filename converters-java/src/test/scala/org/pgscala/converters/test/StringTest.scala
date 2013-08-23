@@ -12,10 +12,10 @@ class StringTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
 
     scenario("String to String Nr. 1."){
       val t = """Ovo je test za String"""
-      given(""" a starting String value "%s"""" format t)
-      when ("that value is converted to String")
+      Given(""" a starting String value "%s"""" format t)
+      When ("that value is converted to String")
       val res = PGNullableStringConverter stringToString t
-      then ("""It should return a String value "%s"""" format res)
+      Then ("""It should return a String value "%s"""" format res)
       res should equal(t)
     }
   }
