@@ -8,25 +8,28 @@ object BuildSettings {
 
   val bsUtil = javaSettings ++ Seq(
     name    := "pgscala-util"
-  , version := "0.3.6-1"
+  , version := "0.3.7"
   , initialCommands := "import org.pgscala.util._"
   )
 
   val bsIORC = scalaSettings ++ Seq(
     name    := "pgscala-iorc"
-  , version := "0.1.7-1"
+  , version := "0.1.8"
   , initialCommands := "import org.pgscala.iorc._"
   )
 
 //  ===========================================================================
 
   val proxy = TaskKey[Unit]("proxy", "Compiles jasmin proxy methods (return type overloading for Scala)")
-  val proxyTask = proxy <<= (baseDirectory, scalaVersion) map { (bD, sV) =>
-    val src = bD / ".."  / "converters-scala" /
+  val proxyTask = proxy := {
+    val src = baseDirectory.value / ".."  / "converters-scala" /
       "src" / "main" / "jasmin" / "org" / "pgscala" / "converters" / "PGNullableConverter.j"
 
-    val dst = bD / ".."  / "converters-scala" /
-      "target" / ("scala-%s" format (if (sV startsWith "2.10") "2.10" else sV)) / "classes"
+    val dst = baseDirectory.value / ".."  / "converters-scala" /
+      "target" / ("scala-%s" format (scalaVersion.value match {
+        case x if x startsWith "2.10" => "2.10"
+        case x => x
+      })) / "classes"
 
     jasmin.Main.main(Array(src.absolutePath, "-d", dst.absolutePath))
   }
@@ -41,26 +44,32 @@ object BuildSettings {
 
   val bsConvertersJava = javaSettings ++ Seq(
     name    := "pgscala-converters-java"
-  , version := "0.2.9-1"
+  , version := "0.2.10"
   , initialCommands := "import org.pgscala.converters._"
   )
 
   val bsConvertersScala = scalaSettings ++ Seq(
     name    := "pgscala-converters-scala"
-  , version := "0.2.15-1"
+  , version := "0.2.16"
   , initialCommands := "import org.pgscala.converters._"
-  , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile, javaSource in Compile)(_ :: _ :: Nil)
+  , unmanagedSourceDirectories in Compile := (scalaSource in Compile).value :: (javaSource in Compile).value :: Nil
   )
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala"
-  , version := "0.7.23-1"
+  , version := "0.7.24"
   , initialCommands := "import org.pgscala._"
   )
 
   val bsPool = scalaSettings ++ Seq(
     name    := "pgscala-pool"
-  , version := "0.2.16-1"
+  , version := "0.2.17"
+  , initialCommands := "import org.pgscala._"
+  )
+
+  val bsRoot = scalaSettings ++ Seq(
+    name    := "root"
+  , version := "0.0.0-SNAPSHOT"
   , initialCommands := "import org.pgscala._"
   )
 }
@@ -68,25 +77,30 @@ object BuildSettings {
 //  ---------------------------------------------------------------------------
 
 object Dependencies {
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.2"
-  lazy val jodaConvert = "org.joda" % "joda-convert" % "1.3.1"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.3"
+  lazy val jodaConvert = "org.joda" % "joda-convert" % "1.4"
 
-  lazy val postgres = "postgresql" % "postgresql" % "9.2-1002.jdbc4"
+  lazy val postgres = "org.postgresql" % "postgresql" % "9.2-1003-jdbc4"
 
   lazy val c3p0 = "com.mchange" % "c3p0" % "0.9.2.1"
 
   lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.5"
   lazy val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.5"
 
-  lazy val logback = "ch.qos.logback" % "logback-classic" % "1.0.11"
-  lazy val scalaIo = (sV: String) =>
-    "com.github.scala-incubator.io" % "scala-io-file_".+(sV match {
-      case "2.9.2" | "2.9.3" => "2.9.2"
-      case x if x startsWith "2.10" => "2.10"
-      case x => "2.9.1"
-    }) % "0.4.2"
+  lazy val logback = "ch.qos.logback" % "logback-classic" % "1.0.13" % "test"
+  lazy val scalaIo = "com.github.scala-incubator.io" % "scala-io-file" % "0.4.2" cross CrossVersion.fullMapped {
+    case "2.9.1" => "2.9.1"
+    case x if x startsWith "2.9" => "2.9.2"
+    case x => "2.9.2"
+  }
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "2.0.M5b"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "2.0.M5b" % "test"
+
+  lazy val configrity = "org.streum" % "configrity-core" % "1.0.0" % "test" cross CrossVersion.fullMapped {
+    case "2.9.1" => "2.9.1"
+    case x if x startsWith "2.10" => x
+    case x => "2.9.2"
+  }
 }
 
 //  ###########################################################################
@@ -101,7 +115,9 @@ object PGScalaBuild extends Build {
   , file("util")
   , settings = bsUtil :+ deps(
       slf4j
-    , scalaTest % "test"
+    , scalaTest
+    , configrity
+    , postgres % "test"
     )
   )
 
@@ -109,7 +125,7 @@ object PGScalaBuild extends Build {
     "iorc"
   , file("iorc")
   , settings = bsIORC :+ deps(
-      scalaTest % "test"
+      scalaTest
     )
   )
 
@@ -127,7 +143,7 @@ object PGScalaBuild extends Build {
   , settings = bsConvertersJava :+ deps(
       jodaTime
     , jodaConvert
-    , scalaTest % "test"
+    , scalaTest
     )
   )
 
@@ -135,7 +151,7 @@ object PGScalaBuild extends Build {
     "converters-scala"
   , file("converters-scala")
   , settings = bsConvertersScala :+ deps(
-      scalaTest % "test"
+      scalaTest
     )
   ) dependsOn(pgjavaConverters)
 
@@ -145,8 +161,8 @@ object PGScalaBuild extends Build {
   , settings = bsPGScala :+ deps(
       postgres
     , slf4j
-    , scalaTest % "test"
-    , logback % "test"
+    , scalaTest
+    , logback
     )
   ) dependsOn(util, iorc, pgscalaConverters)
 
@@ -156,10 +172,16 @@ object PGScalaBuild extends Build {
   , settings = bsPool :+ deps(
       c3p0
     , log4jOverSlf4j
-    , scalaTest % "test"
-    , logback % "test"
+    , scalaTest
+    , logback
     )
   ) dependsOn(pgscala)
+
+  lazy val root = Project(
+    "root"
+  , file(".")
+  , settings = bsRoot
+  )
 }
 
 //  ---------------------------------------------------------------------------
@@ -177,9 +199,7 @@ object Resolvers {
 
   lazy val settings = Seq(
     resolvers := Seq(ElementNexus, ElementReleases, ElementSnapshots)
-  , externalResolvers <<= resolvers map { r =>
-      Resolver.withDefaultResolvers(r, mavenCentral = false)
-    }
+  , externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
   )
 }
 
@@ -189,9 +209,9 @@ object Publishing {
   import Repositories._
 
   lazy val settings = Seq(
-    publishTo <<= version { version => Some(
-      if (version endsWith "SNAPSHOT") ElementSnapshots else ElementReleases
-    )}
+    publishTo := Some(
+      if (version.value endsWith "SNAPSHOT") ElementSnapshots else ElementReleases
+    )
   , credentials += Credentials(Path.userHome / ".config" / "pgscala" / "nexus.config")
   , publishArtifact in (Compile, packageDoc) := false
   )
@@ -253,11 +273,11 @@ object Default {
     Publishing.settings ++ Seq(
       organization := "org.pgscala"
 
-    , scalaVersion <<= crossScalaVersions(_.last)
+    , scalaVersion := crossScalaVersions.value.last
     , crossScalaVersions := Seq(
         "2.10.1"
       )
-    , scalacOptions <<= scalaVersion map ( ScalaOptions(_) )
+    , scalacOptions := ScalaOptions(scalaVersion.value)
 
     , javaHome := sys.env.get("JDK16_HOME").map(file(_))
     , javacOptions := Seq(
@@ -268,19 +288,16 @@ object Default {
       , "-target", "1.6"
       )
 
-    , unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)(_ :: Nil)
-    , unmanagedSourceDirectories in Test    <<= (scalaSource in Test   )(_ :: Nil)
+    , unmanagedSourceDirectories in Compile := (scalaSource in Compile).value :: Nil
+    , unmanagedSourceDirectories in Test    := (scalaSource in Test   ).value :: Nil
     )
 
   lazy val javaSettings =
     scalaSettings ++ Seq(
       autoScalaLibrary := false
     , crossPaths := false
-    , unmanagedSourceDirectories in Compile <<= (javaSource in Compile)(_ :: Nil)
+    , unmanagedSourceDirectories in Compile := (javaSource in Compile).value :: Nil
     )
-
-  def deps(module: String => ModuleID) =
-    libraryDependencies <+= scalaVersion( sV => module(sV) )
 
   def deps(modules: ModuleID*) =
     libraryDependencies ++= modules

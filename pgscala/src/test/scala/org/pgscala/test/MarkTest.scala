@@ -10,9 +10,9 @@ class MarkTestSpec extends FeatureSpec
   with GivenWhenThen
   with MustMatchers {
 given("a non-empty stack")
-      when("when pop is invoked on the stack")
-      then("the most recently pushed element should be returned")
-      and("the stack should have one less item than before")
+      When("when pop is invoked on the stack")
+      Then("the most recently pushed element should be returned")
+      And("the stack should have one less item than before")
   def getresult(res: (Indices, Indices)): String = {
     def getStringFromSeq(s: Seq[Int]) ={
       "(" + s.head + s.tail.map(", "+ _).mkString + ")"
