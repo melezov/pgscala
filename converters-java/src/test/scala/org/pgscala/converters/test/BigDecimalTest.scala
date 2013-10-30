@@ -4,11 +4,11 @@ package test
 
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import java.math.BigDecimal
 import scala.util.Random
 
-class BigDecimalTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class BigDecimalTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("about to test a BigDecimal converter"){
     info("I want to test if PGNullableBigDecimalConverter works correctly, both in 2 way conversion")

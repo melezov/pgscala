@@ -138,7 +138,7 @@ class IndexedSeqMapSpec extends FeatureSpec with GivenWhenThen {
 
     scenario("An empty collection is being added to the IndexedSeqMap") {
       Given("an IndexedSeqMap containing some elements")
-      val iSM = IndexedSeqMap("a"->1., "b"->2., "c"->3.)
+      val iSM = IndexedSeqMap("a"->1.0, "b"->2.0, "c"->3.0)
       When("adding an empty collection")
       val iSMnew = iSM ++ IndexedSeq.empty
       Then("a new IndexedSeqMap must not be created")

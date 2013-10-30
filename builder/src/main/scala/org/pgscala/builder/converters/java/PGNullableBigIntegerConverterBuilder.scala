@@ -3,7 +3,8 @@ package builder
 package converters
 
 object PGNullableBigIntegerConverterBuilder extends PGNullableConverterBuilder {
-  override val imports = "import java.math.BigInteger;"
+  override val imports = """import java.math.BigInteger;
+"""
 
   val pgType = "numeric"
 

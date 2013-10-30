@@ -4,7 +4,8 @@ package converters
 
 object PGNullableDateTimeConverterBuilder extends PGNullableConverterBuilder {
   override val imports = """import org.joda.time.DateTime;
-import org.joda.time.format.*;"""
+import org.joda.time.format.*;
+"""
 
   val pgType = "timestamptz"
 

@@ -211,20 +211,20 @@
   areturn
 .end method
 
-.method public static fromPGString(Ljava/lang/String;)Lscala.collection.mutable.Map;
+.method public static fromPGString(Ljava/lang/String;)Lscala.collection.immutable.Map;
   .limit locals 1
   .limit stack 2
-  .signature "(Ljava/lang/String;)Lscala.collection.mutable.Map<Ljava/lang/String;Ljava/lang/String;>;"
+  .signature "(Ljava/lang/String;)Lscala.collection.immutable.Map<Ljava/lang/String;Ljava/lang/String;>;"
   aload_0
-  invokestatic org/pgscala/converters/PGNullableMapConverter.stringToMap(Ljava/lang/String;)Lscala.collection.mutable.Map;
+  invokestatic org/pgscala/converters/PGNullableMapConverter.stringToMap(Ljava/lang/String;)Lscala.collection.immutable.Map;
   areturn
 .end method
 
-.method public static toPGString(Lscala.collection.mutable.Map;)Ljava/lang/String;
+.method public static toPGString(Lscala.collection.immutable.Map;)Ljava/lang/String;
   .limit locals 1
   .limit stack 2
-  .signature "(Lscala.collection.mutable.Map<Ljava/lang/String;Ljava/lang/String;>;)Ljava/lang/String;"
+  .signature "(Lscala.collection.immutable.Map<Ljava/lang/String;Ljava/lang/String;>;)Ljava/lang/String;"
   aload_0
-  invokestatic org/pgscala/converters/PGNullableMapConverter.mapToString(Lscala.collection.mutable.Map;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableMapConverter.mapToString(Lscala.collection.immutable.Map;)Ljava/lang/String;
   areturn
 .end method

@@ -4,9 +4,9 @@ package test
 
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class BooleanTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class BooleanTest extends FeatureSpec with GivenWhenThen with Matchers {
   feature("About to test a boolean converter"){
     info("I want to test if PGNullableBooleanConverter works correctly, both in 2 way conversion")
 

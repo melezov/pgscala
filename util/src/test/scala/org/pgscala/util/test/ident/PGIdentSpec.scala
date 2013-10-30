@@ -3,11 +3,11 @@ package test
 package record
 
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.matchers.MustMatchers
+import org.scalatest.Matchers
 
 class PGIdentSpec extends FeatureSpec
                   with GivenWhenThen
-                  with MustMatchers {
+                  with Matchers {
 
   feature("Identities can be quoted in PostgreSQL manner") {
 
@@ -15,7 +15,7 @@ class PGIdentSpec extends FeatureSpec
     val quotStr = "\"Schema \"\"Bohema\"\"\""
 
     scenario("Ident can be quoted") {
-      PGIdent.quote(origStr) must equal (quotStr)
+      PGIdent.quote(origStr) should equal (quotStr)
     }
 
     scenario("Boundary conditions must satisfy preset rules") {
@@ -25,7 +25,7 @@ class PGIdentSpec extends FeatureSpec
       }
 
       info("""The quote must return "" on empty string input""")
-      PGIdent.quote("") must equal ("\"\"")
+      PGIdent.quote("") should equal ("\"\"")
     }
 
     scenario("Ident quoting mimics PostgreSQL quote_ident") {
@@ -34,10 +34,10 @@ class PGIdentSpec extends FeatureSpec
         rS.getString(1)
       }
 
-      dbQuotStr must equal(quotStr)
+      dbQuotStr should equal(quotStr)
     }
 
-    scenario("Random generated idents must be able to make a roundabout trip") {
+    scenario("Random generated idents should be able to make a roundabout trip") {
       val isReadible = false
 
       val trials = 100
@@ -89,24 +89,24 @@ class PGIdentSpec extends FeatureSpec
         )
 
       When("they are quoted and embedded into a query (%d chars)" format query.length)
-      Then("the returned idents must equal the original idents")
+      Then("the returned idents should equal the original idents")
 
       val okCount = PGTestDb.qry(query){rS =>
         quotes.count{ case (origGenStr, quotGenStr) =>
           rS.next()
 
           val dbOrigGenStr = rS.getString("orig_str")
-          origGenStr must equal (dbOrigGenStr)
+          origGenStr should equal (dbOrigGenStr)
 
           val dbQuotGenStr = rS.getString("quot_str")
-          quotGenStr must equal (dbQuotGenStr)
+          quotGenStr should equal (dbQuotGenStr)
 
           true
         }
       }
 
       info("Passed %d checks!" format okCount)
-      okCount must be (values.size)
+      okCount should be (values.size)
     }
   }
 }

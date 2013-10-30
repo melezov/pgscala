@@ -26,7 +26,7 @@ package pgscala {
     implicit def impaleParamText[T](p: T)(implicit c: PGConverter[T]) =
       ParamText(p, c)
 
-    implicit def impaleParamTextMapPatch(p: scala.collection.mutable.Map[String, String]) =
+    implicit def impaleParamTextMapPatch(p: Map[String, String]) =
       ParamText(p, PGMapConverter)
 
     implicit def impaleTraversableParamText[T](p: Traversable[T])(implicit c: PGConverter[T]) =

@@ -2,13 +2,12 @@ package org.pgscala.converters;
 
 import org.joda.convert.*;
 
-import org.joda.convert.FromString;
-import org.joda.convert.StringConverter;
-import org.joda.convert.ToString;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
-import scala.collection.mutable.Map;
-import scala.collection.mutable.HashMap;
-
+import scala.collection.immutable.Map;
+import scala.collection.immutable.Map$;
+import scala.collection.mutable.WrappedArray;
 import scala.collection.Iterator;
 import scala.Tuple2;
 
@@ -52,8 +51,10 @@ public enum PGNullableMapConverter implements StringConverter<Map<String, String
   public static Map<String, String> stringToMap(final String m) {
     if (null == m) return null;
 
-    final HashMap<String, String> map = new HashMap<String, String>();
-    if (m.isEmpty()) return map;
+    if (m.isEmpty()) return Map$.MODULE$.empty();
+
+    final Queue<Tuple2<String, String>> tuples =
+        new ArrayDeque<Tuple2<String,String>>();
 
     final String[] pairs = m.substring(1, m.length() - 1).split("\", \"", -1);
     for(final String pair : pairs) {
@@ -63,13 +64,16 @@ public enum PGNullableMapConverter implements StringConverter<Map<String, String
         throw new IllegalArgumentException("Illegal pair: " + pair);
       }
 
-      map.put(
+      tuples.add(new Tuple2<String, String>(
         kv[0].replace("\\\"", "\"").replace("\\\\", "\\")
       , kv[1].replace("\\\"", "\"").replace("\\\\", "\\")
-      );
+      ));
     }
 
-    return map;
+    final WrappedArray<Tuple2<String, String>> wa = scala.Predef.wrapRefArray(
+        (Tuple2<String, String>[]) tuples.toArray(new Tuple2[tuples.size()]));
+
+    return Map$.MODULE$.apply(wa);
   }
 
 // -----------------------------------------------------------------------------

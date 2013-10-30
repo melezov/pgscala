@@ -1,7 +1,5 @@
 package org.pgscala.converters
 
-import scala.collection.mutable.Map
-
 /** Do not edit - generated in Builder / PGMapConverterBuilder.scala */
 
 object PGMapConverter extends PGConverter[Map[String, String]] {

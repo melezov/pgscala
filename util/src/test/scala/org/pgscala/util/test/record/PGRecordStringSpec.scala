@@ -3,26 +3,26 @@ package test
 package record
 
 import org.scalatest.{FeatureSpec, GivenWhenThen}
-import org.scalatest.matchers.MustMatchers
+import org.scalatest.Matchers
 
 class PGRecordStringSpec extends FeatureSpec
                     with GivenWhenThen
-                    with MustMatchers {
+                    with Matchers {
   feature("Strings can be quoted into record string literals") {
 
     val origStr = """It's OK -> \ Don"t {worry} be (happy)! /"""
     val quotStr = """"It's OK -> \\ Don""t {worry} be (happy)! /""""
 
     scenario("String can be quoted") {
-      PGRecord.quote(origStr) must equal (quotStr)
+      PGRecord.quote(origStr) should equal (quotStr)
     }
 
     scenario("Boundary conditions must satisfy preset rules") {
       info("The quoteString must return an empty string on null input")
-      PGRecord.quote(null: String) must equal ("")
+      PGRecord.quote(null: String) should equal ("")
 
       info("""The quoteString must return "" on empty string input""")
-      PGRecord.quote("") must equal ("\"\"")
+      PGRecord.quote("") should equal ("\"\"")
     }
 
     scenario("Strings can be quoted to be directly embedded into queries") {
@@ -47,7 +47,7 @@ class PGRecordStringSpec extends FeatureSpec
           ))
         )){ rS =>
           rS.next()
-          rS.getString(1) must equal (origStr)
+          rS.getString(1) should equal (origStr)
         }
       }
     }

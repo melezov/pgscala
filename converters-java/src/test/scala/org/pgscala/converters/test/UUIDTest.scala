@@ -4,12 +4,12 @@ package test
 
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import java.util.UUID;
 import scala.util.Random
 
 
-class UUIDTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
+class UUIDTest extends FeatureSpec with GivenWhenThen with Matchers {
   feature("About to test an UUID converter"){
     info("I want to test if PGNullableUUIDConverter works correctly, both in 2 way conversion")
 

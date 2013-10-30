@@ -3,15 +3,15 @@ package builder
 package converters
 
 object PGNullableMapConverterBuilder extends PGNullableConverterBuilder {
-  override val imports = """import org.joda.convert.FromString;
-import org.joda.convert.StringConverter;
-import org.joda.convert.ToString;
+  override val imports = """import java.util.ArrayDeque;
+import java.util.Queue;
 
-import scala.collection.mutable.Map;
-import scala.collection.mutable.HashMap;
-
+import scala.collection.immutable.Map;
+import scala.collection.immutable.Map$;
+import scala.collection.mutable.WrappedArray;
 import scala.collection.Iterator;
-import scala.Tuple2;"""
+import scala.Tuple2;
+"""
 
   val pgType = "hstore"
 
@@ -19,9 +19,9 @@ import scala.Tuple2;"""
 
   val clazz = "scala.collection.mutable.Map<String, String>"
 
-  override val jasminType = "Lscala.collection.mutable.Map;"
+  override val jasminType = "Lscala.collection.immutable.Map;"
 
-  private val signature = "Lscala.collection.mutable.Map<Ljava/lang/String;Ljava/lang/String;>;"
+  private val signature = "Lscala.collection.immutable.Map<Ljava/lang/String;Ljava/lang/String;>;"
 
   override val jasminToSignature = """
   .signature "(%s)Ljava/lang/String;"""" format signature
@@ -57,8 +57,10 @@ import scala.Tuple2;"""
 
   val from = """
 
-    final HashMap<String, String> map = new HashMap<String, String>();
-    if (m.isEmpty()) return map;
+    if (m.isEmpty()) return Map$.MODULE$.empty();
+
+    final Queue<Tuple2<String, String>> tuples =
+        new ArrayDeque<Tuple2<String,String>>();
 
     final String[] pairs = m.substring(1, m.length() - 1).split("\", \"", -1);
     for(final String pair : pairs) {
@@ -68,13 +70,16 @@ import scala.Tuple2;"""
         throw new IllegalArgumentException("Illegal pair: " + pair);
       }
 
-      map.put(
+      tuples.add(new Tuple2<String, String>(
         kv[0].replace("\\\"", "\"").replace("\\\\", "\\")
       , kv[1].replace("\\\"", "\"").replace("\\\\", "\\")
-      );
+      ));
     }
 
-    return map"""
+    final WrappedArray<Tuple2<String, String>> wa = scala.Predef.wrapRefArray(
+        (Tuple2<String, String>[]) tuples.toArray(new Tuple2[tuples.size()]));
+
+    return Map$.MODULE$.apply(wa)"""
 
   override val language = Scala
 
@@ -83,5 +88,4 @@ import scala.Tuple2;"""
       .replace(
         "return null == m ? null :",
         "if (null == m) return null;")
-
 }

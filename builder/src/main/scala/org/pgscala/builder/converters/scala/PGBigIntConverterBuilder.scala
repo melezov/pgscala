@@ -2,7 +2,9 @@ package org.pgscala
 package builder
 package converters
 
-object PGBigIntConverterBuilder extends PGPredefConverterBuilder {
+object PGBigIntConverterBuilder
+    extends PGPredefConverterBuilder {
+
   val scalaClazz = "scala.math.BigInt"
 
   override val javaClazz = "java.math.BigInteger"

@@ -4,9 +4,9 @@ package test
 
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class FloatTest  extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class FloatTest  extends FeatureSpec with GivenWhenThen with Matchers {
   feature("About to test a Float converter"){
     info("I want to test if PGNullableFloatConverter works correctly, both in 2 way conversion")
     info("I am going to perform tests for the Float special cases")

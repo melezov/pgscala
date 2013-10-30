@@ -4,9 +4,9 @@ package test
 
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class IntegerTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
+class IntegerTest extends FeatureSpec with GivenWhenThen with Matchers {
   feature("About to test an Integer converter"){
     info("I want to test if PGNullableIntegerConverter works correctly, both in 2 way conversion")
     info("I am going to perform tests for the Integer boundary cases")

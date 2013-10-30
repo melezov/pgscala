@@ -3,7 +3,8 @@ package builder
 package converters
 
 object PGNullableLocalDateConverterBuilder extends PGNullableConverterBuilder {
-  override val imports = "import org.joda.time.LocalDate;"
+  override val imports = """import org.joda.time.LocalDate;
+"""
 
   val clazz = "org.joda.time.LocalDate"
 

@@ -3,7 +3,8 @@ package builder
 package converters
 
 object PGNullableBigDecimalConverterBuilder extends PGNullableConverterBuilder {
-  override val imports = "import java.math.BigDecimal;"
+  override val imports = """import java.math.BigDecimal;
+"""
 
   val pgType = "decimal"
 

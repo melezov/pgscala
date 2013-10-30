@@ -2,7 +2,9 @@ package org.pgscala
 package builder
 package converters
 
-trait PGConverterBuilderLike extends PGConverterHelper {
+trait PGConverterBuilderLike
+    extends PGConverterHelper {
+
   def imports: String        // Scala imports
 
   def scalaClazz: String     // Fully qualified scala class
@@ -57,7 +59,8 @@ trait PGConverterBuilder extends PGConverterBuilderLike {
   def isUp =
     scalaUpperType.toUpperCase == scalaUpperType
 
-  def imports = "import %s;" format javaClazz
+  def imports = """import %s;
+""" format javaClazz
 
   def to = """ =
     PGNullableConverter.toPGString(%s)""" format(scalaVar)
@@ -107,7 +110,7 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
 
   def buildScalaConverters() {
     val template =
-      Resource.fromClasspath("PGConverter.scala")
+      Resource.fromClasspath("PGConverter.scala.template")
         .string(UTF8)
 
     for (c <- converters) {
@@ -121,7 +124,7 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
 
   def buildScalaOptionConverters() {
     val template =
-      Resource.fromClasspath("PGOptionConverter.scala")
+      Resource.fromClasspath("PGOptionConverter.scala.template")
         .string(UTF8)
 
     for (c <- converters) {
@@ -135,7 +138,7 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
 
   def buildScalaConverterImplicits() {
     val template =
-      Resource.fromClasspath("Implicits.scala")
+      Resource.fromClasspath("Implicits.scala.template")
         .string(UTF8)
 
     val path = getPath(Scala) /

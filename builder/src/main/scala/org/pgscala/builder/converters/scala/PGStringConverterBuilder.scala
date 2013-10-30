@@ -2,7 +2,9 @@ package org.pgscala
 package builder
 package converters
 
-object PGStringConverterBuilder extends PGPredefConverterBuilder {
+object PGStringConverterBuilder
+    extends PGPredefConverterBuilder {
+
   val scalaClazz = "java.lang.String"
 
   override def inject(body: String) = {

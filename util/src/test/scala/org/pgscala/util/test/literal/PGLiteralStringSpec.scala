@@ -3,30 +3,30 @@ package test
 package literal
 
 import org.scalatest.{FeatureSpec, GivenWhenThen}
-import org.scalatest.matchers.MustMatchers
+import org.scalatest.Matchers
 
 class PGLiteralStringSpec extends FeatureSpec
                     with GivenWhenThen
-                    with MustMatchers {
+                    with Matchers {
   feature("Strings can be converted into string literals") {
 
     val origStr = """It's OK -> \ Don"t {worry} be (happy)! /"""
     val quotStr  = """'It''s OK -> \ Don"t {worry} be (happy)! /'"""
 
     scenario("String can be quoted") {
-      PGLiteral.quote(origStr) must equal (quotStr)
+      PGLiteral.quote(origStr) should equal (quotStr)
     }
 
     scenario("String can be unquoted") {
-      PGLiteral.unquote(quotStr) must equal (origStr)
+      PGLiteral.unquote(quotStr) should equal (origStr)
     }
 
     scenario("Boundary conditions must satisfy preset rules") {
       info("The quote must return NULL on null input")
-      PGLiteral.quote(null: String) must equal ("NULL")
+      PGLiteral.quote(null: String) should equal ("NULL")
 
       info("The quote must return '' on empty string input")
-      PGLiteral.quote("") must equal ("''")
+      PGLiteral.quote("") should equal ("''")
     }
 
     scenario("Strings can be quoted to be directly embedded into queries") {
@@ -35,7 +35,7 @@ class PGLiteralStringSpec extends FeatureSpec
         rS.getString(1)
       }
 
-      dbOrigStr must equal (origStr)
+      dbOrigStr should equal (origStr)
     }
 
     scenario("Strings quoting mimics PostgreSQL quote_literal") {
@@ -56,10 +56,10 @@ class PGLiteralStringSpec extends FeatureSpec
         rS.getBoolean(1)
       }
 
-      pgApproves must be (true)
+      pgApproves should be (true)
     }
 
-    scenario("Random generated strings must be able to make a roundabout trip") {
+    scenario("Random generated strings should be able to make a roundabout trip") {
       val isReadible = false
 
       val trials = 100
@@ -116,14 +116,14 @@ class PGLiteralStringSpec extends FeatureSpec
         )
 
       When("they are quoted and embedded into a query (%d chars)" format query.length)
-      Then("the returned strings must equal the original strings")
+      Then("the returned strings should equal the original strings")
 
       val dbQuoteValues = PGTestDb.qry(query){rS =>
         values.map{origGenStr =>
           rS.next()
 
           val dbOrigGenStr = rS.getString("orig_str")
-          origGenStr must equal (dbOrigGenStr)
+          origGenStr should equal (dbOrigGenStr)
 
           val dbQuotGenStr = rS.getString("quot_str")
           dbQuotGenStr
@@ -154,13 +154,13 @@ class PGLiteralStringSpec extends FeatureSpec
       val okCount = PGTestDb.qry(responseQuery){rS =>
         dbQuoteValues.count{origGenStr =>
           rS.next()
-          rS.getBoolean("pg_approves") must be (true)
+          rS.getBoolean("pg_approves") should be (true)
           true
         }
       }
 
       info("Passed %d checks!" format okCount)
-      okCount must be (values.size)
+      okCount should be (values.size)
     }
   }
 }

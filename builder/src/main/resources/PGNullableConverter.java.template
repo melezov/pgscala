@@ -3,7 +3,6 @@ package org.pgscala.converters;
 import org.joda.convert.*;
 
 { imports }
-
 /** Do not edit - generated in Builder / { builder } */
 
 public enum PGNullable{ upperType }Converter implements StringConverter<{ javaType }> {

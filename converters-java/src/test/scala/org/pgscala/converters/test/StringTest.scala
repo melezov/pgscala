@@ -4,9 +4,9 @@ package test
 
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class StringTest extends FeatureSpec with GivenWhenThen with ShouldMatchers{
+class StringTest extends FeatureSpec with GivenWhenThen with Matchers {
   feature("About to test an String converter"){
     info("I want to test if PGNullableStringConverter works correctly")
 

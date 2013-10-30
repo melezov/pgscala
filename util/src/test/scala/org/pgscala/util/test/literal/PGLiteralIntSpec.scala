@@ -3,17 +3,17 @@ package test
 package literal
 
 import org.scalatest.{FeatureSpec, GivenWhenThen}
-import org.scalatest.matchers.MustMatchers
+import org.scalatest.Matchers
 
 class PGLiteralIntSpec extends FeatureSpec
                     with GivenWhenThen
-                    with MustMatchers {
+                    with Matchers {
   feature("Integer can be converted into string literals") {
 
     scenario("Integer conversion") {
-      PGLiteral.quote(-100.toString) must equal ("'-100'")
-      PGLiteral.quote(0.toString) must equal ("'0'")
-      PGLiteral.quote(300000.toString) must equal ("'300000'")
+      PGLiteral.quote(-100.toString) should equal ("'-100'")
+      PGLiteral.quote(0.toString) should equal ("'0'")
+      PGLiteral.quote(300000.toString) should equal ("'300000'")
     }
 
     scenario("Integers can be quoted to be directly embedded into queries") {
@@ -22,13 +22,13 @@ class PGLiteralIntSpec extends FeatureSpec
           PGLiteral.quote(0.toString),
           PGLiteral.quote(300000.toString))){ rS =>
         rS.next()
-        rS.getInt(1) must be (-100)
-        rS.getInt(2) must be (0)
-        rS.getInt(3) must be (300000)
+        rS.getInt(1) should be (-100)
+        rS.getInt(2) should be (0)
+        rS.getInt(3) should be (300000)
       }
     }
 
-    scenario("Random generated integere must be able to make a roundabout trip") {
+    scenario("Random generated integere should be able to make a roundabout trip") {
       val trials = 100
 
       import scala.util.Random
@@ -62,20 +62,20 @@ class PGLiteralIntSpec extends FeatureSpec
         )
 
       When("they are quoted and embedded into a query (%d chars)" format query.length)
-      Then("the returned integers must equal the original integers")
+      Then("the returned integers should equal the original integers")
 
       val okCount = PGTestDb.qry(query){rS =>
         values.count{origGenInt =>
           rS.next()
 
           val dbOrigGenInt = rS.getInt("orig_int")
-          origGenInt must equal (dbOrigGenInt)
+          origGenInt should equal (dbOrigGenInt)
           true
         }
       }
 
       info("Passed %d checks!" format okCount)
-      okCount must be (values.size)
+      okCount should be (values.size)
     }
   }
 }

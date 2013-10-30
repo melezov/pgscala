@@ -43,7 +43,8 @@ trait PGNullableConverterBuilderLike extends PGConverterHelper {
 
 trait PGNullableConverterBuilder extends PGNullableConverterBuilderLike {
   override def imports =
-    "import %s;" format clazz
+    """import %s;
+""" format clazz
 
   override def javaType =
     clazz.replaceFirst("^.*\\.", "")
@@ -83,32 +84,32 @@ import Codec.UTF8
 
 object PGNullableConverterBuilder extends PGConverterBuilderPaths {
   val converters = Seq(
-   PGNullableStringConverterBuilder
+    PGNullableStringConverterBuilder
 
-  ,PGNullableBooleanConverterBuilder
-  ,PGNullableShortConverterBuilder
-  ,PGNullableIntegerConverterBuilder
-  ,PGNullableLongConverterBuilder
+  , PGNullableBooleanConverterBuilder
+  , PGNullableShortConverterBuilder
+  , PGNullableIntegerConverterBuilder
+  , PGNullableLongConverterBuilder
 
-  ,PGNullableFloatConverterBuilder
-  ,PGNullableDoubleConverterBuilder
+  , PGNullableFloatConverterBuilder
+  , PGNullableDoubleConverterBuilder
 
-  ,PGNullableBigDecimalConverterBuilder
-  ,PGNullableBigIntegerConverterBuilder
+  , PGNullableBigDecimalConverterBuilder
+  , PGNullableBigIntegerConverterBuilder
 
-  ,PGNullableLocalDateConverterBuilder
-  ,PGNullableDateTimeConverterBuilder
+  , PGNullableLocalDateConverterBuilder
+  , PGNullableDateTimeConverterBuilder
 
-  ,PGNullableByteArrayConverterBuilder
-  ,PGNullableUUIDConverterBuilder
+  , PGNullableByteArrayConverterBuilder
+  , PGNullableUUIDConverterBuilder
 
-  ,PGNullableElemConverterBuilder
-  ,PGNullableMapConverterBuilder
+  , PGNullableElemConverterBuilder
+  , PGNullableMapConverterBuilder
   )
 
   def buildJavaNullableConverters() {
     val nullableTemplate =
-      Resource.fromClasspath("PGNullableConverter.java")
+      Resource.fromClasspath("PGNullableConverter.java.template")
         .string(UTF8)
 
     for (c <- converters) {
@@ -122,7 +123,7 @@ object PGNullableConverterBuilder extends PGConverterBuilderPaths {
 
   def buildJasminProxy() {
     val nullableTemplate =
-      Resource.fromClasspath("PGNullableConverter.j")
+      Resource.fromClasspath("PGNullableConverter.j.template")
         .string(UTF8)
 
     val sB = new StringBuilder

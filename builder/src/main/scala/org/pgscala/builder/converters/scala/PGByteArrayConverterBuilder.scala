@@ -2,7 +2,9 @@ package org.pgscala
 package builder
 package converters
 
-object PGByteArrayConverterBuilder extends PGConverterBuilder {
+object PGByteArrayConverterBuilder
+    extends PGConverterBuilder {
+
   val scalaClazz = "Array[Byte]"
 
   override val imports = ""
