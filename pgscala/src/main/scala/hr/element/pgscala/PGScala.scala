@@ -2,7 +2,9 @@ package hr.element.pgscala
 
 import hr.element.pgscala.converters.PGTypeConverter
 
-import scala.collection.immutable.{VectorBuilder, IndexedSeqMap}
+import org.pgscala.iorc._
+
+import scala.collection.immutable.VectorBuilder
 import scala.collection.mutable.LinkedHashMap
 
 import org.postgresql.ds.PGSimpleDataSource
@@ -325,7 +327,7 @@ class PGScala(con: java.sql.Connection) {
 
     val params = IndexedSeqMap.empty ++ (
       for{ fld <- cc.getClass.getDeclaredFields
-        val col = Column(Symbol(fld.getName))
+        col = Column(Symbol(fld.getName))
         if (!blackList.contains(col))
       } yield {
         fld.setAccessible(true)
@@ -353,7 +355,7 @@ class PGScala(con: java.sql.Connection) {
 
     val params = IndexedSeqMap.empty ++ (
       for{ fld <- cc.getClass.getDeclaredFields
-        val col = Column(Symbol(fld.getName))
+        col = Column(Symbol(fld.getName))
         if (!blackList.contains(col))
       } yield {
         fld.setAccessible(true)

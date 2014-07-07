@@ -7,7 +7,7 @@ class PGSimple(creds: PGCredentials) extends PGSimpleDataSource
                                      with PGSessionFactory {
   val ds = this
 
-  def getParentLogger = sys error "WATCH THIS SPACE"
+  override def getParentLogger = sys error "WATCH THIS SPACE"
 
   setServerName(creds.host)
   setPortNumber(creds.port)

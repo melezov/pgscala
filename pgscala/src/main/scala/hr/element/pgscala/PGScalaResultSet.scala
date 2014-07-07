@@ -1,6 +1,6 @@
 package hr.element.pgscala
 
-import scala.collection.immutable.IndexedSeqMap
+import org.pgscala.iorc._
 import org.joda.time.{DateTime,LocalDate}
 
 class PGScalaResultSet(val rs: java.sql.ResultSet) extends Iterator[PGScalaResultSet]{

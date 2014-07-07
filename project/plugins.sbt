@@ -1,3 +1,10 @@
+resolvers := Seq(
+  "Element Nexus" at "http://repo.element.hr/nexus/content/groups/public/"
+, Resolver.url("Element Nexus (Ivy)", url("http://repo.element.hr/nexus/content/groups/public/"))(Resolver.ivyStylePatterns)
+)
+
+externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
+
 // +-------------------------------------------------------------------------------------+
 // | SBT Eclipse (https://github.com/typesafehub/sbteclipse)                             |
 // | Creates .project and .classpath files for easy Eclipse project imports              |
@@ -6,17 +13,11 @@
 // | See also: Scala IDE downloads (http://download.scala-ide.org/)                      |
 // +-------------------------------------------------------------------------------------+
 
-resolvers += Classpaths.typesafeResolver
-
-addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.0.0-RC1")
+addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.5.0")
 
 // +-------------------------------------------------------------------------------------+
-// | SBT Scalariform (https://github.com/typesafehub/sbt-scalariform)                    |
-// | Performs source code formatting                                                     |
-// |                                                                                     |
-// | See also: Scalariform reference (http://mdr.github.com/scalariform/)                |
+// | Dependency graph SBT plugin (https://github.com/jrudolph/sbt-dependency-graph)      |
+// | Lists all library dependencies in a nicely formatted way for easy inspection.       |
 // +-------------------------------------------------------------------------------------+
 
-resolvers += Classpaths.typesafeResolver
-
-addSbtPlugin("com.typesafe.sbtscalariform" % "sbtscalariform" % "0.3.0")
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.7.4")

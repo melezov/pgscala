@@ -15,7 +15,7 @@ trait PGSessionFactory {
       res
     }
     catch {
-      case e =>
+      case e: Throwable =>
         con.rollback()
         throw e
     }
