@@ -23,12 +23,12 @@ object BuildSettings {
 
   val bsPGScala = scalaSettings ++ Seq(
     name    := "pgscala-legacy",
-    version := "0.7.4-1"
+    version := "0.7.4-2"
   )
 
   val bsPGScalaPool = scalaSettings ++ Seq(
     name    := "pgscala-pool-legacy",
-    version := "0.1.7-1"
+    version := "0.1.7-2"
   )
 }
 
@@ -38,10 +38,7 @@ object Publications {
   val pgjavaUtil        = "hr.element.pgscala" %  "pgjava-util-legacy"        % "0.2.6-1"
   val pgjavaConverters  = "hr.element.pgscala" %  "pgjava-converters-legacy"  % "0.0.1-1"
   val pgscalaConverters = "hr.element.pgscala" %% "pgscala-converters-legacy" % "0.2.2-1"
-  val pgscala           = "hr.element.pgscala" %% "pgscala-legacy"            % "0.7.4-1"
-/*
-  val pgpool            = "hr.element.pgscala" %% "pgscala-pool"       % "0.1.7-1"
-*/
+  val pgscala           = "hr.element.pgscala" %% "pgscala-legacy"            % "0.7.4-2"
 }
 
 //  ---------------------------------------------------------------------------
