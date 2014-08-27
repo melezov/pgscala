@@ -129,9 +129,9 @@ class PGScala(con: java.sql.Connection) {
    * Query multiple database tuples (can be empty), and retrieve all results as an IndexedSeqSet.
    */
 
-  def set[T](query: String, params: ParamText[_]*)(f: PGScalaResultSet => T): IndexedSeqSet[T] = {
+  def set[T](query: String, params: ParamText[_]*)(f: PGScalaResultSet => T): Set[T] = {
     val at = arr(query, params: _*)(f)
-    val res = IndexedSeqSet.empty ++ at
+    val res = Set.empty ++ at
 
     res.ensuring(
       _.size == at.size,
@@ -143,9 +143,9 @@ class PGScala(con: java.sql.Connection) {
    * Query database for a key-value map.
    */
 
-  def map[K, V](query: String, params: ParamText[_]*)(f: PGScalaResultSet => (K, V)): IndexedSeqMap[K, V] = {
+  def map[K, V](query: String, params: ParamText[_]*)(f: PGScalaResultSet => (K, V)): Map[K, V] = {
     val akv = arr(query, params: _*)(f)
-    val res = (IndexedSeqMap.empty ++ akv).asInstanceOf[IndexedSeqMap[K, V]]
+    val res = (Map.empty ++ akv).asInstanceOf[Map[K, V]]
 
     res.ensuring(
       _.size == akv.size,
@@ -160,7 +160,7 @@ class PGScala(con: java.sql.Connection) {
   import scala.collection.mutable.LinkedHashMap
   import scala.collection.immutable.VectorBuilder
 
-  def bag[K, V](query: String, params: ParamText[_]*)(f: PGScalaResultSet => (K, V)): IndexedSeqMap[K, IndexedSeq[V]] = {
+  def bag[K, V](query: String, params: ParamText[_]*)(f: PGScalaResultSet => (K, V)): Map[K, IndexedSeq[V]] = {
     qry(query, params: _*){ rS =>
       val rM = LinkedHashMap.empty[K, VectorBuilder[V]]
 
@@ -174,7 +174,7 @@ class PGScala(con: java.sql.Connection) {
         }) += kv._2
       }
 
-      IndexedSeqMap.empty[K, IndexedSeq[V]] ++ rM.mapValues(_.result)
+      Map.empty[K, IndexedSeq[V]] ++ rM.mapValues(_.result)
     }}
 
   //  --------------------------------------------------------------------------
