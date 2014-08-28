@@ -8,6 +8,9 @@ object PGMapConverter extends PGConverter[Map[String, String]] {
   def toPGString(m: Map[String, String]) =
     PGNullableConverter.toPGString(m)
 
+  val defaultValue: Map[String, String] = Map.empty[String, String]
+
   def fromPGString(m: String) =
+    if (m eq null) defaultValue else
     PGNullableConverter.fromPGString(m)
 }

@@ -8,4 +8,6 @@ object PGLongConverterBuilder
   val scalaClazz = "scala.Long"
 
   override val javaClazz = "java.lang.Long"
+
+  override val defaultValue = """0L"""
 }

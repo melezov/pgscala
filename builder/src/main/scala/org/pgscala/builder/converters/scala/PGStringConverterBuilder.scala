@@ -12,4 +12,8 @@ object PGStringConverterBuilder
 
     code.replaceAll("""=\s*\n\s*PGNullableConverter.*""", "= s")
   }
+
+  override val defaultValue = "\"\""
+
+  override def from = "s"
 }

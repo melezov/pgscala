@@ -1,8 +1,10 @@
 package org
 
 package object pgscala extends Implicits {
+  /*
   val IndexedSeqSet = iorc.IndexedSeqSet
   val IndexedSeqMap = iorc.IndexedSeqMap
+  */
 }
 
 package pgscala {
@@ -20,9 +22,10 @@ package pgscala {
   }
 
   trait Implicits extends converters.Implicits {
+    /*
     type IndexedSeqSet[T] = iorc.IndexedSeqSet[T]
     type IndexedSeqMap[K, V] = iorc.IndexedSeqMap[K, V]
-
+    */
     implicit def impaleParamText[T](p: T)(implicit c: PGConverter[T]) =
       ParamText(p, c)
 

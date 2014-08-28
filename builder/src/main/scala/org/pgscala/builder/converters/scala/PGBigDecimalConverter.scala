@@ -12,6 +12,8 @@ object PGBigDecimalConverterBuilder
   override val to = """ =
     PGNullableConverter.toPGString(bD.bigDecimal)"""
 
-  override val from = """ =
+  override val from = """
     new BigDecimal(PGNullableConverter.fromPGString(bD))"""
+
+  override val defaultValue = """BigDecimal(0)"""
 }

@@ -10,6 +10,9 @@ object PGElemConverter extends PGConverter[Elem] {
   def toPGString(e: Elem) =
     PGNullableConverter.toPGString(e)
 
+  val defaultValue: Elem = null
+
   def fromPGString(e: String) =
+    if (e eq null) defaultValue else
     PGNullableConverter.fromPGString(e)
 }

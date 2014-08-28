@@ -27,6 +27,7 @@ object BuildSettings {
 
     val dst = baseDirectory.value / ".."  / "converters-scala" /
       "target" / ("scala-%s" format (scalaVersion.value match {
+        case x if x startsWith "2.11" => "2.11"
         case x if x startsWith "2.10" => "2.10"
         case x => x
       })) / "classes"
@@ -71,30 +72,22 @@ object BuildSettings {
 //  ---------------------------------------------------------------------------
 
 object Dependencies {
-  lazy val jodaTime = "joda-time" % "joda-time" % "2.3"
-  lazy val jodaConvert = "org.joda" % "joda-convert" % "1.5"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.4"
+  lazy val jodaConvert = "org.joda" % "joda-convert" % "1.7"
 
-  lazy val postgres = "org.postgresql" % "postgresql" % "9.2-1003-jdbc4"
+  lazy val postgres = "org.postgresql" % "postgresql" % "9.3-1102-jdbc4"
 
   lazy val c3p0 = "com.mchange" % "c3p0" % "0.9.2.1"
 
-  lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.5"
-  lazy val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.5"
+  lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.7"
+  lazy val log4jOverSlf4j = "org.slf4j" % "log4j-over-slf4j" % "1.7.7"
 
-  lazy val logback = "ch.qos.logback" % "logback-classic" % "1.0.13" % "test"
-  lazy val scalaIo = "com.github.scala-incubator.io" % "scala-io-file" % "0.4.2" cross CrossVersion.binaryMapped {
-    case "2.9.1" => "2.9.1"
-	case x if x startsWith "2.10" => "2.10"
-    case x => "2.9.2"
-  }
+  lazy val logback = "ch.qos.logback" % "logback-classic" % "1.1.2"
+  lazy val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.2"
 
-  lazy val scalaTest = "org.scalatest" %% "scalatest" % "2.0.RC1" % "test"
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "2.2.2"
 
-  lazy val configrity = "org.streum" % "configrity-core" % "1.0.0" % "test" cross CrossVersion.binaryMapped {
-    case "2.9.1" => "2.9.1"
-    case x if x startsWith "2.10" => x
-    case x => "2.9.2"
-  }
+  lazy val configrity = "org.streum" %% "configrity-core" % "1.0.0"   // not yet published for 2.11
 }
 
 //  ###########################################################################
@@ -109,20 +102,20 @@ object PGScalaBuild extends Build {
   , file("util")
   , settings = bsUtil :+ deps(
       slf4j
-    , scalaTest
-    , configrity
+    , scalaTest % "test"
+    , configrity % "test"
     , postgres % "test"
     )
   )
-
+/*
   lazy val iorc = Project(
     "iorc"
   , file("iorc")
   , settings = bsIORC :+ deps(
-      scalaTest
+      scalaTest % "test"
     )
   )
-
+*/
   lazy val builder = Project(
     "builder"
   , file("builder")
@@ -137,7 +130,7 @@ object PGScalaBuild extends Build {
   , settings = bsConvertersJava :+ deps(
       jodaTime
     , jodaConvert
-    , scalaTest
+    , scalaTest % "test"
     )
   )
 
@@ -145,7 +138,7 @@ object PGScalaBuild extends Build {
     "converters-scala"
   , file("converters-scala")
   , settings = bsConvertersScala :+ deps(
-      scalaTest
+      scalaTest % "test"
     )
   ) dependsOn(pgjavaConverters)
 
@@ -155,10 +148,10 @@ object PGScalaBuild extends Build {
   , settings = bsPGScala :+ deps(
       postgres
     , slf4j
-    , scalaTest
-    , logback
+    , scalaTest % "test"
+    , logback % "test"
     )
-  ) dependsOn(util, iorc, pgscalaConverters)
+  ) dependsOn(util,/* iorc,*/ pgscalaConverters)
 
   lazy val pgscalaPool = Project(
     "pool"
@@ -166,8 +159,8 @@ object PGScalaBuild extends Build {
   , settings = bsPool :+ deps(
       c3p0
     , log4jOverSlf4j
-    , scalaTest
-    , logback
+    , scalaTest % "test"
+    , logback % "test"
     )
   ) dependsOn(pgscala)
 }
@@ -261,10 +254,8 @@ object Default {
     Publishing.settings ++ Seq(
       organization := "org.pgscala"
 
+    , crossScalaVersions := Seq("2.11.2", "2.10.4")
     , scalaVersion := crossScalaVersions.value.last
-    , crossScalaVersions := Seq(
-        "2.10.3"
-      )
     , scalacOptions := ScalaOptions(scalaVersion.value)
 
     , javaHome := sys.env.get("JDK16_HOME").map(file(_))

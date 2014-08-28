@@ -8,4 +8,6 @@ object PGElemConverterBuilder
   val scalaClazz = "Elem"
 
   override val imports = "import scala.xml.Elem"
+
+  override val defaultValue = """null"""
 }

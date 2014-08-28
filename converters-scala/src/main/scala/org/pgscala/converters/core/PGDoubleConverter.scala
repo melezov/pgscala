@@ -8,6 +8,9 @@ object PGDoubleConverter extends PGConverter[Double] {
   def toPGString(d: Double) =
     PGNullableConverter.toPGString(java.lang.Double valueOf d)
 
+  val defaultValue: Double = 0.0
+
   def fromPGString(d: String) =
+    if (d eq null) defaultValue else
     PGNullableConverter.fromPGString(d)
 }

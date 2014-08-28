@@ -8,4 +8,6 @@ object PGIntConverterBuilder
   val scalaClazz = "scala.Int"
 
   override val javaClazz = "java.lang.Integer"
+
+  override val defaultValue = """0"""
 }
