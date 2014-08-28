@@ -20,6 +20,8 @@ trait PGConverterBuilderLike
   def to: String             // Converter code from current type to String
   def from: String           // Converter code from String to current type
 
+  def defaultValue: String
+
   protected def filters = Seq(
     i("imports"            , imports            )
   , i("javaClazz"          , javaClazz          )
@@ -32,6 +34,7 @@ trait PGConverterBuilderLike
   , i("to"                 , to                 )
   , i("from"               , from               )
   , i("builder"            , builder            )
+  , i("defaultValue"       , defaultValue       )
   )
 }
 
@@ -65,7 +68,7 @@ trait PGConverterBuilder extends PGConverterBuilderLike {
   def to = """ =
     PGNullableConverter.toPGString(%s)""" format(scalaVar)
 
-  override def from = """ =
+  override def from = """
     PGNullableConverter.fromPGString(%s)""" .format(scalaVar)
 }
 
@@ -75,7 +78,7 @@ trait PGPredefConverterBuilder extends PGConverterBuilder {
   override def to = """ =
     PGNullableConverter.toPGString(%s valueOf %s)""" format(javaClazz, scalaVar)
 
-  override def from = """ =
+  override def from = """
     PGNullableConverter.fromPGString(%s)""" .format(scalaVar)
 }
 

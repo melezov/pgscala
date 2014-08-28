@@ -12,4 +12,6 @@ object PGByteArrayConverterBuilder
   override val scalaUpperType = "ByteArray"
 
   override val javaUpperType = "ByteArray"
+
+  override val defaultValue = """Array.empty[Byte]"""
 }

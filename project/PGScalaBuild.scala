@@ -87,7 +87,7 @@ object Dependencies {
 
   lazy val scalaTest = "org.scalatest" %% "scalatest" % "2.2.2"
 
-  lazy val configrity = "org.streum" %% "configrity-core" % "1.0.0"   // not yep published for 2.11
+  lazy val configrity = "org.streum" %% "configrity-core" % "1.0.0"   // not yet published for 2.11
 }
 
 //  ###########################################################################
@@ -179,7 +179,7 @@ object Resolvers {
   import Repositories._
 
   lazy val settings = Seq(
-    resolvers ++= Seq(ElementNexus, ElementReleases, ElementSnapshots)
+    resolvers := Seq(ElementNexus, ElementReleases, ElementSnapshots)
   , externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
   )
 }

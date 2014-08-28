@@ -8,6 +8,9 @@ object PGIntConverter extends PGConverter[Int] {
   def toPGString(i: Int) =
     PGNullableConverter.toPGString(java.lang.Integer valueOf i)
 
+  val defaultValue: Int = 0
+
   def fromPGString(i: String) =
+    if (i eq null) defaultValue else
     PGNullableConverter.fromPGString(i)
 }

@@ -8,4 +8,6 @@ object PGShortConverterBuilder
   val scalaClazz = "scala.Short"
 
   override val javaClazz = "java.lang.Short"
+
+  override val defaultValue = """0.toShort"""
 }

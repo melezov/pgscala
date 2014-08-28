@@ -9,5 +9,8 @@ object PG{ scalaUpperType }Converter extends PGConverter[{ scalaType }] {
 
   def toPGString({ scalaVar }: { scalaType }){ to }
 
-  def fromPGString({ scalaVar }: String){ from }
+  val defaultValue: { scalaType } = { defaultValue }
+
+  def fromPGString({ scalaVar }: String) =
+    if ({ scalaVar } eq null) defaultValue else { from }
 }

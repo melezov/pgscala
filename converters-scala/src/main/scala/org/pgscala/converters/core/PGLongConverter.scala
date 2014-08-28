@@ -8,6 +8,9 @@ object PGLongConverter extends PGConverter[Long] {
   def toPGString(l: Long) =
     PGNullableConverter.toPGString(java.lang.Long valueOf l)
 
+  val defaultValue: Long = 0l
+
   def fromPGString(l: String) =
+    if (l eq null) defaultValue else
     PGNullableConverter.fromPGString(l)
 }

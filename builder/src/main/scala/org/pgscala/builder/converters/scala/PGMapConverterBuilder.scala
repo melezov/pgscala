@@ -12,4 +12,6 @@ object PGMapConverterBuilder
   override val scalaUpperType = "Map"
 
   override val imports = ""
+
+  override val defaultValue = """Map.empty[String, String]"""
 }

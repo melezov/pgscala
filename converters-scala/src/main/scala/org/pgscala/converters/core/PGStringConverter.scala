@@ -7,5 +7,8 @@ object PGStringConverter extends PGConverter[String] {
 
   def toPGString(s: String) = s
 
-  def fromPGString(s: String) = s
+  val defaultValue: String = ""
+
+  def fromPGString(s: String) =
+    if (s eq null) defaultValue else s
 }

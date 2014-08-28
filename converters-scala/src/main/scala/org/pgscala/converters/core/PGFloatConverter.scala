@@ -8,6 +8,9 @@ object PGFloatConverter extends PGConverter[Float] {
   def toPGString(f: Float) =
     PGNullableConverter.toPGString(java.lang.Float valueOf f)
 
+  val defaultValue: Float = 0.0f
+
   def fromPGString(f: String) =
+    if (f eq null) defaultValue else
     PGNullableConverter.fromPGString(f)
 }

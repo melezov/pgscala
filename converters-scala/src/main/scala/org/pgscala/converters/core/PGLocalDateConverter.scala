@@ -10,6 +10,9 @@ object PGLocalDateConverter extends PGConverter[LocalDate] {
   def toPGString(lD: LocalDate) =
     PGNullableConverter.toPGString(lD)
 
+  val defaultValue: LocalDate = LocalDate.parse("0001-01-01")
+
   def fromPGString(lD: String) =
+    if (lD eq null) defaultValue else
     PGNullableConverter.fromPGString(lD)
 }

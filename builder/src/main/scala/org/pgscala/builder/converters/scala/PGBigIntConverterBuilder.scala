@@ -12,6 +12,8 @@ object PGBigIntConverterBuilder
   override val to = """ =
     PGNullableConverter.toPGString(bI.bigInteger)"""
 
-  override val from = """ =
+  override val from = """
     new BigInt(PGNullableConverter.fromPGString(bI))"""
+
+  override val defaultValue = """BigInt(0)"""
 }

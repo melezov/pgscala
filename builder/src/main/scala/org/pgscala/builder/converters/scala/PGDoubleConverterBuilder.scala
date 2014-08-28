@@ -8,4 +8,6 @@ object PGDoubleConverterBuilder
   val scalaClazz = "scala.Double"
 
   override val javaClazz = "java.lang.Double"
+
+  override val defaultValue = """0.0"""
 }

@@ -10,6 +10,9 @@ object PGUUIDConverter extends PGConverter[UUID] {
   def toPGString(uuid: UUID) =
     PGNullableConverter.toPGString(uuid)
 
+  val defaultValue: UUID = UUID.fromString("0-0-0-0-0")
+
   def fromPGString(uuid: String) =
+    if (uuid eq null) defaultValue else
     PGNullableConverter.fromPGString(uuid)
 }

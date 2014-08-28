@@ -25,7 +25,7 @@ package pgscala {
     /*
     type IndexedSeqSet[T] = iorc.IndexedSeqSet[T]
     type IndexedSeqMap[K, V] = iorc.IndexedSeqMap[K, V]
-*/
+    */
     implicit def impaleParamText[T](p: T)(implicit c: PGConverter[T]) =
       ParamText(p, c)
 
