@@ -1,4 +1,0 @@
-Simple c3p0 configuration class which provides a connection pool because:
-"In general it is not recommended to use the PostgreSQL™ provided connection pool."
-
-Source: http://jdbc.postgresql.org/documentation/81/ds-ds.html
