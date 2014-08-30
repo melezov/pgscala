@@ -15,8 +15,7 @@ trait Dependencies {
   val slf4j = "org.slf4j" % "slf4j-api" % "1.7.7"
   val logback = "ch.qos.logback" % "logback-classic" % "1.1.2"
 
-  val scalaXml = "org.scala-lang.modules" %% "scala-xml" % "1.0.2"
-  val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.3-1"
+  val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.3"
 
   val junit = "junit" % "junit" % "4.11"
   val scalaTest = "org.scalatest" %% "scalatest" % "2.2.2"
@@ -35,7 +34,7 @@ trait BuildSettings {
     graphSettings ++ Seq(
       organization := "org.pgscala"
 
-    , crossScalaVersions := Seq("2.11.2")
+    , crossScalaVersions := Seq("2.10.4")
     , scalaVersion := crossScalaVersions.value.head
     , scalacOptions := Seq(
         "-deprecation"
@@ -53,7 +52,6 @@ trait BuildSettings {
       , "-Xno-forwarders"
       , "-Xverify"
       , "-Yclosure-elim"
-      , "-Yconst-opt"
       , "-Ydead-code"
       , "-Yinline-warnings"
       , "-Yinline"
@@ -61,11 +59,9 @@ trait BuildSettings {
       , "-Ywarn-adapted-args"
       , "-Ywarn-dead-code"
       , "-Ywarn-inaccessible"
-      , "-Ywarn-infer-any"
       , "-Ywarn-nullary-override"
       , "-Ywarn-nullary-unit"
       , "-Ywarn-numeric-widen"
-      , "-Ywarn-unused"
       )
 
     , javacOptions := Seq(
@@ -182,8 +178,7 @@ object PGScalaBuild extends Build with BuildSettings with Dependencies {
     , version := "0.2.18"
     , initialCommands := "import org.pgscala.converters._"
     , libraryDependencies ++= Seq(
-        scalaXml
-      , junit % "test"
+        junit % "test"
       , scalaTest % "test"
       )
     , unmanagedSourceDirectories in Compile := Seq(
