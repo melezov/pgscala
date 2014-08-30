@@ -2,12 +2,16 @@ package org.pgscala.util
 package test
 package record
 
-import org.scalatest.{FeatureSpec, GivenWhenThen}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.FeatureSpec
+import org.scalatest.GivenWhenThen
 import org.scalatest.Matchers
 
-class PGRecordStringSpec extends FeatureSpec
-                    with GivenWhenThen
-                    with Matchers {
+@RunWith(classOf[JUnitRunner])
+class PGRecordStringSpec
+    extends FeatureSpec with GivenWhenThen with Matchers {
+
   feature("Strings can be quoted into record string literals") {
 
     val origStr = """It's OK -> \ Don"t {worry} be (happy)! /"""

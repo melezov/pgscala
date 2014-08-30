@@ -2,12 +2,16 @@ package org.pgscala.util
 package test
 package literal
 
-import org.scalatest.{FeatureSpec, GivenWhenThen}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.FeatureSpec
+import org.scalatest.GivenWhenThen
 import org.scalatest.Matchers
 
-class PGLiteralIntSpec extends FeatureSpec
-                    with GivenWhenThen
-                    with Matchers {
+@RunWith(classOf[JUnitRunner])
+class PGLiteralIntSpec
+    extends FeatureSpec with GivenWhenThen with Matchers {
+
   feature("Integer can be converted into string literals") {
 
     scenario("Integer conversion") {
@@ -17,7 +21,7 @@ class PGLiteralIntSpec extends FeatureSpec
     }
 
     scenario("Integers can be quoted to be directly embedded into queries") {
-      val dbTrue = PGTestDb.qry("SELECT %s, %s, %s;" format(
+      PGTestDb.qry("SELECT %s, %s, %s;" format(
           PGLiteral.quote(-100.toString),
           PGLiteral.quote(0.toString),
           PGLiteral.quote(300000.toString))){ rS =>
@@ -32,7 +36,7 @@ class PGLiteralIntSpec extends FeatureSpec
       val trials = 100
 
       import scala.util.Random
-      val seed = Random.nextInt
+      val seed = Random.nextLong
       Random.setSeed(seed)
 
       Given("%d random integers" format trials)

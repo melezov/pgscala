@@ -2,12 +2,16 @@ package org.pgscala.util
 package test
 package literal
 
-import org.scalatest.{FeatureSpec, GivenWhenThen}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.FeatureSpec
+import org.scalatest.GivenWhenThen
 import org.scalatest.Matchers
 
-class PGLiteralStringSpec extends FeatureSpec
-                    with GivenWhenThen
-                    with Matchers {
+@RunWith(classOf[JUnitRunner])
+class PGLiteralStringSpec
+    extends FeatureSpec with GivenWhenThen with Matchers {
+
   feature("Strings can be converted into string literals") {
 
     val origStr = """It's OK -> \ Don"t {worry} be (happy)! /"""
@@ -68,7 +72,7 @@ class PGLiteralStringSpec extends FeatureSpec
       val emptyRatio = 0.05
 
       import scala.util.Random
-      val seed = Random.nextInt
+      val seed = Random.nextLong
       Random.setSeed(seed)
 
       Given("%d random strings up to %d chars in length" format (trials, maxLength))

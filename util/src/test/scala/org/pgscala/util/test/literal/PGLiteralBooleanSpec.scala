@@ -2,12 +2,16 @@ package org.pgscala.util
 package test
 package literal
 
-import org.scalatest.{FeatureSpec, GivenWhenThen}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.FeatureSpec
+import org.scalatest.GivenWhenThen
 import org.scalatest.Matchers
 
-class PGLiteralBooleanSpec extends FeatureSpec
-                    with GivenWhenThen
-                    with Matchers {
+@RunWith(classOf[JUnitRunner])
+class PGLiteralBooleanSpec
+    extends FeatureSpec with GivenWhenThen with Matchers {
+
   feature("Booleans can be converted into string literals") {
 
     val qT = "'t'"
@@ -19,7 +23,7 @@ class PGLiteralBooleanSpec extends FeatureSpec
     }
 
     scenario("Booleans can be quoted to be directly embedded into queries") {
-      val dbTrue = PGTestDb.qry("SELECT %s, %s;" format(qT, qF)){ rS =>
+      PGTestDb.qry("SELECT %s, %s;" format(qT, qF)){ rS =>
         rS.next()
         rS.getBoolean(1) should be (true)
         rS.getBoolean(2) should be (false)

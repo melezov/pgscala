@@ -9,6 +9,5 @@ object PGBooleanConverterBuilder
 
   override val javaClazz = "java.lang.Boolean"
 
-
-  override val defaultValue = """false"""
+  val defaultValue = "false"
 }

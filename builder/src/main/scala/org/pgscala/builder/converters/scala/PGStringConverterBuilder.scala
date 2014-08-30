@@ -10,10 +10,10 @@ object PGStringConverterBuilder
   override def inject(body: String) = {
     val code = super.inject(body)
 
-    code.replaceAll("""=\s*\n\s*PGNullableConverter.*""", "= s")
+    code.replaceFirst("""=\n\s+PGNullableStringConverter.*""", "= s")
   }
 
-  override val defaultValue = "\"\""
+  val defaultValue = "\"\""
 
   override def from = "s"
 }

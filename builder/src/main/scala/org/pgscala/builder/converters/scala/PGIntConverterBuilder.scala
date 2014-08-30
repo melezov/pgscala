@@ -9,5 +9,5 @@ object PGIntConverterBuilder
 
   override val javaClazz = "java.lang.Integer"
 
-  override val defaultValue = """0"""
+  val defaultValue = "0"
 }

@@ -3,7 +3,8 @@ package builder
 package converters
 
 object PGNullableMapConverterBuilder extends PGNullableConverterBuilder {
-  override val imports = """import java.util.ArrayDeque;
+  override val imports = """
+import java.util.ArrayDeque;
 import java.util.Queue;
 
 import scala.collection.immutable.Map;
@@ -77,15 +78,18 @@ import scala.Tuple2;
     }
 
     final WrappedArray<Tuple2<String, String>> wa = scala.Predef.wrapRefArray(
-        (Tuple2<String, String>[]) tuples.toArray(new Tuple2[tuples.size()]));
+        (Tuple2<String, String>[]) tuples.toArray(new Tuple2<?, ?>[tuples.size()]));
 
     return Map$.MODULE$.apply(wa)"""
 
-  override val language = Scala
+  override val language = Language.Scala
 
   override def inject(body: String) =
     super.inject(body)
       .replace(
         "return null == m ? null :",
         "if (null == m) return null;")
+
+  override def fromAnnotation = """@SuppressWarnings("unchecked")
+  @FromString"""
 }

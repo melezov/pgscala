@@ -1,7 +1,5 @@
 package org.pgscala.converters
-
 { imports }
-
 /** Do not edit - generated in Builder / { builder } */
 
 object PGOption{ scalaUpperType }Converter extends PGConverter[Option[{ scalaType }]] {

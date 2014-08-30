@@ -1,18 +1,19 @@
-package org.pgscala
-package converters
+package org.pgscala.converters
 package test
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.Matchers
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
+import org.joda.time.DateTimeZone
 
-
-
+@RunWith(classOf[JUnitRunner])
 class DateTimeTest extends FeatureSpec with GivenWhenThen with Matchers {
-  val dFormat = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSZZ")
+  val dFormat = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSSZZ")
 
   feature("About to test a DateTime converter"){
     info("I want to test if PGNullableDateTimeConverter works correctly, both in 2 way conversion")
@@ -24,7 +25,7 @@ class DateTimeTest extends FeatureSpec with GivenWhenThen with Matchers {
       When ("that value is converted to String")
       val res = PGNullableDateTimeConverter dateTimeToString t
       Then ("""It should return a String value "%s"""" format res)
-      res should equal(t.toString())
+      res should equal(t.toString(dFormat))
     }
 
     scenario("Datetime to String Nr. 2."){
@@ -33,7 +34,7 @@ class DateTimeTest extends FeatureSpec with GivenWhenThen with Matchers {
       When ("that value is converted to String")
       val res = PGNullableDateTimeConverter dateTimeToString t
       Then ("""It should return a String value "%s"""" format res)
-      res should equal(t.toString())
+      res should equal(t.toString(dFormat))
     }
 
     scenario("Datetime to String Nr. 3."){
@@ -42,7 +43,7 @@ class DateTimeTest extends FeatureSpec with GivenWhenThen with Matchers {
       When ("that value is converted to String")
       val res = PGNullableDateTimeConverter dateTimeToString t
       Then ("""It should return a String value "%s"""" format res)
-      res should equal(t.toString())
+      res should equal(t.toString(dFormat))
     }
 
     scenario("Datetime to String Nr. 4."){
@@ -51,7 +52,7 @@ class DateTimeTest extends FeatureSpec with GivenWhenThen with Matchers {
       When ("that value is converted to String")
       val res = PGNullableDateTimeConverter dateTimeToString t
       Then ("""It should return a String value "%s"""" format res)
-      res should equal(t.toString())
+      res should equal(t.toString(dFormat))
     }
 
     scenario("Datetime to String Nr. 5."){
@@ -60,7 +61,7 @@ class DateTimeTest extends FeatureSpec with GivenWhenThen with Matchers {
       When ("that value is converted to String")
       val res = PGNullableDateTimeConverter dateTimeToString t
       Then ("""It should return a String value "%s"""" format res)
-      res should equal(t.toString())
+      res should equal(t.toString(dFormat))
     }
 
     scenario("String to DateTime Nr. 1"){
@@ -113,54 +114,52 @@ class DateTimeTest extends FeatureSpec with GivenWhenThen with Matchers {
      */
     scenario("POSTGRESQL: String to DateTime Nr. 1"){
       info("test for 'now'::timestamp")
-      val SQLtimestamp = "2012-02-23 14:27:01.994854"
+      val SQLtimestamp = "2012-02-23 14:27:01.994000+01:00"
       Given(""" a starting String value for sql timestamp "%s""" format SQLtimestamp)
       When("that value is converted to DateTime")
       val res = PGNullableDateTimeConverter stringToDateTime SQLtimestamp
       Then ("It should return a DateTime value %s" format res.toString())
-      res.toString() should equal(SQLtimestamp)
+      res.toString(dFormat) should equal(SQLtimestamp)
     }
 
     scenario("POSTGRESQL: String to DateTime Nr. 2"){
       info("test for 'epoch'::timestamp")
-      val SQLtimestamp = "1970-01-01 00:00:00"
+      val SQLtimestamp = "1970-01-01 00:00:00+00:00"
       Given(""" a starting String value for sql timestamp "%s""" format SQLtimestamp)
       When("that value is converted to DateTime")
       val res = PGNullableDateTimeConverter stringToDateTime SQLtimestamp
       Then ("It should return a DateTime value %s" format res.toString())
-      res.toString() should equal(SQLtimestamp)
+      res.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd HH:mm:ssZZ") should equal(SQLtimestamp)
     }
 
     scenario("POSTGRESQL: String to Datetime Nr. 3"){
       info("test for 'today'::timestamp")
-      val SQLtimestamp = "2012-02-23 00:00:00"
+      val SQLtimestamp = "2012-02-23 00:00:00+01:00"
       Given(""" a starting String value for sql timestamp "%s""" format SQLtimestamp)
       When("that value is converted to DateTime")
       val res = PGNullableDateTimeConverter stringToDateTime SQLtimestamp
       Then ("It should return a DateTime value %s" format res.toString())
-      res.toString() should equal(SQLtimestamp)
+      res.toString("yyyy-MM-dd HH:mm:ssZZ") should equal(SQLtimestamp)
     }
 
     scenario("POSTGRESQL: String to Datetime Nr. 4"){
       info("test for 'tomorrow'::timestamp")
-      val SQLtimestamp = "2012-02-24 00:00:00"
+      val SQLtimestamp = "2012-02-24 00:00:00.000000+01:00"
       Given(""" a starting String value for sql timestamp "%s""" format SQLtimestamp)
       When("that value is converted to DateTime")
       val res = PGNullableDateTimeConverter stringToDateTime SQLtimestamp
       Then ("It should return a DateTime value %s" format res.toString())
-      res.toString() should equal(SQLtimestamp)
+      res.toString(dFormat) should equal(SQLtimestamp)
     }
 
     scenario("POSTGRESQL: String to Datetime Nr. 5"){
       info("test for timezone: SELECT TIMESTAMP WITH TIME ZONE 'now';")
-      val SQLtimestamp = "2012-02-23 15:49:39.466516+01"
+      val SQLtimestamp = "2012-02-23 15:49:39.466000+01:00"
       Given(""" a starting String value for sql timestamp "%s""" format SQLtimestamp)
       When("that value is converted to DateTime")
       val res = PGNullableDateTimeConverter stringToDateTime SQLtimestamp
       Then ("It should return a DateTime value %s" format res.toString())
-      res.toString() should equal(SQLtimestamp)
+      res.toString(dFormat) should equal(SQLtimestamp)
     }
-
-
-   }
+  }
 }

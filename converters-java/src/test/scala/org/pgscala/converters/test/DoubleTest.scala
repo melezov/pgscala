@@ -1,11 +1,13 @@
-package org.pgscala
-package converters
+package org.pgscala.converters
 package test
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.Matchers
 
+@RunWith(classOf[JUnitRunner])
 class DoubleTest extends FeatureSpec with GivenWhenThen with Matchers {
   feature("About to test a Double converter"){
     info("I want to test if PGNullableDoubleConverter works correctly, both in 2 way conversion")
@@ -82,10 +84,5 @@ class DoubleTest extends FeatureSpec with GivenWhenThen with Matchers {
       Then ("it should return a Double value of %s" format s)
       res should equal (0d)
     }
-
-
-
-
-
   }
 }

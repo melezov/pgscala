@@ -1,14 +1,16 @@
-package org.pgscala
-package converters
+package org.pgscala.converters
 package test
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.Matchers
-import java.util.UUID;
+
+import java.util.UUID
 import scala.util.Random
 
-
+@RunWith(classOf[JUnitRunner])
 class UUIDTest extends FeatureSpec with GivenWhenThen with Matchers {
   feature("About to test an UUID converter"){
     info("I want to test if PGNullableUUIDConverter works correctly, both in 2 way conversion")

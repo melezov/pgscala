@@ -1,13 +1,16 @@
 package org.pgscala.util
 package test
-package record
+package ident
 
-import org.scalatest.{ FeatureSpec, GivenWhenThen }
+import org.junit.runner.RunWith
+import org.scalatest.FeatureSpec
+import org.scalatest.GivenWhenThen
 import org.scalatest.Matchers
+import org.scalatest.junit.JUnitRunner
 
-class PGIdentSpec extends FeatureSpec
-                  with GivenWhenThen
-                  with Matchers {
+@RunWith(classOf[JUnitRunner])
+class PGIdentSpec
+    extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Identities can be quoted in PostgreSQL manner") {
 
@@ -45,7 +48,7 @@ class PGIdentSpec extends FeatureSpec
       val emptyRatio = 0.05
 
       import scala.util.Random
-      val seed = Random.nextInt
+      val seed = Random.nextLong
       Random.setSeed(seed)
 
       Given("%d random idents up to %d chars in length" format (trials, maxLength))

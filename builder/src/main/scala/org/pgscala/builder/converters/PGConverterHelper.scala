@@ -19,4 +19,9 @@ trait PGConverterHelper {
 
   protected def l(word: String) =
     word.head.toLower + word.tail
+
+  protected def lu(word: String) =
+    if (word.toUpperCase == word)
+      word.toLowerCase
+    else l(word)
 }

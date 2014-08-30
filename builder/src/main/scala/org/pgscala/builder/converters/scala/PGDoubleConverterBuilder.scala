@@ -9,5 +9,5 @@ object PGDoubleConverterBuilder
 
   override val javaClazz = "java.lang.Double"
 
-  override val defaultValue = """0.0"""
+  val defaultValue = "0.0"
 }

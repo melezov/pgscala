@@ -1,12 +1,15 @@
-package org.pgscala
-package converters
+package org.pgscala.converters
 package test
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.Matchers
+
 import scala.util.Random
 
+@RunWith(classOf[JUnitRunner])
 class ByteArrayTest extends FeatureSpec with GivenWhenThen with Matchers {
   feature("About to test an String converter"){
     info("I want to test if PGNullableByteArrayConverter works correctly, both in 2 way conversion")

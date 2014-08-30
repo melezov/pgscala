@@ -1,20 +1,23 @@
 package org.pgscala.util
 package test
 
-import org.streum.configrity._
-import java.sql.{Statement, ResultSet}
+import java.sql.{ Statement, ResultSet }
 import org.postgresql.ds.PGSimpleDataSource
+import java.util.Properties
+import org.slf4j.LoggerFactory
 
 object PGTestDb {
+  private lazy val dbConfig = {
+    val props = new Properties
+    props.load(getClass.getResourceAsStream("/db.properties"))
+    props
+  }
 
-  private lazy val dbConfig =
-    Configuration.loadResource("/db.conf").detach("db")
-
-  lazy val host = dbConfig[String]("host")
-  lazy val port = dbConfig[Int]("port")
-  lazy val dbName = dbConfig[String]("dbname")
-  lazy val user = dbConfig[String]("user")
-  lazy val pass = dbConfig[String]("pass")
+  lazy val host = dbConfig.getProperty("host")
+  lazy val port = dbConfig.getProperty("port").toInt
+  lazy val dbName = dbConfig.getProperty("dbname")
+  lazy val user = dbConfig.getProperty("user")
+  lazy val pass = dbConfig.getProperty("pass")
 
   private lazy val pgds = {
     val driver = "org.postgresql.Driver"

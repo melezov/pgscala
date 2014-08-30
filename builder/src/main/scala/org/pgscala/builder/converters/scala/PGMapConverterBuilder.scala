@@ -13,5 +13,5 @@ object PGMapConverterBuilder
 
   override val imports = ""
 
-  override val defaultValue = """Map.empty[String, String]"""
+  val defaultValue = "Map.empty[String, String]"
 }

@@ -35,16 +35,19 @@ trait PGNullableConverterBuilderLike extends PGConverterHelper {
   , i("builder"            , builder            )
   , i("jasminToSignature"  , jasminToSignature  )
   , i("jasminFromSignature", jasminFromSignature)
+  , i("toAnnotation"       , toAnnotation       )
+  , i("fromAnnotation"     , fromAnnotation     )
   )
 
   def jasminToSignature: String
   def jasminFromSignature: String
+
+  def toAnnotation = "@ToString"
+  def fromAnnotation = "@FromString"
 }
 
 trait PGNullableConverterBuilder extends PGNullableConverterBuilderLike {
-  override def imports =
-    """import %s;
-""" format clazz
+  def imports = ""
 
   override def javaType =
     clazz.replaceFirst("^.*\\.", "")
@@ -56,26 +59,20 @@ trait PGNullableConverterBuilder extends PGNullableConverterBuilderLike {
     javaType
 
   override def lowerType =
-    if (isUp) upperType.toLowerCase else l(upperType)
+    lu(upperType)
 
   override def javaVar =
-    if (isUp) upperType.toLowerCase else {
-      l(upperType.replaceAll("[a-z]", ""))
-    }
+    upperType.replaceAll("[a-z]", "").toLowerCase
 
   override val body = ""
 
-  def isUp =
-    upperType.toUpperCase == upperType
-
-  override def language = Java: Language
+  override def language = Language.Java: Language
 
   override def jasminToSignature = ""
   override def jasminFromSignature = ""
 }
 
 trait PGPredefNullableConverterBuilder extends PGNullableConverterBuilder {
-  override val imports = ""
 }
 
 import scalax.file._
@@ -113,7 +110,7 @@ object PGNullableConverterBuilder extends PGConverterBuilderPaths {
         .string(UTF8)
 
     for (c <- converters) {
-      val path = getPath(c.language, Java) /
+      val path = getPath(c.language, Language.Java) /
         ("PGNullable%sConverter.java" format c.upperType)
 
       println("Generated: " + path.toAbsolute.path)
@@ -143,7 +140,7 @@ object PGNullableConverterBuilder extends PGConverterBuilderPaths {
       sB ++= c.inject(templateBody) += '\n'
     }
 
-    val path = getPath(Scala, Jasmin) /
+    val path = getPath(Language.Scala, Language.Jasmin) /
         "PGNullableConverter.j"
 
     println("Generated: " + path.toAbsolute.path)

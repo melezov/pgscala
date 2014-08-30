@@ -1,7 +1,6 @@
 package org.pgscala.converters;
 
 import org.joda.convert.*;
-
 { imports }
 /** Do not edit - generated in Builder / { builder } */
 
@@ -12,12 +11,12 @@ public enum PGNullable{ upperType }Converter implements StringConverter<{ javaTy
 
 { body }
 
-  @ToString
+  { toAnnotation }
   public static String { lowerType }ToString(final { javaType } { javaVar }) {
     return null == { javaVar } ? null : { to };
   }
 
-  @FromString
+  { fromAnnotation }
   public static { javaType } stringTo{ upperType }(final String { javaVar }) {
     return null == { javaVar } ? null : { from };
   }

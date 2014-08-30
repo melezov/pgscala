@@ -25,7 +25,7 @@ object PGNullableByteArrayConverterBuilder extends PGPredefNullableConverterBuil
 
   val to = """
 
-    final int len = bA.length;
+    final int len = ba.length;
     if (len == 0) {
       return "";
     }
@@ -37,7 +37,7 @@ object PGNullableByteArrayConverterBuilder extends PGPredefNullableConverterBuil
 
       int index = 2;
       for (int i = 0; i < len; i++) {
-        final byte b = bA[i];
+        final byte b = ba[i];
         buffer[index++] = HEX_DIGITS[(b & 0xf0) >>> 4];
         buffer[index++] = HEX_DIGITS[b & 0xf];
       }
@@ -47,7 +47,7 @@ object PGNullableByteArrayConverterBuilder extends PGPredefNullableConverterBuil
 
   val from = """
 
-    final int len = bA.length();
+    final int len = ba.length();
     if ((len == 0) || (len == 2)) {
       return new byte[0];
     }
@@ -57,8 +57,8 @@ object PGNullableByteArrayConverterBuilder extends PGPredefNullableConverterBuil
 
     int index = 2;
     for (int i = 0; i < newLen; i++) {
-      final char chH = bA.charAt(index++);
-      final char chL = bA.charAt(index++);
+      final char chH = ba.charAt(index++);
+      final char chL = ba.charAt(index++);
       buffer[i] = (byte) ((HEX_INDEXES[chH] << 4)
                          + HEX_INDEXES[chL]);
     }
@@ -68,7 +68,7 @@ object PGNullableByteArrayConverterBuilder extends PGPredefNullableConverterBuil
   override def inject(body: String) =
     super.inject(body)
       .replace(
-        "return null == bA ? null :",
-        "if (null == bA) return null;"
+        "return null == ba ? null :",
+        "if (null == ba) return null;"
       )
 }

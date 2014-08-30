@@ -9,5 +9,5 @@ object PGElemConverterBuilder
 
   override val imports = "import scala.xml.Elem"
 
-  override val defaultValue = """null"""
+  val defaultValue = "null // no sane default for XML"
 }

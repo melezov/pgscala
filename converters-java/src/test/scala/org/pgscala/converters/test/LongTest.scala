@@ -1,12 +1,15 @@
-package org.pgscala
-package converters
+package org.pgscala.converters
 package test
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import org.scalatest.Matchers
+
 import scala.util.Random
 
+@RunWith(classOf[JUnitRunner])
 class LongTest extends FeatureSpec with GivenWhenThen with Matchers {
   feature("About to test an Long converter"){
     info("I want to test if PGNullableLongConverter works correctly, both in 2 way conversion")

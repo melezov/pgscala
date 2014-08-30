@@ -5,14 +5,19 @@ package converters
 import scalax.file.Path
 
 trait PGConverterBuilderPaths {
+  protected def normalizeBuilderPath(path: String) =
+    Path(Path(path).toAbsolute.path
+        .replace("\\", "/")
+        .replace("/builder/", "/"), '/')
+
   protected def getProject(lang: Language) =
-    lang match {
-      case Java => "converters-java"
-      case _    => "converters-scala"
-    }
+    normalizeBuilderPath(lang match {
+      case Language.Java => "converters-java"
+      case _             => "converters-scala"
+    })
 
   protected def getRoot(project: Language, dir: Language) =
-    Path(getProject(project)) /  "src" / "main" / dir.dir
+    getProject(project) /  "src" / "generated" / dir.dir
 
   def getPath(project: Language) =
     getRoot(project, project) / "org" / "pgscala" / "converters"

@@ -20,7 +20,7 @@ trait PGConverterBuilderLike
   def to: String             // Converter code from current type to String
   def from: String           // Converter code from String to current type
 
-  def defaultValue: String
+  def defaultValue: String   // For divining the default value of null
 
   protected def filters = Seq(
     i("imports"            , imports            )
@@ -42,44 +42,48 @@ trait PGConverterBuilder extends PGConverterBuilderLike {
   override def javaClazz =
     scalaClazz
 
+  private val lastWord = (_: String).replaceFirst("^.*\\.", "")
+
   override def scalaType =
-    scalaClazz.replaceFirst("^.*\\.", "")
+    lastWord(scalaClazz)
 
   override def javaUpperType =
-    javaClazz.replaceFirst("^.*\\.", "")
+    lastWord(javaClazz)
 
   override def scalaUpperType =
     scalaType
 
+  def scalaLowerType =
+    lu(scalaUpperType)
+
+  def javaLowerType =
+    lu(javaUpperType)
+
   override def scalaVar =
-    if (isUp) scalaUpperType.toLowerCase else {
-      l(scalaUpperType.replaceAll("[a-z]", ""))
-    }
+    scalaUpperType.replaceAll("[a-z]", "").toLowerCase
 
   override def optionScalaVar =
-    "o" + scalaVar.head.toUpper + scalaVar.tail
+    "o" + scalaVar
 
-  def isUp =
-    scalaUpperType.toUpperCase == scalaUpperType
+  def imports= ""
 
-  def imports = """import %s;
-""" format javaClazz
+  def nullableConverter = s"PGNullable${javaUpperType}Converter"
 
-  def to = """ =
-    PGNullableConverter.toPGString(%s)""" format(scalaVar)
+  def to =
+    s"${nullableConverter}.${javaLowerType}ToString(${scalaVar})"
 
-  override def from = """
-    PGNullableConverter.fromPGString(%s)""" .format(scalaVar)
+  def from =
+    s"${nullableConverter}.stringTo${javaUpperType}(${scalaVar})"
 }
 
 trait PGPredefConverterBuilder extends PGConverterBuilder {
   override def imports = ""
 
-  override def to = """ =
-    PGNullableConverter.toPGString(%s valueOf %s)""" format(javaClazz, scalaVar)
+  override def to =
+    s"${nullableConverter}.${javaLowerType}ToString(${javaClazz} valueOf ${scalaVar})"
 
-  override def from = """
-    PGNullableConverter.fromPGString(%s)""" .format(scalaVar)
+  override def from =
+    s"${nullableConverter}.stringTo${javaUpperType}(${scalaVar})"
 }
 
 import scalax.file._
@@ -117,7 +121,7 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
         .string(UTF8)
 
     for (c <- converters) {
-      val path = getPath(Scala) / "core" /
+      val path = getPath(Language.Scala) / "core" /
         ("PG%sConverter.scala" format c.scalaUpperType)
 
       println("Generated: " + path.toAbsolute.path)
@@ -131,7 +135,7 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
         .string(UTF8)
 
     for (c <- converters) {
-      val path = getPath(Scala) / "option" /
+      val path = getPath(Language.Scala) / "option" /
         ("PGOption%sConverter.scala" format c.scalaUpperType)
 
       println("Generated: " + path.toAbsolute.path)
@@ -144,7 +148,7 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
       Resource.fromClasspath("Implicits.scala.template")
         .string(UTF8)
 
-    val path = getPath(Scala) /
+    val path = getPath(Language.Scala) /
       "Implicits.scala"
 
     val padding =

@@ -3,7 +3,8 @@ package builder
 package converters
 
 object PGNullableDateTimeConverterBuilder extends PGNullableConverterBuilder {
-  override val imports = """import org.joda.time.DateTime;
+  override val imports = """
+import org.joda.time.DateTime;
 import org.joda.time.format.*;
 """
 
@@ -19,19 +20,19 @@ import org.joda.time.format.*;
     DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ssZZ");
 """
 
-  val to = "dateTimeFormat.print(dT)"
+  val to = "dateTimeFormat.print(dt)"
 
   val from = """try {
-      return dateTimeFormat.parseDateTime(dT);
+      return dateTimeFormat.parseDateTime(dt);
     }
     catch(final IllegalArgumentException e) {
-      return dateTimeSecondFormat.parseDateTime(dT);
+      return dateTimeSecondFormat.parseDateTime(dt);
     }"""
 
   override def inject(body: String) = {
     val code = super.inject(body)
     code
-      .replaceFirst("return null == dT \\? null : try", """if (null == dT) return null;
+      .replaceFirst("return null == dt \\? null : try", """if (null == dt) return null;
     try""").replaceFirst("\\};", "}")
   }
 }

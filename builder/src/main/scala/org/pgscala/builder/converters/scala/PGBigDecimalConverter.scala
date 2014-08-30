@@ -3,17 +3,15 @@ package builder
 package converters
 
 object PGBigDecimalConverterBuilder
-    extends PGPredefConverterBuilder {
+    extends PGConverterBuilder {
 
   val scalaClazz = "scala.math.BigDecimal"
 
-  override val javaClazz = "java.math.BigDecimal"
+  override val to =
+    "%s.bigDecimalToString(bd.bigDecimal)" format nullableConverter
 
-  override val to = """ =
-    PGNullableConverter.toPGString(bD.bigDecimal)"""
+  override val from =
+    "BigDecimal(%s.stringToBigDecimal(bd))" format nullableConverter
 
-  override val from = """
-    new BigDecimal(PGNullableConverter.fromPGString(bD))"""
-
-  override val defaultValue = """BigDecimal(0)"""
+  val defaultValue = "BigDecimal(0)"
 }

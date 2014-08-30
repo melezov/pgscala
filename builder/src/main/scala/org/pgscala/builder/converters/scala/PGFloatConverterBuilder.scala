@@ -9,5 +9,5 @@ object PGFloatConverterBuilder
 
   override val javaClazz = "java.lang.Float"
 
-  override val defaultValue = """0.0f"""
+  val defaultValue = "0.0f"
 }

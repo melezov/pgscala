@@ -9,11 +9,11 @@ object PGBigIntConverterBuilder
 
   override val javaClazz = "java.math.BigInteger"
 
-  override val to = """ =
-    PGNullableConverter.toPGString(bI.bigInteger)"""
+  override val to =
+    "%s.bigIntegerToString(bi.bigInteger)" format nullableConverter
 
-  override val from = """
-    new BigInt(PGNullableConverter.fromPGString(bI))"""
+  override val from =
+    "new BigInt(%s.stringToBigInteger(bi))" format nullableConverter
 
-  override val defaultValue = """BigInt(0)"""
+  val defaultValue = "BigInt(0)"
 }

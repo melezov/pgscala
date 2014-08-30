@@ -8,7 +8,6 @@ trait PGConverter[T] {
 }
 
 object PGConverter {
-
 //   /* Alternative version */
 //   def toPGString[T: PGConverter](t: T): String =
 //     implicitly[PGConverter[T]].toPGString(t)
