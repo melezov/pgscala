@@ -5,7 +5,6 @@ cd "%~dp0"
 
 set JVM_PARAMS=-Xss2m -Xms2g -Xmx2g -XX:+TieredCompilation -XX:ReservedCodeCacheSize=256m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled -XX:+UseNUMA -XX:+UseParallelGC -Dscalac.patmat.analysisBudget=off
 
-set TRY_JREBEL=true
 set LOG_LEVEL=
 set NO_PAUSE=false
 set DO_LOOP=false
@@ -32,12 +31,6 @@ if "%~1"=="--prod" (
   goto :PARSER_CONTINUE
 )
 
-if "%~1"=="--no-jrebel" (
-  echo Disabling JRebel for faster compilation
-  set TRY_JREBEL=false
-  goto :PARSER_CONTINUE
-)
-
 if "%~1"=="--loop" (
   echo Will run SBT in loop mode
   set DO_LOOP=true
@@ -56,10 +49,6 @@ set SBT_PARAMS=%SBT_PARAMS% %1
 shift
 goto :PARSER_LOOP
 :PARSER_END
-
-if %TRY_JREBEL%.==true. (
-  if exist "%JREBEL_HOME%\jrebel.jar" set JVM_PARAMS=%JVM_PARAMS% -noverify -javaagent:"%JREBEL_HOME%\jrebel.jar" %JREBEL_PLUGINS%
-)
 
 set GRUJ_PATH=project\strap\gruj_vs_sbt-launch-0.13.x.jar
 set RUN_CMD=java %JVM_PARAMS% -jar %GRUJ_PATH% %LOG_LEVEL% %SBT_PARAMS%
