@@ -5,14 +5,14 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.Matchers
+import org.scalatest.matchers.ShouldMatchers
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateTimeZone
 
 @RunWith(classOf[JUnitRunner])
-class DateTimeTest extends FeatureSpec with GivenWhenThen with Matchers {
+class DateTimeTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
   val dFormat = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSSZZ")
 
   feature("About to test a DateTime converter"){

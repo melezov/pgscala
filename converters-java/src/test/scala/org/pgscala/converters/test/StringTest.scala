@@ -5,12 +5,12 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.Matchers
+import org.scalatest.matchers.ShouldMatchers
 
 import scala.util.Random
 
 @RunWith(classOf[JUnitRunner])
-class StringTest extends FeatureSpec with GivenWhenThen with Matchers {
+class StringTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
   feature("About to test an String converter"){
     info("I want to test if PGNullableStringConverter works correctly")
 

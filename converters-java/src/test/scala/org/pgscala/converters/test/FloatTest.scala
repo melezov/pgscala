@@ -5,10 +5,10 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.Matchers
+import org.scalatest.matchers.ShouldMatchers
 
 @RunWith(classOf[JUnitRunner])
-class FloatTest  extends FeatureSpec with GivenWhenThen with Matchers {
+class FloatTest  extends FeatureSpec with GivenWhenThen with ShouldMatchers {
   feature("About to test a Float converter"){
     info("I want to test if PGNullableFloatConverter works correctly, both in 2 way conversion")
     info("I am going to perform tests for the Float special cases")

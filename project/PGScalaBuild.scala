@@ -15,10 +15,10 @@ trait Dependencies {
   val slf4j = "org.slf4j" % "slf4j-api" % "1.7.7"
   val logback = "ch.qos.logback" % "logback-classic" % "1.1.2"
 
-  val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.3"
+  val scalaIo = "com.github.scala-incubator.io" % "scala-io-file_2.9.2" % "0.4.1-seq"
 
   val junit = "junit" % "junit" % "4.11"
-  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.2"
+  val scalaTest = "org.scalatest" %% "scalatest" % "2.0.M5b"
 }
 
 //  ---------------------------------------------------------------------------
@@ -34,36 +34,22 @@ trait BuildSettings {
     graphSettings ++ Seq(
       organization := "org.pgscala"
 
-    , crossScalaVersions := Seq("2.10.4")
+    , crossScalaVersions := Seq("2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.2", "2.9.3") 
     , scalaVersion := crossScalaVersions.value.head
     , scalacOptions := Seq(
         "-deprecation"
       , "-encoding", "UTF-8"
-      , "-feature"
-      , "-language:existentials"
-      , "-language:implicitConversions"
-      , "-language:postfixOps"
-      , "-language:reflectiveCalls"
       , "-optimise"
       , "-unchecked"
       , "-Xcheckinit"
-      , "-Xlint"
       , "-Xmax-classfile-name", "72"
       , "-Xno-forwarders"
-      , "-Xverify"
       , "-Yclosure-elim"
       , "-Ydead-code"
-      , "-Yinline-warnings"
       , "-Yinline"
-      , "-Yrepl-sync"
-      , "-Ywarn-adapted-args"
       , "-Ywarn-dead-code"
-      , "-Ywarn-inaccessible"
-      , "-Ywarn-nullary-override"
-      , "-Ywarn-nullary-unit"
-      , "-Ywarn-numeric-widen"
       )
-
+	  
     , javacOptions := Seq(
         "-encoding", "UTF-8"
       , "-deprecation"

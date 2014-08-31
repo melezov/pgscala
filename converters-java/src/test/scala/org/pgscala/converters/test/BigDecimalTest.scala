@@ -5,13 +5,13 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.Matchers
+import org.scalatest.matchers.ShouldMatchers
 
 import java.math.BigDecimal
 import scala.util.Random
 
 @RunWith(classOf[JUnitRunner])
-class BigDecimalTest extends FeatureSpec with GivenWhenThen with Matchers {
+class BigDecimalTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
   feature("about to test a BigDecimal converter"){
     info("I want to test if PGNullableBigDecimalConverter works correctly, both in 2 way conversion")

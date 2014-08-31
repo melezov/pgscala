@@ -5,11 +5,11 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.Matchers
+import org.scalatest.matchers.ShouldMatchers
 
 @RunWith(classOf[JUnitRunner])
 class DefaultValuesOnNullValuesSpec
-    extends FeatureSpec with GivenWhenThen with Matchers {
+    extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
   feature("when a record is null") {
     scenario("conversion to BigDecimal will be BigDecimal(0)") {

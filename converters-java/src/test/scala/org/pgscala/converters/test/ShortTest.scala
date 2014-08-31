@@ -5,12 +5,12 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
-import org.scalatest.Matchers
+import org.scalatest.matchers.ShouldMatchers
 
 import scala.util.Random
 
 @RunWith(classOf[JUnitRunner])
-class ShortTest extends FeatureSpec with GivenWhenThen with Matchers {
+class ShortTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
   feature("About to test an Short converter"){
     info("I want to test if PGNullableShortConverter works correctly, both in 2 way conversion")
     info("I am going to perform tests for the Short boundary cases")

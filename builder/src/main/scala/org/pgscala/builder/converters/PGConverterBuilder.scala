@@ -67,23 +67,23 @@ trait PGConverterBuilder extends PGConverterBuilderLike {
 
   def imports= ""
 
-  def nullableConverter = s"PGNullable${javaUpperType}Converter"
+  def nullableConverter = "PGNullable" + javaUpperType + "Converter"
 
   def to =
-    s"${nullableConverter}.${javaLowerType}ToString(${scalaVar})"
+    nullableConverter + "." + javaLowerType + "ToString(" + scalaVar + ")"
 
   def from =
-    s"${nullableConverter}.stringTo${javaUpperType}(${scalaVar})"
+    nullableConverter + ".stringTo" + javaUpperType + "(" + scalaVar + ")"
 }
 
 trait PGPredefConverterBuilder extends PGConverterBuilder {
   override def imports = ""
 
   override def to =
-    s"${nullableConverter}.${javaLowerType}ToString(${javaClazz} valueOf ${scalaVar})"
+    nullableConverter + "." + javaLowerType + "ToString(" + javaClazz + " valueOf " + scalaVar + ")"
 
   override def from =
-    s"${nullableConverter}.stringTo${javaUpperType}(${scalaVar})"
+    nullableConverter + ".stringTo" + javaUpperType + "(" + scalaVar + ")"
 }
 
 import scalax.file._
