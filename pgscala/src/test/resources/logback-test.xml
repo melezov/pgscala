@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" debug="false">
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>[%4p] [%d{HH:mm:ss}] [%t] %c{36}: %m%n</pattern>
-    </encoder>
-  </appender>
-  <logger name="org.pgscala" level="INFO"/>
-  <root level="INFO">
-    <appender-ref ref="STDOUT"/>
-  </root>
+<configuration scan="false" debug="false">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%4p] [%d{HH:mm:ss}]: %m%n</pattern>
+        </encoder>
+    </appender>
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+    </root>
 </configuration>
