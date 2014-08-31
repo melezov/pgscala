@@ -1,4 +1,5 @@
 package org.pgscala
+
 import Parametrifier._
 import converters._
 
