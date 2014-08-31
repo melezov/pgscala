@@ -196,7 +196,7 @@ object PGScalaBuild extends Build with BuildSettings with Dependencies {
   , file("pgscala")
   , settings = scalaSettings ++ Seq(
       name    := "pgscala"
-    , version := "0.7.26"
+    , version := "0.7.27"
     , initialCommands := "import org.pgscala._"
     , libraryDependencies ++= Seq(
         postgresJdbc

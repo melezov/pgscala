@@ -17,7 +17,7 @@ object PGTestDb {
   lazy val port = dbConfig.getProperty("port").toInt
   lazy val dbName = dbConfig.getProperty("dbname")
   lazy val user = dbConfig.getProperty("user")
-  lazy val pass = dbConfig.getProperty("pass")
+  lazy val password = dbConfig.getProperty("password")
 
   private lazy val pgds = {
     val driver = "org.postgresql.Driver"
@@ -28,7 +28,7 @@ object PGTestDb {
     pgsds.setPortNumber(port)
     pgsds.setDatabaseName(dbName)
     pgsds.setUser(user)
-    pgsds.setPassword(pass)
+    pgsds.setPassword(password)
     pgsds
   }
 

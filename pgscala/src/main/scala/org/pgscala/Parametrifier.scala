@@ -116,6 +116,13 @@ class Parametrifier private(query: Array[Char], params: IndexedSeq[ParamText[_]]
   val preparedQuery = replaceMarks(replacements)
 
   if (logger.isDebugEnabled) {
+    if (preparedParams.isEmpty) {
+      logger.debug("""
+Prepared query:
+  -> <%s>""" format(
+        preparedQuery.trim))
+    }
+    else {
       logger.debug("""
 Prepared query:
   -> <%s>
@@ -125,6 +132,7 @@ Prepared params:
       , preparedParams mkString """>
   -> <"""))
     }
+  }
 
   private def replaceMarks(flow: Seq[ParamReplacement]) = {
     val buff = new Array[Char](

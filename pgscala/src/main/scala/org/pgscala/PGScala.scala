@@ -131,7 +131,7 @@ class PGScala(con: java.sql.Connection) {
 
   def set[T](query: String, params: ParamText[_]*)(f: PGScalaResultSet => T): Set[T] = {
     val at = arr(query, params: _*)(f)
-    val res = Set.empty ++ at
+    val res = at.toSet
 
     res.ensuring(
       _.size == at.size,
@@ -145,7 +145,7 @@ class PGScala(con: java.sql.Connection) {
 
   def map[K, V](query: String, params: ParamText[_]*)(f: PGScalaResultSet => (K, V)): Map[K, V] = {
     val akv = arr(query, params: _*)(f)
-    val res = (Map.empty ++ akv).asInstanceOf[Map[K, V]]
+    val res = akv.toMap
 
     res.ensuring(
       _.size == akv.size,
