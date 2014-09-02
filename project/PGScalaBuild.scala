@@ -24,17 +24,12 @@ trait Dependencies {
 //  ---------------------------------------------------------------------------
 
 trait BuildSettings {
-  private val ElementNexus     = "Element Nexus"     at "http://repo.element.hr/nexus/content/groups/public/"
-  private val ElementReleases  = "Element Releases"  at "http://repo.element.hr/nexus/content/repositories/releases/"
-  private val ElementSnapshots = "Element Snapshots" at "http://repo.element.hr/nexus/content/repositories/snapshots/"
 
   lazy val scalaSettings =
     Defaults.defaultSettings ++
     eclipseSettings ++
     graphSettings ++ Seq(
-      organization := "org.pgscala"
-
-    , crossScalaVersions := Seq("2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.2", "2.9.3") 
+      crossScalaVersions := Seq("2.9.0", "2.9.0-1", "2.9.1", "2.9.1-1", "2.9.2", "2.9.3") 
     , scalaVersion := crossScalaVersions.value.head
     , scalacOptions := Seq(
         "-deprecation"
@@ -49,7 +44,7 @@ trait BuildSettings {
       , "-Yinline"
       , "-Ywarn-dead-code"
       )
-	  
+
     , javacOptions := Seq(
         "-encoding", "UTF-8"
       , "-deprecation"
@@ -63,18 +58,6 @@ trait BuildSettings {
 
     , EclipseKeys.eclipseOutput := Some(".target")
     , EclipseKeys.executionEnvironment := Some(EclipseExecutionEnvironment.JavaSE16)
-
-    , resolvers := Seq(ElementNexus, ElementReleases, ElementSnapshots)
-    , externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
-
-    , publishArtifact in (Compile, packageDoc) := false
-    , publishTo := Some(
-        if (version.value endsWith "-SNAPSHOT") ElementSnapshots else ElementReleases
-      )
-    , credentials ++= {
-        val creds = Path.userHome / ".config" / "pgscala" / "nexus.config"
-        if (creds.exists) Some(Credentials(creds)) else None
-      }.toSeq
     )
 
   lazy val javaSettings =
@@ -178,10 +161,10 @@ object PGScalaBuild extends Build with BuildSettings with Dependencies {
   ) dependsOn(pgjavaConverters, util % "test->compile")
 
   lazy val pgscala = Project(
-    "pgscala"
+    "pgscala-commons"
   , file("pgscala")
   , settings = scalaSettings ++ Seq(
-      name    := "pgscala"
+      name    := "pgscala-commons"
     , version := "0.7.27"
     , initialCommands := "import org.pgscala._"
     , libraryDependencies ++= Seq(
@@ -197,19 +180,23 @@ object PGScalaBuild extends Build with BuildSettings with Dependencies {
     )
   ) dependsOn(util, pgscalaConverters)
 
-  lazy val root = (project
-    in(file("."))
-    settings(scalaSettings: _*)
-    settings(
-      publishLocal := {}
-    , publish := {}
-    )
-    aggregate(
-      util
-    , builder
-    , pgjavaConverters
-    , pgscalaConverters
-    , pgscala
-    )
+  val projs: Seq[sbt.ProjectReference] = Seq(pgscalaConverters, pgjavaConverters, util, pgscala)
+
+  def aggregatedCompile =  ScopeFilter(inProjects(projs: _*), inConfigurations(Compile))
+
+  def aggregatedTest = ScopeFilter(inProjects(projs: _*), inConfigurations(Test))
+
+  def aggregatedModules = Seq(
+    sources in Compile                        := sources.all(aggregatedCompile).value.flatten,
+    unmanagedSources in Compile               := unmanagedSources.all(aggregatedCompile).value.flatten,
+    unmanagedSourceDirectories in Compile     := unmanagedSourceDirectories.all(aggregatedCompile).value.flatten,
+    unmanagedResourceDirectories in Compile   := unmanagedResourceDirectories.all(aggregatedCompile).value.flatten,
+    sources in Test                           := sources.all(aggregatedTest).value.flatten,
+    unmanagedSources in Test                  := unmanagedSources.all(aggregatedTest).value.flatten,
+    unmanagedSourceDirectories in Test        := unmanagedSourceDirectories.all(aggregatedTest).value.flatten,
+    unmanagedResourceDirectories in Test      := unmanagedResourceDirectories.all(aggregatedTest).value.flatten,
+    libraryDependencies                       := libraryDependencies.all(aggregatedCompile).value.flatten
   )
+
+  lazy val root = (project in file(".")) settings ((scalaSettings ++ aggregatedModules): _*)
 }
