@@ -9,7 +9,7 @@ import net.virtualvoid.sbt.graph.Plugin._
 trait Dependencies {
   val postgresJdbc = "org.postgresql" % "postgresql" % "9.3-1102-jdbc4"
 
-  val jodaTime = "joda-time" % "joda-time" % "2.4"
+  val jodaTime = "joda-time" % "joda-time" % "2.6"
   val jodaConvert = "org.joda" % "joda-convert" % "1.7"
 
   val slf4j = "org.slf4j" % "slf4j-api" % "1.7.7"
@@ -18,8 +18,8 @@ trait Dependencies {
   val scalaXml = "org.scala-lang.modules" %% "scala-xml" % "1.0.2"
   val scalaIo = "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.3-1"
 
-  val junit = "junit" % "junit" % "4.11"
-  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.2"
+  val junit = "junit" % "junit" % "4.12"
+  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.3"
 }
 
 //  ---------------------------------------------------------------------------
@@ -30,7 +30,7 @@ trait BuildSettings {
     Defaults.defaultSettings ++
     eclipseSettings ++
     graphSettings ++ Seq(
-      crossScalaVersions := Seq("2.11.2")
+      crossScalaVersions := Seq("2.11.4")
     , scalaVersion := crossScalaVersions.value.head
     , scalacOptions := Seq(
         "-deprecation"
@@ -108,7 +108,7 @@ object PGScalaBuild extends Build with BuildSettings with Dependencies {
   , file("util")
   , settings = javaSettings ++ Seq(
       name    := "pgscala-util"
-    , version := "0.3.9"
+    , version := "0.0.0-SNAPSHOT"
     , initialCommands := "import org.pgscala.util._"
     , libraryDependencies ++= Seq(
         slf4j
@@ -144,7 +144,7 @@ object PGScalaBuild extends Build with BuildSettings with Dependencies {
   , file("converters-java")
   , settings = javaSettings ++ Seq(
       name    := "pgscala-converters-java"
-    , version := "0.2.12"
+    , version := "0.0.0-SNAPSHOT"
     , initialCommands := "import org.pgscala.converters._"
     , libraryDependencies ++= Seq(
         jodaTime
@@ -162,7 +162,7 @@ object PGScalaBuild extends Build with BuildSettings with Dependencies {
   , file("converters-scala")
   , settings = scalaSettings ++ Seq(
       name    := "pgscala-converters-scala"
-    , version := "0.2.18"
+    , version := "0.0.0-SNAPSHOT"
     , initialCommands := "import org.pgscala.converters._"
     , libraryDependencies ++= Seq(
         scalaXml
@@ -184,7 +184,7 @@ object PGScalaBuild extends Build with BuildSettings with Dependencies {
   , file("pgscala")
   , settings = scalaSettings ++ Seq(
       name    := "pgscala-commons"
-    , version := "0.7.27"
+    , version := "0.0.0-SNAPSHOT"
     , initialCommands := "import org.pgscala._"
     , libraryDependencies ++= Seq(
         postgresJdbc

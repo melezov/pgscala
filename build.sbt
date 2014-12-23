@@ -2,7 +2,7 @@ organization in ThisBuild           := "org.pgscala"
 
 name                                := "pgscala"
 
-version in ThisBuild                := "0.7.29"
+version in ThisBuild                := "0.8.0-SNAPSHOT"
 
 publishTo in ThisBuild              := Some(if (version.value endsWith "-SNAPSHOT") Opts.resolver.sonatypeSnapshots else Opts.resolver.sonatypeStaging)
 
