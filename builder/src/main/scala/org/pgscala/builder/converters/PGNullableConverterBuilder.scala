@@ -37,13 +37,23 @@ trait PGNullableConverterBuilderLike extends PGConverterHelper {
   , i("jasminFromSignature", jasminFromSignature)
   , i("toAnnotation"       , toAnnotation       )
   , i("fromAnnotation"     , fromAnnotation     )
+  , i("toThrows"           , toThrows           )
+  , i("fromThrows"         , fromThrows         )
+  , addToExceptionWrapper
+  , addFromExceptionWrapper
   )
 
   def jasminToSignature: String
   def jasminFromSignature: String
 
+  def toThrows: String
+  def fromThrows: String
+
   def toAnnotation = "@ToString"
   def fromAnnotation = "@FromString"
+
+  def addToExceptionWrapper = identity[String] _
+  def addFromExceptionWrapper = identity[String] _
 }
 
 trait PGNullableConverterBuilder extends PGNullableConverterBuilderLike {
@@ -68,12 +78,44 @@ trait PGNullableConverterBuilder extends PGNullableConverterBuilderLike {
 
   override def language = Language.Java: Language
 
+  def toThrowsExceptions = Seq.empty[String]
+  def fromThrowsExceptions = Seq.empty[String]
+
+  private def addThrows(exceptions: Seq[String]) =
+    if (exceptions.isEmpty) "" else exceptions.mkString("throws ", ", ", " ")
+
+  override def toThrows = addThrows(toThrowsExceptions)
+  override def fromThrows = addThrows(fromThrowsExceptions)
+
+  override def addToExceptionWrapper = (body: String) =>
+    if (toThrowsExceptions.isEmpty) body else {
+      body.replaceFirst(
+          """(public String convertToString.*?)\n( +return.*?;)""",
+          """$1
+        try {
+    $2
+        } catch (final """ + toThrowsExceptions.head + s""" e) {
+            throw new RuntimeException("Could not convert ${javaType} to String");
+        }""")
+    }
+
+  override def addFromExceptionWrapper = (body: String) =>
+    if (fromThrowsExceptions.isEmpty) body else {
+      body.replaceFirst(
+          """(public .*? convertFromString.*?)\n( +return.*?;)""",
+          """$1
+        try {
+    $2
+        } catch (final """ + fromThrowsExceptions.head + s""" e) {
+            throw new RuntimeException("Could not convert String to ${javaType}");
+        }""")
+    }
+
   override def jasminToSignature = ""
   override def jasminFromSignature = ""
 }
 
-trait PGPredefNullableConverterBuilder extends PGNullableConverterBuilder {
-}
+trait PGPredefNullableConverterBuilder extends PGNullableConverterBuilder
 
 import scalax.file._
 import scalax.io._
@@ -98,6 +140,9 @@ object PGNullableConverterBuilder extends PGConverterBuilderPaths {
   , PGNullableDateTimeConverterBuilder
 
   , PGNullableByteArrayConverterBuilder
+  , PGNullableBufferedImageConverterBuilder
+
+  , PGNullableURLConverterBuilder
   , PGNullableUUIDConverterBuilder
 
   , PGNullableElemConverterBuilder

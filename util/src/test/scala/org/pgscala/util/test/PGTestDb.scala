@@ -4,7 +4,6 @@ package test
 import java.sql.{ Statement, ResultSet }
 import org.postgresql.ds.PGSimpleDataSource
 import java.util.Properties
-import org.slf4j.LoggerFactory
 
 object PGTestDb {
   private lazy val dbConfig = {

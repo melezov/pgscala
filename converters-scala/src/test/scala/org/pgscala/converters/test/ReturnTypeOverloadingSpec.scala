@@ -1,3 +1,4 @@
+/*
 package org.pgscala.converters
 package test
 
@@ -73,3 +74,4 @@ class ReturnTypeOverloadingSpec
     }
   }
 }
+*/

@@ -109,6 +109,9 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
   , PGDateTimeConverterBuilder
 
   , PGByteArrayConverterBuilder
+  , PGBufferedImageConverterBuilder
+
+  , PGURLConverterBuilder
   , PGUUIDConverterBuilder
 
   , PGElemConverterBuilder

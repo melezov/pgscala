@@ -179,6 +179,38 @@
   areturn
 .end method
 
+.method public static fromPGString(Ljava/lang/String;)Ljava/awt/image/BufferedImage;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableBufferedImageConverter.stringToBufferedImage(Ljava/lang/String;)Ljava/awt/image/BufferedImage;
+  areturn
+.end method
+
+.method public static toPGString(Ljava/awt/image/BufferedImage;)Ljava/lang/String;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableBufferedImageConverter.bufferedImageToString(Ljava/awt/image/BufferedImage;)Ljava/lang/String;
+  areturn
+.end method
+
+.method public static fromPGString(Ljava/lang/String;)Ljava/net/URL;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableURLConverter.stringToURL(Ljava/lang/String;)Ljava/net/URL;
+  areturn
+.end method
+
+.method public static toPGString(Ljava/net/URL;)Ljava/lang/String;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableURLConverter.urlToString(Ljava/net/URL;)Ljava/lang/String;
+  areturn
+.end method
+
 .method public static fromPGString(Ljava/lang/String;)Ljava/util/UUID;
   .limit locals 1
   .limit stack 2
