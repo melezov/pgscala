@@ -15,7 +15,7 @@ object PGNullableStringConverterBuilder extends PGPredefNullableConverterBuilder
     val code = super.inject(body)
 
     code
-      .replaceFirst("""(?s)(  @ToString\n).*(  @FromString)""", "$1$2")
+      .replaceFirst("""(?s)(  @ToString\n).*(    @FromString)""", "$1$2")
       .replaceAll("return.*", "return s;")
   }
 }

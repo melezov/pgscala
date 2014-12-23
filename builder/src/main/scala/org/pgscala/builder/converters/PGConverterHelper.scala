@@ -15,7 +15,7 @@ trait PGConverterHelper {
   )
 
   protected def i(key: String, value: String) =
-    (_: String).replace("{ "+ key +" }", value)
+    (_: String).replace("{ " + key + " }", value)
 
   protected def l(word: String) =
     word.head.toLower + word.tail

@@ -31,56 +31,55 @@ import scala.Tuple2;
   .signature "(Ljava/lang/String;)%s"""" format signature
 
   val to = """
-    if (m.isEmpty()) return "";
+        if (m.isEmpty()) return "";
 
-    final StringBuilder sB = new StringBuilder();
+        final StringBuilder sB = new StringBuilder();
 
-    final Iterator<Tuple2<String, String>> i = m.iterator();
-    while(i.hasNext()) {
-      final Tuple2<String, String> kv = i.next();
+        final Iterator<Tuple2<String, String>> i = m.iterator();
+        while(i.hasNext()) {
+            final Tuple2<String, String> kv = i.next();
 
-      if (null == kv._1) {
-        throw new NullPointerException("Map key cannot be NULL!");
-      }
-      else if (null == kv._2) {
-        throw new NullPointerException("Map values cannot be NULL!");
-      }
+            if (null == kv._1) {
+                throw new NullPointerException("Map key cannot be NULL!");
+            } else if (null == kv._2) {
+                throw new NullPointerException("Map values cannot be NULL!");
+            }
 
-      final String k = kv._1.replace("\\", "\\\\").replace("\"", "\\\"");
-      final String v = kv._2.replace("\\", "\\\\").replace("\"", "\\\"");
+            final String k = kv._1.replace("\\", "\\\\").replace("\"", "\\\"");
+            final String v = kv._2.replace("\\", "\\\\").replace("\"", "\\\"");
 
-      (sB.length() == 0
-        ? sB.append('"')
-        : sB.append("\", \"")).append(k).append("\"=>\"").append(v);
-    }
+            (sB.length() == 0
+                ? sB.append('"')
+                : sB.append("\", \"")).append(k).append("\"=>\"").append(v);
+        }
 
-    return sB.append('"').toString()"""
+        return sB.append('"').toString()"""
 
   val from = """
 
-    if (m.isEmpty()) return Map$.MODULE$.empty();
+        if (m.isEmpty()) return Map$.MODULE$.empty();
 
-    final Queue<Tuple2<String, String>> tuples =
-        new ArrayDeque<Tuple2<String,String>>();
+        final Queue<Tuple2<String, String>> tuples =
+                new ArrayDeque<Tuple2<String,String>>();
 
-    final String[] pairs = m.substring(1, m.length() - 1).split("\", \"", -1);
-    for(final String pair : pairs) {
-      final String[] kv = pair.split("\"=>\"", -1);
+        final String[] pairs = m.substring(1, m.length() - 1).split("\", \"", -1);
+        for(final String pair : pairs) {
+            final String[] kv = pair.split("\"=>\"", -1);
 
-      if (kv.length != 2) {
-        throw new IllegalArgumentException("Illegal pair: " + pair);
-      }
+            if (kv.length != 2) {
+                throw new IllegalArgumentException("Illegal pair: " + pair);
+            }
 
-      tuples.add(new Tuple2<String, String>(
-        kv[0].replace("\\\"", "\"").replace("\\\\", "\\")
-      , kv[1].replace("\\\"", "\"").replace("\\\\", "\\")
-      ));
-    }
+            tuples.add(new Tuple2<String, String>(
+              kv[0].replace("\\\"", "\"").replace("\\\\", "\\"),
+              kv[1].replace("\\\"", "\"").replace("\\\\", "\\")
+            ));
+        }
 
-    final WrappedArray<Tuple2<String, String>> wa = scala.Predef.wrapRefArray(
-        (Tuple2<String, String>[]) tuples.toArray(new Tuple2<?, ?>[tuples.size()]));
+        final WrappedArray<Tuple2<String, String>> wa = scala.Predef.wrapRefArray(
+            (Tuple2<String, String>[]) tuples.toArray(new Tuple2<?, ?>[tuples.size()]));
 
-    return Map$.MODULE$.apply(wa)"""
+        return Map$.MODULE$.apply(wa)"""
 
   override val language = Language.Scala
 

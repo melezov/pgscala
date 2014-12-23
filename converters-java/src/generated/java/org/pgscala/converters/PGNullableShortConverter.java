@@ -5,27 +5,27 @@ import org.joda.convert.*;
 /** Do not edit - generated in Builder / PGNullableShortConverterBuilder.scala */
 
 public enum PGNullableShortConverter implements StringConverter<Short> {
-  INSTANCE;
+    INSTANCE;
 
-  public static final String pgType = "smallint";
+    public static final String pgType = "smallint";
 
-  @ToString
-  public static String shortToString(final Short s) {
-    return null == s ? null : Short.toString(s);
-  }
+    @ToString
+    public static String shortToString(final Short s) {
+        return null == s ? null : Short.toString(s);
+    }
 
-  @FromString
-  public static Short stringToShort(final String s) {
-    return null == s ? null : Short.valueOf(s);
-  }
+    @FromString
+    public static Short stringToShort(final String s) {
+        return null == s ? null : Short.valueOf(s);
+    }
 
 // -----------------------------------------------------------------------------
 
-  public String convertToString(final Short s) {
-    return shortToString(s);
-  }
+    public String convertToString(final Short s) {
+        return shortToString(s);
+    }
 
-  public Short convertFromString(final Class<? extends Short> clazz, final String s) {
-    return stringToShort(s);
-  }
+    public Short convertFromString(final Class<? extends Short> clazz, final String s) {
+        return stringToShort(s);
+    }
 }

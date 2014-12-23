@@ -16,9 +16,9 @@ import scala.xml.parsing.ConstructingParser;
   val to = "e.toString()"
 
   val from = """
-      (Elem) ConstructingParser
-        .fromSource(Source.fromString(e), true)
-        .document().docElem()"""
+            (Elem) ConstructingParser
+                .fromSource(Source.fromString(e), true)
+                .document().docElem()"""
 
   override val language = Language.Scala
 }

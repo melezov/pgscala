@@ -5,27 +5,27 @@ import org.joda.convert.*;
 /** Do not edit - generated in Builder / PGNullableIntegerConverterBuilder.scala */
 
 public enum PGNullableIntegerConverter implements StringConverter<Integer> {
-  INSTANCE;
+    INSTANCE;
 
-  public static final String pgType = "integer";
+    public static final String pgType = "integer";
 
-  @ToString
-  public static String integerToString(final Integer i) {
-    return null == i ? null : Integer.toString(i);
-  }
+    @ToString
+    public static String integerToString(final Integer i) {
+        return null == i ? null : Integer.toString(i);
+    }
 
-  @FromString
-  public static Integer stringToInteger(final String i) {
-    return null == i ? null : Integer.valueOf(i);
-  }
+    @FromString
+    public static Integer stringToInteger(final String i) {
+        return null == i ? null : Integer.valueOf(i);
+    }
 
 // -----------------------------------------------------------------------------
 
-  public String convertToString(final Integer i) {
-    return integerToString(i);
-  }
+    public String convertToString(final Integer i) {
+        return integerToString(i);
+    }
 
-  public Integer convertFromString(final Class<? extends Integer> clazz, final String i) {
-    return stringToInteger(i);
-  }
+    public Integer convertFromString(final Class<? extends Integer> clazz, final String i) {
+        return stringToInteger(i);
+    }
 }
