@@ -100,4 +100,49 @@ public final class PGLiteral {
 
     return new String(unquoted);
   }
+
+  public static final String escapeLike(final String like) {
+    if (null == like) {
+      return null;
+    }
+
+    final int len = like.length();
+    if (len == 0) {
+      return like;
+    }
+
+    final int total;
+    {
+      int cnt = 0;
+
+      for (int i = 0; i < len; i++) {
+        final char ch = like.charAt(i);
+        if (ch == '%' || ch == '_' || ch == '\\') {
+          cnt++;
+        }
+      }
+
+      if (cnt == 0) {
+        return like;
+      }
+
+      total = cnt;
+    }
+
+    final int newLen = len + total;
+    final char[] quoted = new char[newLen];
+    {
+      int cnt = 0;
+      for (int i = 0; i < len; i++) {
+        final char ch = like.charAt(i);
+        if (ch == '%' || ch == '_' || ch == '\\') {
+          quoted[cnt++ + i] = '\\';
+        }
+
+        quoted[cnt + i] = ch;
+      }
+    }
+
+    return new String(quoted);
+  }
 }
