@@ -260,3 +260,19 @@
   invokestatic org/pgscala/converters/PGNullableMapConverter.mapToString(Lscala.collection.immutable.Map;)Ljava/lang/String;
   areturn
 .end method
+
+.method public static fromPGString(Ljava/lang/String;)Ljava/awt/geom/Point2D;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullablePointConverter.stringToPoint(Ljava/lang/String;)Ljava/awt/geom/Point2D;
+  areturn
+.end method
+
+.method public static toPGString(Ljava/awt/geom/Point2D;)Ljava/lang/String;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullablePointConverter.pointToString(Ljava/awt/geom/Point2D;)Ljava/lang/String;
+  areturn
+.end method

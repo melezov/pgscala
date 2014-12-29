@@ -147,6 +147,8 @@ object PGNullableConverterBuilder extends PGConverterBuilderPaths {
 
   , PGNullableElemConverterBuilder
   , PGNullableMapConverterBuilder
+  
+  , PGNullablePointConverterBuilder
   )
 
   def buildJavaNullableConverters() {
