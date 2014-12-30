@@ -148,6 +148,7 @@ object PGNullableConverterBuilder extends PGConverterBuilderPaths {
   , PGNullableElemConverterBuilder
   , PGNullableMapConverterBuilder
   
+  , PGNullableLocationConverterBuilder
   , PGNullablePointConverterBuilder
   )
 

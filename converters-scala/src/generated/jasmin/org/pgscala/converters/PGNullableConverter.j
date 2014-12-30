@@ -265,7 +265,7 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic org/pgscala/converters/PGNullablePointConverter.stringToPoint(Ljava/lang/String;)Ljava/awt/geom/Point2D;
+  invokestatic org/pgscala/converters/PGNullableLocationConverter.stringToLocation(Ljava/lang/String;)Ljava/awt/geom/Point2D;
   areturn
 .end method
 
@@ -273,6 +273,22 @@
   .limit locals 1
   .limit stack 2
   aload_0
-  invokestatic org/pgscala/converters/PGNullablePointConverter.pointToString(Ljava/awt/geom/Point2D;)Ljava/lang/String;
+  invokestatic org/pgscala/converters/PGNullableLocationConverter.locationToString(Ljava/awt/geom/Point2D;)Ljava/lang/String;
+  areturn
+.end method
+
+.method public static fromPGString(Ljava/lang/String;)Ljava/awt/Point;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullablePointConverter.stringToPoint(Ljava/lang/String;)Ljava/awt/Point;
+  areturn
+.end method
+
+.method public static toPGString(Ljava/awt/Point;)Ljava/lang/String;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullablePointConverter.pointToString(Ljava/awt/Point;)Ljava/lang/String;
   areturn
 .end method

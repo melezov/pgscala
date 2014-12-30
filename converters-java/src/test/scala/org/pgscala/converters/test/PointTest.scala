@@ -13,88 +13,77 @@ class PointTest extends FeatureSpec with GivenWhenThen with Matchers {
     info("I want to test if PGNullablePointConverter works correctly, both in 2 way conversion")
     info("I am going to perform tests for the Point boundary cases")
 
-    scenario("Double Point to String Nr. 1") {
-      Given("a starting Point(Double.Min, Double.MaxValue)")
-      val p = new java.awt.geom.Point2D.Double(Double.MaxValue, Double.MinValue);
+    scenario("java.awt.Point to String Nr. 1") {
+      Given("a starting Point(Int.Min, Int.MaxValue)")
+      val p = new java.awt.Point(Int.MaxValue, Int.MinValue);
       val res = PGNullablePointConverter pointToString p
       When(s"that value is converted to String $res")
-      val expectedResult = s"(${Double.MaxValue.toDouble},${Double.MinValue.toDouble})"
+      val expectedResult = s"(${Int.MaxValue},${Int.MinValue})"
       Then(s"It should return a String value $expectedResult")
       res should equal(expectedResult)
     }
-    
-    scenario("Double Point to String Nr. 2") {
-      Given("a starting Point(Double.NaN, Double.NaN)")
-      val p = new java.awt.geom.Point2D.Double(Double.NaN, Double.NaN);
-      When("that value is converted to String")
-      val res = PGNullablePointConverter pointToString p
-      val expectedResult = s"(${Double.NaN},${Double.NaN})"
-      Then(s"It should return a String value $expectedResult")
-      res should equal(expectedResult)
-    }    
 
-    scenario("Double Point to String Nr. 3") {
+
+    scenario("Integer Point to String Nr. 2") {
       Given("a starting Point(0,0)")
-      val p = new java.awt.geom.Point2D.Double(0, 0);
+      val p = new java.awt.Point(0, 0);
       val res = PGNullablePointConverter pointToString p
       When(s"that value is converted to String $res")
-      val expectedResult = s"(${0d},${0d})"
+      val expectedResult = "(0,0)"
       Then(s"It should return a String value $expectedResult")
       res should equal(expectedResult)
     }
-    
-    scenario("Double Point to String Nr. 4") {
-      Given("a starting Point(Double.PositiveInfinity, Double.NegativeInfinity)")
-      val p = new java.awt.geom.Point2D.Double(Double.PositiveInfinity, Double.NegativeInfinity);
-      When("that value is converted to String")
+
+    scenario("Integer Point to String Nr. 3") {
+      Given("a starting Point of random integers...")
+      val x = scala.util.Random.nextInt
+      val y = scala.util.Random.nextInt
+      val p = new java.awt.Point(x, y);
       val res = PGNullablePointConverter pointToString p
-      val expectedResult = s"(${Double.PositiveInfinity},${Double.NegativeInfinity})"
+      When(s"that value is converted to String: $res")
+      val expectedResult = s"(${x},${y})"
       Then(s"It should return a String value $expectedResult")
       res should equal(expectedResult)
-    } 
-    
-//    scenario("Db test Nr. 1") {
-//      PGTestDb.
-//    }  
-    
+    }
+
     scenario("String to Point Nr. 1") {
-      Given("a starting String (Double.Min, Double.MaxValue)")
-      val given = s"(${Double.MaxValue.toDouble},${Double.MinValue.toDouble})"
+      val given = "(2147483647,-2147483648)"
+      Given(s"a starting String: $given")
       val res = PGNullablePointConverter stringToPoint given
       When(s"that value is converted to String $res")
-      val expectedResult = new java.awt.geom.Point2D.Double(Double.MaxValue, Double.MinValue);
+      val expectedResult = new java.awt.Point(2147483647, -2147483648);
       Then(s"It should return a Point $expectedResult")
       res should equal(expectedResult)
     }
-    
+
     scenario("String to Point Nr. 2") {
-      Given("a starting String (Double.NaN, Double.NaN)")
-      val given = s"(${Double.NaN},${Double.NaN})"
+      val given = "(nan,nan)"
+      Given(s"a starting String: $given")
       val res = PGNullablePointConverter stringToPoint(given)
       When(s"that value is converted to String $res")
-      val expectedResult = new java.awt.geom.Point2D.Double(Double.NaN, Double.NaN);
+      val expectedResult = null;
       Then(s"It should return a Point value $expectedResult")
-      res should equal(expectedResult)
-    }    
+      res should be(null)
+    }
 
     scenario("String to Point Nr. 3") {
-      Given("a starting Point(0,0)")
-      val given = s"(${0d},${0d})"
+      val given = "(0,0)"
+      Given(s"a starting String: $given")
       val res = PGNullablePointConverter stringToPoint given
       When(s"that value is converted to String $res")
-      val expectedResult = new java.awt.geom.Point2D.Double(0, 0)
+      val expectedResult = new java.awt.Point(0, 0)
       Then(s"It should return a String value $expectedResult")
       res should equal(expectedResult)
     }
-    
+
     scenario("String to Point Nr. 4") {
-      Given("a starting Point(Double.PositiveInfinity, Double.NegativeInfinity)")
-      val given = s"(${Double.PositiveInfinity},${Double.NegativeInfinity})"
+      val given = "(inf,-inf)"
+      Given(s"a starting String: $given")
       val res = PGNullablePointConverter stringToPoint(given)
       When(s"that value is converted to String $res")
-      val expectedResult = new java.awt.geom.Point2D.Double(Double.PositiveInfinity, Double.NegativeInfinity);
+      val expectedResult = null;
       Then(s"It should return a Point value $expectedResult")
       res should equal(expectedResult)
-    }     
+    }
   }
 }
