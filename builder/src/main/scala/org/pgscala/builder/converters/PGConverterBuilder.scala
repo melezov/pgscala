@@ -116,6 +116,9 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
 
   , PGElemConverterBuilder
   , PGMapConverterBuilder
+
+  , PGLocationConverterBuilder
+  , PGPointConverterBuilder
   )
 
   def buildScalaConverters() {

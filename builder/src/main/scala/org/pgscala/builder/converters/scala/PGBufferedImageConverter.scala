@@ -4,6 +4,7 @@ package converters
 
 object PGBufferedImageConverterBuilder
     extends PGConverterBuilder {
+  override def imports = "import java.awt.image.BufferedImage"
 
   val scalaClazz = "java.awt.image.BufferedImage"
 

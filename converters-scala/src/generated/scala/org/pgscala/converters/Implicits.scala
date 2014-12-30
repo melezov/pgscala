@@ -18,6 +18,8 @@ trait Implicits {
   implicit val implicitPGUUIDConverter          = PGUUIDConverter
   implicit val implicitPGElemConverter          = PGElemConverter
   implicit val implicitPGMapConverter           = PGMapConverter
+  implicit val implicitPGLocationConverter      = PGLocationConverter
+  implicit val implicitPGPointConverter         = PGPointConverter
 
   implicit val implicitPGOptionStringConverter        = PGOptionStringConverter
   implicit val implicitPGOptionBooleanConverter       = PGOptionBooleanConverter
@@ -36,4 +38,6 @@ trait Implicits {
   implicit val implicitPGOptionUUIDConverter          = PGOptionUUIDConverter
   implicit val implicitPGOptionElemConverter          = PGOptionElemConverter
   implicit val implicitPGOptionMapConverter           = PGOptionMapConverter
+  implicit val implicitPGOptionLocationConverter      = PGOptionLocationConverter
+  implicit val implicitPGOptionPointConverter         = PGOptionPointConverter
 }

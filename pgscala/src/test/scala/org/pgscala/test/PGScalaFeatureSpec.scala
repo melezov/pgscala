@@ -19,5 +19,10 @@ class PGScalaFeatureSpec extends FeatureSpec with GivenWhenThen with Matchers {
       using(_.get[BigDecimal]("SELECT @1;", bd)) should === (bd)
       using(_.get[BigDecimal]("SELECT $1;", bd)) should === (bd)
     }
+
+    scenario("Point test"){
+      val p = new java.awt.Point(0, 0)
+      using(_.get[java.awt.Point]("SELECT @1;", p)) should === (p)
+    }
   }
 }

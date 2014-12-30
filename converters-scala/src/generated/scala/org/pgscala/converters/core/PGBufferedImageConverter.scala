@@ -1,5 +1,5 @@
 package org.pgscala.converters
-
+import java.awt.image.BufferedImage
 /** Do not edit - generated in Builder / PGBufferedImageConverterBuilder.scala */
 
 object PGBufferedImageConverter extends PGConverter[BufferedImage] {
