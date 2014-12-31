@@ -1,0 +1,6 @@
+package org.pgscala
+package builder
+package converters
+
+object PGNullableLocationConverterBuilder extends PGNullableLocationConverterBuilderLike
+

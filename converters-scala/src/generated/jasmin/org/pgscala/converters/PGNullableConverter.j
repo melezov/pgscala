@@ -260,3 +260,67 @@
   invokestatic org/pgscala/converters/PGNullableMapConverter.mapToString(Lscala.collection.immutable.Map;)Ljava/lang/String;
   areturn
 .end method
+
+.method public static fromPGString(Ljava/lang/String;)Ljava/awt/geom/Point2D;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableLocationConverter.stringToLocation(Ljava/lang/String;)Ljava/awt/geom/Point2D;
+  areturn
+.end method
+
+.method public static toPGString(Ljava/awt/geom/Point2D;)Ljava/lang/String;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableLocationConverter.locationToString(Ljava/awt/geom/Point2D;)Ljava/lang/String;
+  areturn
+.end method
+
+.method public static fromPGString(Ljava/lang/String;)Ljava/awt/geom/Point2D/Double;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableLocationDoubleConverter.stringToLocationDouble(Ljava/lang/String;)Ljava/awt/geom/Point2D/Double;
+  areturn
+.end method
+
+.method public static toPGString(Ljava/awt/geom/Point2D/Double;)Ljava/lang/String;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableLocationDoubleConverter.locationDoubleToString(Ljava/awt/geom/Point2D/Double;)Ljava/lang/String;
+  areturn
+.end method
+
+.method public static fromPGString(Ljava/lang/String;)Ljava/awt/geom/Point2D/Float;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableLocationFloatConverter.stringToLocationFloat(Ljava/lang/String;)Ljava/awt/geom/Point2D/Float;
+  areturn
+.end method
+
+.method public static toPGString(Ljava/awt/geom/Point2D/Float;)Ljava/lang/String;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullableLocationFloatConverter.locationFloatToString(Ljava/awt/geom/Point2D/Float;)Ljava/lang/String;
+  areturn
+.end method
+
+.method public static fromPGString(Ljava/lang/String;)Ljava/awt/Point;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullablePointConverter.stringToPoint(Ljava/lang/String;)Ljava/awt/Point;
+  areturn
+.end method
+
+.method public static toPGString(Ljava/awt/Point;)Ljava/lang/String;
+  .limit locals 1
+  .limit stack 2
+  aload_0
+  invokestatic org/pgscala/converters/PGNullablePointConverter.pointToString(Ljava/awt/Point;)Ljava/lang/String;
+  areturn
+.end method
