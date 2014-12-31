@@ -28,7 +28,7 @@ class LocationTest extends FeatureSpec with GivenWhenThen with Matchers {
       val p = new java.awt.geom.Point2D.Double(Double.NaN, Double.NaN);
       When("that value is converted to String")
       val res = PGNullableLocationConverter locationToString p
-      val expectedResult = s"(${Double.NaN},${Double.NaN})"
+      val expectedResult = "(nan,nan)"
       Then(s"It should return a String value $expectedResult")
       res should equal(expectedResult)
     }
@@ -48,7 +48,7 @@ class LocationTest extends FeatureSpec with GivenWhenThen with Matchers {
       val p = new java.awt.geom.Point2D.Double(Double.PositiveInfinity, Double.NegativeInfinity);
       When("that value is converted to String")
       val res = PGNullableLocationConverter locationToString p
-      val expectedResult = s"(${Double.PositiveInfinity},${Double.NegativeInfinity})"
+      val expectedResult = "(inf,-inf)"
       Then(s"It should return a String value $expectedResult")
       res should equal(expectedResult)
     }

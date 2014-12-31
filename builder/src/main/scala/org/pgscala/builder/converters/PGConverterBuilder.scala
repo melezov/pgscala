@@ -117,7 +117,7 @@ object PGConverterBuilder extends PGConverterBuilderPaths {
   , PGElemConverterBuilder
   , PGMapConverterBuilder
 
-  , PGLocationConverterBuilder
+  , PGLocationDoubleConverterBuilder
   , PGPointConverterBuilder
   )
 

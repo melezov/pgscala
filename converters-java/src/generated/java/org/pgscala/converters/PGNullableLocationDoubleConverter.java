@@ -2,9 +2,9 @@ package org.pgscala.converters;
 
 import org.joda.convert.*;
 
-/** Do not edit - generated in Builder / PGNullableLocationConverterBuilder.scala */
+/** Do not edit - generated in Builder / PGNullableLocationDoubleConverterBuilder.scala */
 
-public enum PGNullableLocationConverter implements StringConverter<java.awt.geom.Point2D> {
+public enum PGNullableLocationDoubleConverter implements StringConverter<java.awt.geom.Point2D.Double> {
     INSTANCE;
 
     public static final String pgType = "point";
@@ -32,12 +32,12 @@ public enum PGNullableLocationConverter implements StringConverter<java.awt.geom
     }
 
     @ToString
-    public static String locationToString(final java.awt.geom.Point2D l) {
+    public static String locationDoubleToString(final java.awt.geom.Point2D.Double l) {
         if (null == l) return null; return "("+ getStringFromDouble(l.getX())+","+getStringFromDouble(l.getY())+")";
     }
 
     @FromString
-    public static java.awt.geom.Point2D stringToLocation(final String l) {
+    public static java.awt.geom.Point2D.Double stringToLocationDouble(final String l) {
         if (null == l) return null;
     double x = getDoubleFromString(l.substring(1, l.indexOf(",")));
     double y = getDoubleFromString(l.substring(l.indexOf(",")+1, l.length()-1));
@@ -46,11 +46,11 @@ public enum PGNullableLocationConverter implements StringConverter<java.awt.geom
 
 // -----------------------------------------------------------------------------
 
-    public String convertToString(final java.awt.geom.Point2D l) {
-        return locationToString(l);
+    public String convertToString(final java.awt.geom.Point2D.Double l) {
+        return locationDoubleToString(l);
     }
 
-    public java.awt.geom.Point2D convertFromString(final Class<? extends java.awt.geom.Point2D> clazz, final String l) {
-        return stringToLocation(l);
+    public java.awt.geom.Point2D.Double convertFromString(final Class<? extends java.awt.geom.Point2D.Double> clazz, final String l) {
+        return stringToLocationDouble(l);
     }
 }

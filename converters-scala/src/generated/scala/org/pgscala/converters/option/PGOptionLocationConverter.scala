@@ -2,10 +2,10 @@ package org.pgscala.converters
 import java.awt.geom._
 /** Do not edit - generated in Builder / PGLocationConverterBuilder.scala */
 
-object PGOptionLocationConverter extends PGConverter[Option[Point2D]] {
+object PGOptionLocationConverter extends PGConverter[Option[java.awt.geom.Point2D.Double]] {
   val PGType = PGLocationConverter.PGType
 
-  def toPGString(ol: Option[Point2D]): String =
+  def toPGString(ol: Option[java.awt.geom.Point2D.Double]): String =
     ol match {
       case None =>
         null
@@ -13,7 +13,7 @@ object PGOptionLocationConverter extends PGConverter[Option[Point2D]] {
         PGLocationConverter.toPGString(l)
     }
 
-  def fromPGString(l: String): Option[Point2D] =
+  def fromPGString(l: String): Option[java.awt.geom.Point2D.Double] =
     l match {
       case null | "" =>
         None
